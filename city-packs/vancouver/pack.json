@@ -1,0 +1,16 @@
+{
+  "id": "vancouver",
+  "flag": "🇨🇦",
+  "short": "YVR",
+  "city": "Vancouver",
+  "country": "Canada",
+  "locale": "en-CA",
+  "supportedLanguages": ["en"],
+  "version": "2026.03",
+  "updatedAt": "2026-03-10",
+  "emergency": {
+    "primary": "911",
+    "secondaryLabel": "Non-emergency (E-Comm)",
+    "secondary": "604-717-3321"
+  }
+}

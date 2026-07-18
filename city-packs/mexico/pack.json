@@ -1,0 +1,16 @@
+{
+  "id": "mexico",
+  "flag": "🇲🇽",
+  "short": "CDMX",
+  "city": "Mexico City",
+  "country": "Mexico",
+  "locale": "es-MX",
+  "supportedLanguages": ["es", "en"],
+  "version": "2026.03",
+  "updatedAt": "2026-03-01",
+  "emergency": {
+    "primary": "911",
+    "secondaryLabel": "Locatel non-emergency line",
+    "secondary": "55 5658-1111"
+  }
+}

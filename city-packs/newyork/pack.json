@@ -1,0 +1,16 @@
+{
+  "id": "newyork",
+  "flag": "🇺🇸",
+  "short": "NYC",
+  "city": "New York / New Jersey",
+  "country": "United States",
+  "locale": "en-US",
+  "supportedLanguages": ["en", "es"],
+  "version": "2026.01",
+  "updatedAt": "2026-01-20",
+  "emergency": {
+    "primary": "911",
+    "secondaryLabel": "NYC non-emergency",
+    "secondary": "311"
+  }
+}

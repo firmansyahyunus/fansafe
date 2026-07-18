@@ -1,0 +1,16 @@
+{
+  "id": "toronto",
+  "flag": "🇨🇦",
+  "short": "YYZ",
+  "city": "Toronto",
+  "country": "Canada",
+  "locale": "en-CA",
+  "supportedLanguages": ["en", "fr"],
+  "version": "2026.02",
+  "updatedAt": "2026-02-14",
+  "emergency": {
+    "primary": "911",
+    "secondaryLabel": "City / community non-emergency",
+    "secondary": "311 / 211"
+  }
+}

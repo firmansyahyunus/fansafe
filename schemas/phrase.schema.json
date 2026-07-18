@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fansafe.example/schemas/phrase.schema.json",
+  "title": "FanSafe Phrase",
+  "description": "Schema for a single entry in the phrasebook. Mirrors the shape currently hardcoded in FanSafe_PWA/index.html's `const phraseBook = [...]` array (index.html around line 1086). Reference schema only — not yet consumed at runtime, see docs/architecture.md Phase 2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "category", "values"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier, e.g. 'med1'.",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "category": {
+      "type": "string",
+      "description": "Must match one of the category ids in FanSafe_PWA/index.html's `const categories = [...]`.",
+      "enum": [
+        "emergency", "medical", "navigation", "transport",
+        "hotel", "police", "lost_document", "ticket_scam"
+      ]
+    },
+    "values": {
+      "type": "object",
+      "description": "Per-language phrase text. docs/content-governance.md requires every phrase to exist in ALL four languages before merge — a partial phrase is worse than no phrase, since the UI has no per-language fallback.",
+      "additionalProperties": false,
+      "required": ["id", "en", "es", "fr"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Indonesian" },
+        "en": { "type": "string", "minLength": 1, "description": "English" },
+        "es": { "type": "string", "minLength": 1, "description": "Spanish" },
+        "fr": { "type": "string", "minLength": 1, "description": "French" }
+      }
+    },
+    "reviewedBy": {
+      "type": "array",
+      "description": "Per docs/content-governance.md: a fluent/native speaker reviewer per language, for emergency/medical category phrases especially. Optional here so existing demo phrases (authored pre-process) still validate.",
+      "items": {
+        "type": "object",
+        "required": ["language", "reviewer"],
+        "properties": {
+          "language": { "type": "string", "enum": ["id", "en", "es", "fr"] },
+          "reviewer": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

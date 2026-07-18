@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fansafe.example/schemas/city-pack.schema.json",
+  "title": "FanSafe City Pack",
+  "description": "Schema for a single city's offline pack. Mirrors the shape currently hardcoded in FanSafe_PWA/index.html's `const cityPacks = [...]` array (index.html around line 1060). This schema is a documented reference for a future runtime extraction (docs/architecture.md, Phase 2) — FanSafe_PWA/index.html does not read from city-packs/*/pack.json today.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "flag", "short", "city", "country", "locale",
+    "supportedLanguages", "version", "updatedAt", "emergency"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier, e.g. 'mexico', 'toronto'.",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "flag": {
+      "type": "string",
+      "description": "Flag emoji. Known OS limitation: renders as a two-letter code on some Windows/Chrome combinations (documented in FanSafe_PWA/README.md) — not a data error."
+    },
+    "short": {
+      "type": "string",
+      "description": "Short code shown in the UI, e.g. 'CDMX', 'YYZ'."
+    },
+    "city": { "type": "string", "minLength": 1 },
+    "country": { "type": "string", "minLength": 1 },
+    "locale": {
+      "type": "string",
+      "description": "BCP-47-ish locale tag used for speech synthesis, e.g. 'es-MX'.",
+      "pattern": "^[a-z]{2}(-[A-Za-z0-9]+)*$"
+    },
+    "supportedLanguages": {
+      "type": "array",
+      "description": "Language codes this pack has phrase coverage for. Must match docs/content-governance.md's 'a language claimed must be fully covered' rule.",
+      "items": { "type": "string", "enum": ["id", "en", "es", "fr"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "version": {
+      "type": "string",
+      "description": "Free-text version string, e.g. '2026.03'. Bump on any content change.",
+      "minLength": 1
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date this version became current."
+    },
+    "reviewByDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Hard date after which this pack must be re-verified before being trusted again (docs/content-governance.md). Not present in the current hardcoded index.html data — a gap to close during Phase 2 runtime extraction, not required here so existing demo data can still validate."
+    },
+    "revoked": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, this pack must not be presented as ready-offline until re-reviewed."
+    },
+    "emergency": { "$ref": "./emergency-info.schema.json" }
+  }
+}
