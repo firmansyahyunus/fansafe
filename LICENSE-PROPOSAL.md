@@ -1,45 +1,56 @@
-# License Proposal (Draft — Not Yet Legally Final)
+# License Status
 
-This file is a **recommendation**, not a license grant. No `LICENSE` file
-exists in this repository yet because two prerequisites are not confirmed by
-any evidence available to this audit:
+## Code license: FINAL
 
-1. **Ownership** — who holds the rights to the existing code, phrase
-   translations, city emergency-number data, icons, and documentation (this
-   matters because the repo was produced under a Claude Code build session;
-   confirm the human owner/organization before publishing any license).
-2. **Third-party content compatibility** — the four demo city packs, 17
-   phrases, and risk-checker signal set were authored for this build (no
-   external dataset or copyrighted source was found referenced in
-   `FanSafe_PWA/index.html` or its docs), but this has not been independently
-   verified against, e.g., a translation service's terms of use.
+As of 2026-07-19, the repository owner has confirmed:
 
-Do not copy this proposal into a `LICENSE` file and treat the project as
-licensed until a human owner confirms both points above.
+1. **Ownership:** the owner holds the rights to the FanSafe code in this
+   repository.
+2. **License choice:** Apache-2.0 for source code and tooling.
 
-## Recommendation
+The full license text is now in [`LICENSE`](LICENSE) and applies to
+`FanSafe_PWA/index.html`, `FanSafe_PWA/sw.js`,
+`FanSafe_Standalone_Prototype.html`, and everything under `tools/` and
+`schemas/`. This is a real grant, not a draft.
 
-| Content | Recommended license | Why |
-|---|---|---|
-| Application source code (`FanSafe_PWA/index.html`, `sw.js`, tooling in `tools/`) | **Apache-2.0** | Explicit patent grant (relevant to a "safety" product where a downstream commercial actor could otherwise assert patents against reusers), permissive enough for commercial/white-label reuse, and its inbound=outbound contribution terms need no CLA — appropriate for a solo-maintainer project. MIT lacks the patent grant; MPL-2.0's file-level copyleft is nearly meaningless for a single-file app and adds friction without benefit. |
-| Documentation (`docs/`, `*.md` files) | **CC-BY-4.0** | Standard for prose/docs, keeps attribution, accepted by grant programs (e.g., Digital Public Goods Alliance requires no NC/ND clauses — CC-BY-4.0 qualifies). |
-| Phrase/translation strings and city emergency-number datasets (`schemas/`, `city-packs/`) | **CC0-1.0** | These are largely factual/short-phrase content with thin copyright protection anyway. Public-safety data should have zero attribution friction so other travel-safety or civic-tech projects can ingest it directly — that maximizes exactly the reuse this project wants credit for enabling. |
-| Icons / brand mark (`icon-192.png`, `icon-512.png`, the "FanSafe" name and lockup) | **All rights reserved**, separate from the code license | See `TRADEMARK.md`. Brand assets should not be bundled into the same permissive grant as the code, or downstream forks could present themselves as FanSafe. |
+## Content license (city-pack data, phrase/translation content): UNRESOLVED
 
-## Consequence to accept before finalizing
+**By explicit owner instruction, city-pack data and phrase content are NOT
+licensed for reuse yet**, even though a permissive license (CC0-1.0) was
+recommended in the previous draft of this file. The owner's instruction was:
 
-Apache-2.0 (code) + CC0 (data) together mean a commercial competitor could
-white-label the entire application, including the curated emergency-number
-data, with no attribution and no obligation to contribute fixes back. This is
-a deliberate trade of control for adoption, consistent with maximizing reuse
-and grant/DPG eligibility — but it is not reversible for anything already
-distributed under these terms once a `LICENSE` file ships. Confirm this
-trade-off is acceptable before promoting this proposal to a real `LICENSE`.
+> Do not license city-pack data or phrase content yet unless provenance,
+> ownership, and source-license compatibility have been verified.
 
-## What would make this final
+Status of that verification as of this session (2026-07-19):
 
-- Written confirmation from the repository owner of (1) and (2) above.
-- Replace this file's content into `LICENSE` (Apache-2.0 full text) and add a
-  `LICENSE-DATA` file (CC0-1.0 full text) plus a one-line `NOTICE` addition
-  pointing to both — see `NOTICE`.
-- Update `package.json`/`manifest.json` `license` fields if introduced later.
+- **Emergency numbers:** provenance work was done this session — see
+  `city-packs/<city>/SOURCES.md` for what was and wasn't verifiable against
+  an official primary source (results vary per city; some numbers remain
+  unverified and are marked as such, not silently assumed correct).
+  Verifying that a fact (a phone number) is *accurate* is a different
+  question from verifying *who owns the right to redistribute the phrasing
+  used to present it* — the latter has not been assessed.
+- **Phrase/translation content:** authorship provenance (who translated
+  each phrase, whether any translation was sourced from a third-party
+  service with its own terms) has **not** been investigated this session.
+  This remains the precise blocker.
+
+**Precise unresolved-license blocker:** the phrase/translation strings in
+`FanSafe_PWA/index.html`'s `phraseBook` and the reference copies in
+`schemas/phrase.schema.json`-conformant data have no recorded translator or
+translation-method attribution. Until that provenance is recorded (even
+informally — "maintainer-authored" is a valid answer, but it must be
+recorded, not assumed), this repository must not represent phrase content
+as available under any open license, including in `NOTICE`, `README.md`, or
+any funding/grant material.
+
+Until this is resolved: city-pack and phrase content in this repository is
+**all rights reserved by default** (standard copyright — no license grant),
+same as any other unlicensed original content. It may be viewed as part of
+this source-available repository but should not be assumed reusable
+elsewhere.
+
+See `docs/content-licensing-matrix.md` for the full per-category breakdown
+(code, docs, phrase content, city-pack data, emergency data, icons,
+screenshots, brand).

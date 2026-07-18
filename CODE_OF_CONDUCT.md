@@ -47,9 +47,7 @@ representing the project.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the maintainer at **moonwalkingpenguins@gmail.com**
-*(placeholder contact — update to the project's real conduct-reporting
-address before this repository is made public; this is currently the only
-maintainer contact on record)*. All complaints will be reviewed and
+(owner-confirmed contact, 2026-07-19). All complaints will be reviewed and
 investigated promptly and fairly.
 
 ## Attribution

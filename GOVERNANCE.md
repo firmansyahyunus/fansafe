@@ -11,7 +11,9 @@ The maintainer:
 
 - Has final say on all code, content, and documentation changes
 - Is responsible for security triage (`SECURITY.md`)
-- Owns the license decision (`LICENSE-PROPOSAL.md`) until finalized
+- Owns the code license (finalized: Apache-2.0, see `LICENSE`) and the
+  still-unresolved content license (`LICENSE-PROPOSAL.md`,
+  `docs/content-licensing-matrix.md`)
 - Owns city-pack content governance decisions (`docs/content-governance.md`)
   until a review-board model is warranted by contributor volume
 
@@ -37,7 +39,7 @@ in an area as "not yet decided," not as an implicit precedent.
 
 ## Conflict of interest / commercial use
 
-Because the intended license (`LICENSE-PROPOSAL.md`) permits commercial and
+Because the code license (`LICENSE`, Apache-2.0) permits commercial and
 white-label reuse, the maintainer may in the future offer a hosted or
 consulting version of FanSafe. If that happens, this document will be updated
 to disclose it and to separate the maintainer's commercial interests from

@@ -14,10 +14,10 @@ abstract: >-
   no server, no external dependencies); all data stays on-device.
 authors:
   - name: "FanSafe project contributors"
-# license is PROVISIONAL — tracks the recommendation in LICENSE-PROPOSAL.md,
-# not a finalized grant. Update once a human owner confirms it (see that file).
+# license covers the code only (owner-confirmed, 2026-07-19). City-pack and
+# phrase content are unlicensed — see docs/content-licensing-matrix.md.
 license: Apache-2.0
-license-url: "https://github.com/PLACEHOLDER/fansafe/blob/main/LICENSE-PROPOSAL.md"
+license-url: "PLACEHOLDER — fill in once this repository has a public remote URL, then point at LICENSE"
 repository-code: "PLACEHOLDER — no remote configured yet; update once this repository has one (see Git handoff section of the audit report)"
 date-released: "PLACEHOLDER — update on first tagged release"
 keywords:

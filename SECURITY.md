@@ -29,8 +29,8 @@ security report is anything that could:
   attacker-controlled content
 
 **Do not open a public GitHub issue for a security report.** Email
-**moonwalkingpenguins@gmail.com** *(placeholder — update to the project's
-real security contact before public release)* with:
+**moonwalkingpenguins@gmail.com** (owner-confirmed security contact,
+2026-07-19) with:
 
 - A description of the issue and its impact
 - Steps to reproduce (a minimal HTML/JS snippet is ideal, since the whole
