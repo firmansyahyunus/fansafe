@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#07110f" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="description" content="FanSafe — offline-first safety, translation, and travel-assistance companion for international football supporters." />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<title>FanSafe — Travel Safety Companion</title>
+<style>
+  :root{
+    --bg:#f4f7f5; --surface:#ffffff; --surface-soft:#eef3f0; --ink:#0d1714; --muted:#67736f;
+    --line:#dfe7e2; --brand:#075d49; --brand-2:#0f8064; --lime:#c7ff4a; --danger:#d93645;
+    --warning:#f3a712; --info:#276ef1; --success:#0e9a6c; --violet:#7457ff; --cyan:#42d9c8;
+    --amber-soft:#fff4d8; --shadow:0 18px 55px rgba(10,30,24,.13);
+    --radius-xl:30px; --radius-lg:22px; --radius-md:16px; --radius-sm:12px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; min-height:100vh; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--ink);
+    background:radial-gradient(circle at 10% 0%, rgba(199,255,74,.22), transparent 28%),
+      radial-gradient(circle at 100% 25%, rgba(15,128,100,.16), transparent 30%), #eaf0ec;
+  }
+  button,input,select,textarea{font:inherit}
+  button{cursor:pointer}
+  a{color:inherit; text-decoration:none}
+  h1,h2,h3{font-family:inherit}
+
+  .site-shell{
+    width:min(1180px,100%); margin:0 auto; padding:28px 20px 40px;
+    display:grid; grid-template-columns:minmax(300px,430px) minmax(420px,1fr);
+    gap:38px; align-items:center; min-height:100vh;
+  }
+  .pitch{padding:10px 12px}
+  .eyebrow{display:inline-flex; gap:8px; align-items:center; padding:8px 12px; background:rgba(255,255,255,.72); border:1px solid rgba(255,255,255,.9); border-radius:999px; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; box-shadow:0 10px 30px rgba(31,64,51,.08);}
+  .pitch h1{font-size:clamp(40px,6vw,68px); line-height:.98; letter-spacing:-.05em; margin:24px 0 20px; max-width:640px;}
+  .pitch h1 span{color:var(--brand-2)}
+  .pitch>p{color:#43504b; font-size:17px; line-height:1.65; max-width:600px; margin:0 0 22px;}
+  .feature-chips{display:flex; flex-wrap:wrap; gap:10px; margin:20px 0 26px;}
+  .feature-chip{padding:10px 13px; border-radius:999px; background:rgba(255,255,255,.72); border:1px solid rgba(13,93,73,.12); color:#25443a; font-size:13px; font-weight:700;}
+  .prototype-note{display:flex; gap:12px; align-items:flex-start; padding:16px; border-radius:18px; background:#09261f; color:#fff; max-width:600px;}
+  .prototype-note b{display:block; margin-bottom:3px}
+  .prototype-note span{color:rgba(255,255,255,.68); font-size:13px; line-height:1.5}
+
+  .device-wrap{display:grid; place-items:center; position:relative}
+  .device-glow{position:absolute; width:430px; height:430px; border-radius:50%; background:rgba(199,255,74,.42); filter:blur(55px); opacity:.65}
+  .phone{width:390px; height:min(844px, calc(100vh - 42px)); min-height:690px; background:var(--bg); border:9px solid #111915; border-radius:48px; box-shadow:0 35px 90px rgba(0,26,17,.28), inset 0 0 0 1px rgba(255,255,255,.3); overflow:hidden; position:relative; z-index:1;}
+  .notch{position:absolute; left:50%; top:9px; transform:translateX(-50%); width:112px; height:28px; background:#111915; border-radius:0 0 19px 19px; z-index:50;}
+  .app{height:100%; display:flex; flex-direction:column; overflow:hidden; background:var(--bg);}
+  .statusbar{height:34px; flex:0 0 34px; display:flex; justify-content:space-between; align-items:center; padding:8px 22px 0; font-size:11px; font-weight:800; position:relative; z-index:5;}
+  .status-icons{display:flex; gap:5px; align-items:center}
+  .app-header{flex:0 0 auto; padding:10px 18px 13px; display:flex; align-items:center; justify-content:space-between; background:rgba(244,247,245,.88); backdrop-filter:blur(16px); border-bottom:1px solid rgba(223,231,226,.75); position:relative; z-index:10;}
+  .brand-lockup{display:flex; align-items:center; gap:10px}
+  .brand-mark{width:38px; height:38px; border-radius:13px; display:grid; place-items:center; background:#08271f; color:var(--lime); font-size:17px; font-weight:900; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
+  .brand-name{font-weight:900; letter-spacing:-.02em}
+  .brand-sub{color:var(--muted); font-size:11px; margin-top:1px}
+  .header-actions{display:flex; align-items:center; gap:7px}
+  .icon-btn{width:44px; height:44px; border-radius:14px; border:1px solid var(--line); display:grid; place-items:center; background:var(--surface); color:var(--ink);}
+  .city-switcher{height:44px; padding:0 10px; border-radius:14px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-weight:900; font-size:11px; display:inline-flex; align-items:center; gap:5px; max-width:118px; white-space:nowrap; overflow:hidden;}
+
+  .screen-container{flex:1; min-height:0; position:relative; overflow:hidden;}
+  .screen{display:none; height:100%; overflow-y:auto; overscroll-behavior:contain; padding:18px 16px 108px; scrollbar-width:none;}
+  .screen::-webkit-scrollbar{display:none}
+  .screen.active{display:block; animation:enter .24s ease;}
+  @keyframes enter{from{opacity:0; transform:translateY(7px)} to{opacity:1; transform:none}}
+
+  .bottom-nav{position:absolute; z-index:30; left:12px; right:12px; bottom:10px; height:72px; display:grid; grid-template-columns:repeat(5,1fr); gap:3px; padding:8px; background:rgba(7,22,18,.95); backdrop-filter:blur(22px); border-radius:24px; box-shadow:0 18px 38px rgba(0,20,14,.28);}
+  .nav-btn{border:0; border-radius:17px; background:transparent; color:rgba(255,255,255,.55); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:10px; font-weight:700; transition:.2s ease; min-height:44px;}
+  .nav-btn .nav-icon{font-size:19px; line-height:1}
+  .nav-btn.active{background:var(--lime); color:#0d1c16;}
+  .nav-btn[data-go="safety"]{background:#a9192b; color:#fff; transform:translateY(-8px); box-shadow:0 9px 20px rgba(169,25,43,.32);}
+  .nav-btn[data-go="safety"].active{background:var(--danger); color:#fff;}
+
+  .section-head{display:flex; align-items:end; justify-content:space-between; gap:14px; margin:0 2px 12px;}
+  .section-head h2,.screen-title{margin:0; letter-spacing:-.035em}
+  .section-head h2{font-size:19px}
+  .section-head button{border:0; background:transparent; color:var(--brand); font-weight:800; font-size:12px; padding:6px; min-height:32px;}
+  .screen-kicker{font-size:12px; text-transform:uppercase; font-weight:900; letter-spacing:.11em; color:var(--brand); margin-bottom:5px;}
+  .screen-title{font-size:26px; margin-bottom:6px}
+  .screen-desc{color:var(--muted); font-size:13px; line-height:1.5; margin:0 0 16px;}
+  .tiny-disclaimer{color:var(--muted); font-size:10.5px; line-height:1.5; padding:9px 2px 0;}
+
+  .trip-command{border-radius:30px; padding:18px; margin-bottom:14px; background:linear-gradient(140deg, rgba(255,255,255,.1), transparent 46%), radial-gradient(circle at 90% 0%, rgba(199,255,74,.38), transparent 35%), #071f19; color:#fff; box-shadow:var(--shadow); overflow:hidden; position:relative;}
+  .trip-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; position:relative; z-index:2;}
+  .trip-label{font-size:10px; font-weight:950; letter-spacing:.12em; text-transform:uppercase; color:var(--lime);}
+  .trip-command h1{margin:7px 0 4px; font-size:23px; letter-spacing:-.04em; line-height:1.08;}
+  .trip-sub{color:rgba(255,255,255,.62); font-size:12px;}
+  .readiness-ring{--value:0; width:64px; height:64px; border-radius:50%; flex:0 0 64px; background:conic-gradient(var(--lime) calc(var(--value)*1%), rgba(255,255,255,.12) 0); display:grid; place-items:center; position:relative;}
+  .readiness-ring::before{content:""; width:52px; height:52px; background:#0b2a22; border-radius:50%; position:absolute;}
+  .readiness-ring span{position:relative; z-index:1; font-weight:950; font-size:14px;}
+  .trip-checklist{margin-top:14px; position:relative; z-index:2; display:grid; gap:6px;}
+  .trip-check-item{display:flex; align-items:center; gap:9px; padding:10px 11px; border-radius:13px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.06); font-size:12px; text-align:left; color:#fff; width:100%;}
+  .trip-check-item.done{opacity:.55}
+  .trip-check-item .dot{width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,.4); display:grid; place-items:center; flex:0 0 18px; font-size:10px;}
+  .trip-check-item.done .dot{background:var(--lime); border-color:var(--lime); color:#0c2118;}
+  .trip-actions{display:grid; grid-template-columns:1.2fr 1fr; gap:8px; margin-top:12px; position:relative; z-index:2;}
+  .trip-actions button{border:0; border-radius:14px; padding:12px; font-size:11.5px; font-weight:950; min-height:44px;}
+  .trip-actions .primary-trip{background:var(--lime); color:#092017;}
+  .trip-actions .secondary-trip{background:rgba(255,255,255,.1); color:#fff; border:1px solid rgba(255,255,255,.08);}
+
+  .context-next{display:flex; gap:12px; align-items:center; border-radius:20px; padding:14px; margin-bottom:16px; border:1px solid var(--line); background:linear-gradient(115deg,#fff,#f0f8f4);}
+  .context-next .icon{width:40px; height:40px; border-radius:13px; background:var(--surface-soft); display:grid; place-items:center; font-size:18px; flex:0 0 40px;}
+  .context-next b{display:block; font-size:13px;}
+  .context-next small{display:block; color:var(--muted); margin-top:3px; line-height:1.4;}
+  .context-next button{margin-left:auto; border:0; border-radius:11px; padding:9px 11px; background:var(--brand); color:#fff; font-weight:900; font-size:11px; min-height:40px;}
+
+  .safety-strip{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; border:1px solid var(--line); background:linear-gradient(115deg,#fff,#f0f8f4); border-radius:20px; padding:14px; margin-bottom:18px;}
+  .safety-strip b{display:block; font-size:13px;}
+  .safety-strip small{display:block; color:var(--muted); margin-top:4px; line-height:1.35;}
+  .checkin-btn{grid-column:1/-1; border:0; border-radius:12px; padding:11px; background:#e4f5ee; color:var(--brand); font-weight:950; min-height:44px;}
+
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:11px;}
+  .quick-card{border:1px solid var(--line); background:var(--surface); border-radius:20px; padding:16px; min-height:120px; text-align:left; position:relative; overflow:hidden; transition:transform .18s ease;}
+  .quick-card:active{transform:scale(.98)}
+  .quick-card .q-icon{width:38px; height:38px; display:grid; place-items:center; border-radius:13px; background:var(--surface-soft); margin-bottom:15px; font-size:18px;}
+  .quick-card b{display:block; font-size:14px; margin-bottom:4px;}
+  .quick-card small{color:var(--muted); line-height:1.35; display:block;}
+
+  .pack-card{border:1px solid var(--line); background:var(--surface); border-radius:20px; padding:15px; display:flex; align-items:center; gap:13px; margin-bottom:10px;}
+  .pack-flag{width:45px; height:45px; border-radius:15px; display:grid; place-items:center; background:var(--surface-soft); font-size:22px; flex:0 0 45px;}
+  .pack-copy{flex:1; min-width:0;}
+  .pack-copy b{display:block; font-size:14px;}
+  .pack-copy small{color:var(--muted); display:block; margin-top:3px; font-size:11px;}
+  .download-btn{border:0; border-radius:12px; padding:9px 11px; background:#e7f4ef; color:var(--brand); font-weight:900; font-size:11px; min-width:76px; min-height:40px;}
+  .download-btn.downloaded{background:#112d25; color:#fff;}
+  .progress{width:100%; height:7px; background:#dce7e1; border-radius:999px; overflow:hidden; margin-top:8px; display:none;}
+  .progress>span{display:block; width:0; height:100%; background:var(--brand); transition:width .2s linear;}
+
+  .translator-panel{background:var(--surface); border:1px solid var(--line); border-radius:26px; padding:15px; box-shadow:0 12px 32px rgba(13,40,31,.07);}
+  .language-row{display:grid; grid-template-columns:1fr 44px 1fr; gap:8px; align-items:center;}
+  .select-shell{border:1px solid var(--line); background:var(--surface-soft); padding:0 10px; border-radius:13px;}
+  select{width:100%; height:44px; border:0; outline:0; background:transparent; color:var(--ink); font-weight:800;}
+  .swap-btn{width:44px; height:44px; border-radius:14px; border:1px solid var(--line); background:var(--surface); font-weight:900;}
+  .input-block,.output-block{margin-top:12px; border-radius:18px; min-height:150px; padding:15px; position:relative;}
+  .input-block{background:#f5f8f6; border:1px solid var(--line);}
+  .output-block{background:#08271f; color:#fff;}
+  textarea{width:100%; min-height:80px; resize:none; border:0; outline:0; background:transparent; color:var(--ink); font-size:17px; line-height:1.45;}
+  .output-text{font-size:19px; line-height:1.4; padding-right:5px; min-height:78px;}
+  .block-label{font-size:10px; text-transform:uppercase; letter-spacing:.1em; font-weight:900; color:var(--muted); margin-bottom:9px;}
+  .output-block .block-label{color:rgba(255,255,255,.5)}
+  .input-actions,.output-actions{display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:8px;}
+  .mini-action{border:0; border-radius:12px; padding:10px 11px; font-size:12px; font-weight:900; background:var(--surface); color:var(--ink); min-height:40px;}
+  .output-block .mini-action{background:rgba(255,255,255,.12); color:#fff;}
+  .mic-btn{width:44px; height:44px; border-radius:50%; border:0; display:grid; place-items:center; background:var(--brand); color:#fff; font-size:18px;}
+  .mic-btn[disabled]{opacity:.4}
+  .translate-btn{width:100%; margin-top:12px; height:52px; border:0; border-radius:16px; background:var(--lime); color:#0c2118; font-weight:950; font-size:15px;}
+
+  .category-scroller{display:flex; gap:8px; overflow-x:auto; padding-bottom:3px; scrollbar-width:none; margin:2px 0 14px;}
+  .category-scroller::-webkit-scrollbar{display:none}
+  .category-chip{flex:0 0 auto; border:1px solid var(--line); border-radius:999px; padding:9px 13px; background:var(--surface); font-size:11.5px; font-weight:800; display:inline-flex; align-items:center; gap:6px; min-height:40px;}
+  .category-chip.active{background:#08271f; color:#fff; border-color:#08271f;}
+
+  .phrase-scroller{display:flex; gap:8px; overflow-x:auto; padding-bottom:3px; scrollbar-width:none; margin:12px 0 0;}
+  .phrase-scroller::-webkit-scrollbar{display:none}
+  .phrase-pill{flex:0 0 auto; border:1px solid var(--line); border-radius:999px; padding:10px 12px; background:var(--surface); font-size:11px; font-weight:800; min-height:40px;}
+
+  .phrase-card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:14px; margin-bottom:9px;}
+  .phrase-card .original{font-weight:850; line-height:1.4;}
+  .phrase-card .translated{color:var(--brand); margin-top:7px; line-height:1.4;}
+  .phrase-card-actions{display:flex; gap:7px; margin-top:12px; flex-wrap:wrap;}
+  .phrase-card-actions button{border:0; border-radius:10px; padding:9px 10px; background:var(--surface-soft); font-size:11px; font-weight:850; min-height:38px;}
+  .empty-note{color:var(--muted); font-size:12.5px; line-height:1.5; padding:14px; background:var(--surface); border:1px dashed var(--line); border-radius:16px; text-align:center;}
+
+  .mode-switch{display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:15px; background:#e5ece8; margin-bottom:12px;}
+  .mode-switch button{border:0; padding:11px; border-radius:12px; background:transparent; font-size:12px; font-weight:900; color:var(--muted); min-height:40px;}
+  .mode-switch button.active{background:#fff; color:var(--ink); box-shadow:0 5px 14px rgba(16,40,32,.08);}
+  .mode-panel.hidden{display:none}
+
+  .conversation-panel{background:#0a211b; color:#fff; border-radius:26px; overflow:hidden; border:1px solid rgba(255,255,255,.05);}
+  .conversation-head{padding:14px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,.08); gap:8px;}
+  .conversation-head b{font-size:13px;}
+  .conversation-head small{display:block; color:rgba(255,255,255,.5); margin-top:2px;}
+  .transcript-toggle{display:flex; align-items:center; gap:6px; font-size:9px; color:rgba(255,255,255,.6); font-weight:800; text-transform:uppercase; letter-spacing:.05em;}
+  .conversation-feed{min-height:220px; max-height:300px; overflow:auto; padding:14px; display:flex; flex-direction:column; gap:10px;}
+  .talk-bubble{max-width:84%; padding:11px 12px; border-radius:16px; font-size:13px; line-height:1.4;}
+  .talk-bubble.a{align-self:flex-start; background:rgba(255,255,255,.1); border-bottom-left-radius:5px;}
+  .talk-bubble.b{align-self:flex-end; background:var(--lime); color:#0c2118; border-bottom-right-radius:5px;}
+  .talk-bubble small{display:block; opacity:.6; font-size:9px; margin-bottom:4px; font-weight:900; text-transform:uppercase; letter-spacing:.07em;}
+  .conversation-controls{display:grid; grid-template-columns:1fr 1fr; gap:9px; padding:13px; background:rgba(0,0,0,.12);}
+  .talk-btn{border:0; border-radius:16px; padding:13px 10px; font-weight:950; font-size:12px; min-height:44px;}
+  .talk-btn.a{background:#fff; color:#10231c;}
+  .talk-btn.b{background:var(--lime); color:#10231c;}
+  .conversation-note{padding:0 15px 14px; color:rgba(255,255,255,.45); font-size:9.5px; line-height:1.4;}
+  .conversation-clear{width:100%; border:0; padding:12px; background:rgba(255,255,255,.08); color:rgba(255,255,255,.7); font-size:11px; font-weight:800;}
+
+  .fullscreen-phrase{position:absolute; inset:0; z-index:130; background:#08271f; color:#fff; display:none; flex-direction:column; padding:20px;}
+  .fullscreen-phrase.open{display:flex}
+  .fullscreen-phrase .fp-top{display:flex; justify-content:space-between; align-items:center;}
+  .fullscreen-phrase .fp-close{width:40px; height:40px; border-radius:12px; border:1px solid rgba(255,255,255,.2); background:transparent; color:#fff;}
+  .fullscreen-phrase .fp-body{flex:1; display:flex; align-items:center; justify-content:center; text-align:center; font-size:clamp(24px,7vw,34px); font-weight:800; line-height:1.3; padding:20px 4px;}
+  .fullscreen-phrase .fp-actions{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .fullscreen-phrase .fp-actions button{border:0; border-radius:14px; padding:14px; font-weight:900; min-height:48px;}
+  .fullscreen-phrase .fp-actions .fp-play{background:var(--lime); color:#0c2118;}
+  .fullscreen-phrase .fp-actions .fp-share{background:rgba(255,255,255,.12); color:#fff;}
+
+  .sos-header{background:linear-gradient(135deg,#66131c,var(--danger)); color:#fff; border-radius:28px; padding:20px; margin-bottom:14px; box-shadow:0 18px 40px rgba(180,28,46,.2);}
+  .sos-header h1{margin:12px 0 6px; font-size:26px; letter-spacing:-.04em;}
+  .sos-header p{margin:0; color:rgba(255,255,255,.72); line-height:1.5; font-size:13px;}
+  .location-pill{display:inline-flex; gap:7px; align-items:center; padding:7px 9px; border-radius:999px; background:rgba(255,255,255,.13); font-size:11px; font-weight:900;}
+
+  .sos-pulse-card{background:#fff; border:1px solid #f0d5d8; border-radius:27px; padding:18px; margin-bottom:13px; text-align:center; box-shadow:0 15px 40px rgba(168,30,47,.08);}
+  .sos-pulse-card h3{margin:0 0 4px; font-size:17px;}
+  .sos-pulse-card p{margin:0 0 15px; color:var(--muted); font-size:11.5px; line-height:1.45;}
+  .hold-sos{--hold:0%; width:126px; height:126px; border-radius:50%; border:0; position:relative; background:conic-gradient(var(--danger) var(--hold), #f4dadd 0); padding:8px; margin:0 auto 12px; touch-action:none; user-select:none;}
+  .hold-sos::before{content:""; position:absolute; inset:8px; border-radius:50%; background:linear-gradient(145deg,#e94352,#b9192b); box-shadow:inset 0 8px 18px rgba(255,255,255,.14), 0 12px 28px rgba(185,25,43,.25);}
+  .hold-sos span{position:relative; z-index:2; color:#fff; display:flex; height:100%; flex-direction:column; align-items:center; justify-content:center; font-weight:950; font-size:14px;}
+  .hold-sos small{display:block; font-size:9px; opacity:.75; margin-top:3px;}
+  .sos-ready-line{display:flex; justify-content:center; gap:10px; color:var(--muted); font-size:10px; flex-wrap:wrap;}
+  .sos-disclaimer{background:#fff0f2; border:1px solid #f0c6cb; border-radius:16px; padding:12px; font-size:11px; line-height:1.5; color:#8b1e2b; margin-bottom:14px;}
+
+  .safe-checkin{display:flex; align-items:center; gap:12px; padding:14px; border-radius:19px; background:#e9f7f1; border:1px solid #cceadf; margin-bottom:15px;}
+  .safe-checkin .pulse-dot{width:38px; height:38px; border-radius:14px; background:#c9f0df; display:grid; place-items:center;}
+  .safe-checkin .copy{flex:1}
+  .safe-checkin b{display:block; font-size:13px;}
+  .safe-checkin small{color:var(--muted); font-size:10px;}
+  .safe-checkin button{border:0; border-radius:11px; padding:10px; background:var(--brand); color:#fff; font-weight:900; font-size:10px; min-height:40px;}
+
+  .context-card{border-radius:22px; padding:15px; background:linear-gradient(125deg,#f7fbf9,#fff); border:1px solid var(--line); margin-bottom:14px;}
+  .context-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:8px;}
+  .context-top b{font-size:13px;}
+  .verified-pill{padding:5px 7px; border-radius:999px; color:var(--success); background:#e7f8f1; font-size:9px; font-weight:950; white-space:nowrap;}
+  .context-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:7px;}
+  .context-cell{padding:10px 8px; border-radius:13px; background:#fff; border:1px solid var(--line); text-align:center;}
+  .context-cell span{display:block; font-size:16px;}
+  .context-cell b{display:block; font-size:11px; margin-top:4px;}
+  .context-cell small{color:var(--muted); font-size:8px;}
+
+  .emergency-call{display:flex; align-items:center; gap:13px; width:100%; border:1px solid #f0c6cb; background:#fff; border-radius:20px; padding:15px; margin-bottom:10px; text-align:left; min-height:44px;}
+  .call-icon{width:48px; height:48px; border-radius:16px; display:grid; place-items:center; background:#fff0f2; font-size:20px; color:var(--danger); flex:0 0 48px;}
+  .emergency-call .copy{flex:1}
+  .emergency-call b{display:block}
+  .emergency-call small{color:var(--muted); display:block; margin-top:3px;}
+  .number{color:var(--danger); font-weight:950;}
+
+  .ticket-checker{border-radius:24px; background:#fff; border:1px solid var(--line); padding:15px; margin-bottom:16px;}
+  .ticket-checker h3{margin:0 0 4px; font-size:16px;}
+  .ticket-checker>p{margin:0 0 12px; color:var(--muted); font-size:11px; line-height:1.4;}
+  .risk-options{display:grid; gap:8px;}
+  .risk-option{display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid var(--line); border-radius:14px; padding:11px; min-height:44px;}
+  .risk-option span{font-size:11px; font-weight:800; line-height:1.3;}
+  .risk-option input{width:19px; height:19px; accent-color:var(--danger);}
+  .risk-result{display:none; margin-top:11px; padding:12px; border-radius:14px; font-size:11.5px; line-height:1.5;}
+  .risk-result.low{display:block; background:#e8f7f1; color:#126548;}
+  .risk-result.medium{display:block; background:var(--amber-soft); color:#76530b;}
+  .risk-result.high{display:block; background:#ffebed; color:#8b1e2b;}
+  .risk-result ul{margin:8px 0 0; padding-left:18px;}
+  .risk-actions{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;}
+  .risk-actions button{border:0; border-radius:13px; padding:11px; font-weight:950; font-size:11.5px; min-height:44px;}
+  .risk-actions .save-risk{background:#10271f; color:#fff;}
+  .risk-actions .case-risk{background:var(--surface-soft); color:var(--ink);}
+
+  .case-card{border:1px solid var(--line); border-radius:19px; background:#fff; padding:14px; margin-bottom:10px;}
+  .case-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .case-top b{font-size:13px; display:block;}
+  .case-top small{color:var(--muted); font-size:10.5px; display:block; margin-top:2px;}
+  .case-status{padding:5px 8px; border-radius:999px; font-size:9px; font-weight:950; text-transform:uppercase; white-space:nowrap;}
+  .case-status.draft{background:#eef3f0; color:var(--muted);}
+  .case-status.active{background:var(--amber-soft); color:#76530b;}
+  .case-status.closed{background:#e7f8f1; color:var(--success);}
+  .case-detail{font-size:12px; color:var(--ink); margin-top:9px; line-height:1.5;}
+  .case-updates{margin-top:9px; padding-top:9px; border-top:1px solid var(--line); display:grid; gap:6px;}
+  .case-update-row{font-size:11px; color:var(--muted); line-height:1.4;}
+  .case-actions{display:flex; gap:7px; margin-top:11px; flex-wrap:wrap;}
+  .case-actions button{border:0; border-radius:10px; padding:9px 10px; background:var(--surface-soft); font-size:11px; font-weight:850; min-height:38px;}
+  .case-local-label{font-size:9.5px; color:var(--muted); text-transform:uppercase; font-weight:900; letter-spacing:.06em; margin-top:6px;}
+
+  .safety-report-panel{border:1px solid var(--line); border-radius:22px; background:#fff; padding:16px; margin-bottom:16px;}
+  .safety-report-panel h3{margin:0 0 4px; font-size:15px;}
+  .safety-report-panel p{margin:0 0 12px; color:var(--muted); font-size:11.5px; line-height:1.45;}
+  .yn-row{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;}
+  .yn-row button{border:1px solid var(--line); border-radius:13px; padding:12px; font-weight:900; font-size:12.5px; background:#fff; min-height:44px;}
+  .yn-row button.selected{background:#08271f; color:#fff; border-color:#08271f;}
+  .field{margin-bottom:11px}
+  .field label{display:block; font-size:11px; font-weight:850; margin-bottom:5px; color:var(--muted);}
+  .field input,.field select,.field textarea{width:100%; border:1px solid var(--line); border-radius:12px; padding:12px; min-height:44px; font-size:14px; background:#fbfcfb;}
+  .field textarea{min-height:80px}
+  .save-btn{width:100%; border:0; border-radius:13px; padding:13px; background:var(--brand); color:#fff; font-weight:900; min-height:48px;}
+  .save-btn.secondary{background:var(--surface-soft); color:var(--ink);}
+  .form-panel{display:none}
+  .form-panel.open{display:block; animation:enter .2s ease;}
+
+  .destination-builder{background:#08271f; color:#fff; border-radius:25px; padding:17px; margin-bottom:16px;}
+  .destination-builder h3{margin:0 0 5px;}
+  .destination-builder p{margin:0 0 13px; color:rgba(255,255,255,.6); font-size:12px;}
+  .dest-row{display:flex; gap:8px;}
+  .dest-row input{flex:1; min-width:0; border:0; outline:0; border-radius:13px; padding:12px; min-height:44px;}
+  .dest-row button{border:0; border-radius:13px; padding:0 14px; background:var(--lime); font-weight:950; min-width:56px;}
+  .dest-result{margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,.12); font-size:14px; line-height:1.5; display:none;}
+  .dest-result-actions{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
+  .dest-result-actions button{border:0; border-radius:11px; padding:9px 11px; background:rgba(255,255,255,.12); color:#fff; font-size:11px; font-weight:850; min-height:38px;}
+
+  .accordion{border:1px solid var(--line); background:var(--surface); border-radius:18px; margin-bottom:9px; overflow:hidden;}
+  .accordion-head{width:100%; border:0; background:transparent; display:flex; justify-content:space-between; align-items:center; padding:15px; font-weight:900; text-align:left; min-height:44px;}
+  .accordion-body{display:none; padding:0 15px 15px; color:var(--muted); font-size:13px; line-height:1.55;}
+  .accordion.open .accordion-body{display:block}
+  .accordion.open .chev{transform:rotate(180deg)}
+  .chev{transition:.2s ease}
+
+  .danger-question{border:1px solid #f0d5d8; background:#fff7f7; border-radius:19px; padding:15px; margin-bottom:16px;}
+  .danger-question b{display:block; font-size:13px; margin-bottom:9px;}
+  .danger-warning{background:#ffebed; border:1px solid #f5b8bf; border-radius:16px; padding:13px; margin-bottom:14px; display:none;}
+  .danger-warning.show{display:block}
+  .danger-warning b{color:#8b1e2b; display:block; margin-bottom:4px; font-size:12.5px;}
+  .danger-warning p{margin:0 0 10px; font-size:11.5px; color:#8b1e2b; line-height:1.5;}
+  .danger-warning button{border:0; border-radius:12px; padding:11px; background:var(--danger); color:#fff; font-weight:900; width:100%; min-height:44px;}
+
+  .directory-note{background:var(--surface-soft); border-radius:16px; padding:13px; font-size:11.5px; color:#43504b; line-height:1.55; margin:12px 0;}
+
+  .check-item{display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:17px; background:var(--surface); border:1px solid var(--line); margin-bottom:9px;}
+  .check-item input{margin-top:2px; width:20px; height:20px; accent-color:var(--brand); flex:0 0 20px;}
+  .check-item b{display:block; font-size:13px; line-height:1.4;}
+  .check-item small{color:var(--muted); display:block; line-height:1.4; margin-top:3px;}
+
+  .place-card{border:1px solid var(--line); background:#fff; border-radius:17px; padding:13px; display:flex; align-items:center; gap:11px; margin-bottom:9px;}
+  .place-card .p-icon{width:38px; height:38px; border-radius:12px; background:var(--surface-soft); display:grid; place-items:center; flex:0 0 38px;}
+  .place-card .copy{flex:1; min-width:0;}
+  .place-card b{display:block; font-size:12.5px;}
+  .place-card small{color:var(--muted); display:block; margin-top:2px; font-size:10.5px;}
+  .place-card button{border:0; border-radius:10px; padding:8px 9px; background:var(--surface-soft); font-size:10.5px; font-weight:850; min-height:38px;}
+
+  .pack-health{border-radius:20px; padding:14px; background:#0a241d; color:#fff; margin-bottom:15px;}
+  .pack-health-top{display:flex; justify-content:space-between; align-items:center;}
+  .pack-health b{font-size:13px;}
+  .pack-health span{color:var(--lime); font-weight:950; font-size:11px;}
+  .storage-bar{height:7px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; margin:11px 0 7px;}
+  .storage-bar i{display:block; height:100%; background:linear-gradient(90deg,var(--cyan),var(--lime));}
+  .pack-health small{color:rgba(255,255,255,.5); font-size:9px;}
+
+  .profile-card{background:linear-gradient(135deg,#fff,#eef8f3); border:1px solid var(--line); border-radius:26px; padding:18px; margin-bottom:14px;}
+  .profile-row{display:flex; align-items:center; gap:13px;}
+  .avatar{width:55px; height:55px; border-radius:18px; display:grid; place-items:center; background:#08271f; color:var(--lime); font-weight:950; font-size:18px; flex:0 0 55px;}
+  .profile-row h3{margin:0 0 3px; font-size:16px;}
+  .profile-row p{color:var(--muted); margin:0; font-size:12px;}
+  .edit-btn{margin-left:auto; border:0; border-radius:12px; padding:9px 11px; background:var(--surface); font-weight:900; box-shadow:0 5px 18px rgba(0,0,0,.05); min-height:40px;}
+
+  .medical-card{background:#fff; border-radius:24px; overflow:hidden; border:1px solid var(--line); box-shadow:0 16px 38px rgba(14,47,36,.09); margin-bottom:15px;}
+  .medical-card-head{display:flex; align-items:center; justify-content:space-between; padding:15px 17px; background:#b91f32; color:#fff;}
+  .medical-card-body{padding:17px;}
+  .med-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .med-field label{display:block; color:var(--muted); font-size:9px; font-weight:900; text-transform:uppercase; letter-spacing:.09em; margin-bottom:4px;}
+  .med-field div{font-weight:850; font-size:13px; line-height:1.35;}
+  .full{grid-column:1/-1}
+  .medical-hidden-state{padding:26px 16px; text-align:center;}
+  .medical-hidden-state .lock-icon{font-size:30px; margin-bottom:8px;}
+  .medical-hidden-state p{color:var(--muted); font-size:12px; line-height:1.5; margin:0 0 14px;}
+  .medical-hidden-state button{border:0; border-radius:13px; padding:12px 16px; background:var(--brand); color:#fff; font-weight:900; min-height:44px;}
+  .medical-card-actions{display:flex; gap:7px; padding:0 17px 17px; flex-wrap:wrap;}
+  .medical-card-actions button{border:0; border-radius:11px; padding:10px 11px; background:var(--surface-soft); font-size:11px; font-weight:850; min-height:40px;}
+  .shared-device-warning{background:var(--amber-soft); color:#76530b; font-size:10.5px; line-height:1.5; padding:11px 17px; margin:0 17px 15px; border-radius:12px;}
+
+  .trusted-card{border:1px solid var(--line); border-radius:22px; padding:15px; background:#fff; margin-bottom:14px;}
+  .trusted-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .trusted-head h3{margin:0 0 3px; font-size:15px;}
+  .trusted-head p{margin:0; color:var(--muted); font-size:10px;}
+  .trusted-head button{border:0; border-radius:11px; padding:9px 10px; background:var(--surface-soft); font-weight:900; font-size:10px; min-height:40px;}
+  .contact-row{display:flex; align-items:center; gap:11px; margin-top:13px; padding-top:13px; border-top:1px solid var(--line);}
+  .contact-avatar{width:41px; height:41px; border-radius:14px; background:#0c2c23; color:var(--lime); display:grid; place-items:center; font-weight:950; flex:0 0 41px;}
+  .contact-row .copy{flex:1; min-width:0;}
+  .contact-row b{display:block; font-size:12px;}
+  .contact-row small{color:var(--muted); font-size:10px;}
+  .primary-badge{display:inline-block; margin-left:6px; padding:2px 6px; border-radius:999px; background:#e7f8f1; color:var(--success); font-size:8px; font-weight:950; vertical-align:middle;}
+  .contact-actions{display:flex; gap:5px;}
+  .contact-actions button{width:38px; height:38px; border-radius:11px; border:1px solid var(--line); background:#fff;}
+
+  .setting-row{display:flex; align-items:center; gap:13px; padding:14px; background:var(--surface); border:1px solid var(--line); border-radius:17px; margin-bottom:9px;}
+  .setting-icon{width:39px; height:39px; border-radius:13px; display:grid; place-items:center; background:var(--surface-soft); flex:0 0 39px;}
+  .setting-row .copy{flex:1}
+  .setting-row b{display:block; font-size:13px;}
+  .setting-row small{color:var(--muted); font-size:11px;}
+  .toggle{width:46px; height:26px; border-radius:999px; padding:3px; background:#c8d1cc; border:0; transition:.2s; flex:0 0 46px;}
+  .toggle::after{content:""; display:block; width:20px; height:20px; border-radius:50%; background:#fff; transition:.2s; box-shadow:0 2px 6px rgba(0,0,0,.18);}
+  .toggle.on{background:var(--brand)}
+  .toggle.on::after{transform:translateX(20px)}
+
+  .privacy-block{background:var(--surface-soft); border-radius:18px; padding:15px; margin-bottom:16px; font-size:12px; color:#43504b; line-height:1.6;}
+  .privacy-block b{display:block; margin-bottom:6px; color:var(--ink);}
+  .danger-zone{border:1px solid #f0c6cb; border-radius:19px; padding:15px; margin-bottom:16px; background:#fff7f7;}
+  .danger-zone b{display:block; margin-bottom:5px; font-size:13px; color:#8b1e2b;}
+  .danger-zone p{margin:0 0 12px; font-size:11.5px; color:#8b1e2b; line-height:1.5;}
+  .danger-zone button{width:100%; border:0; border-radius:13px; padding:12px; background:var(--danger); color:#fff; font-weight:900; min-height:48px;}
+
+  .toast{position:absolute; left:50%; bottom:95px; transform:translate(-50%,20px); width:max-content; max-width:calc(100% - 32px); padding:12px 15px; border-radius:13px; background:#111b17; color:#fff; font-size:12px; font-weight:750; line-height:1.4; opacity:0; pointer-events:none; z-index:150; transition:.25s ease; box-shadow:0 12px 30px rgba(0,0,0,.23); text-align:center;}
+  .toast.show{opacity:1; transform:translate(-50%,0)}
+
+  .modal-backdrop{display:none; position:absolute; inset:0; z-index:90; background:rgba(5,15,12,.52); backdrop-filter:blur(5px); padding:68px 14px 94px; align-items:end;}
+  .modal-backdrop.open{display:flex}
+  .modal{width:100%; max-height:100%; overflow-y:auto; background:var(--surface); border-radius:25px; padding:18px; box-shadow:0 28px 70px rgba(0,0,0,.25);}
+  .modal h3{margin:0 0 6px; font-size:20px;}
+  .modal p{color:var(--muted); font-size:12px; line-height:1.55;}
+  .modal-actions{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:14px;}
+  .modal-actions button{border:0; border-radius:13px; padding:13px; font-weight:900; min-height:46px;}
+  .modal-actions .secondary{background:var(--surface-soft)}
+  .modal-actions .primary{background:var(--brand); color:#fff;}
+  .modal-actions .primary.danger-btn{background:var(--danger)}
+
+  .sheet-backdrop{display:none; position:absolute; inset:0; z-index:100; background:rgba(5,15,12,.55); backdrop-filter:blur(5px); align-items:flex-end;}
+  .sheet-backdrop.open{display:flex}
+  .sheet{width:100%; max-height:88%; overflow-y:auto; background:var(--surface); border-radius:26px 26px 0 0; padding:18px 18px 24px;}
+  .sheet-handle{width:36px; height:4px; border-radius:99px; background:var(--line); margin:0 auto 12px;}
+  .sheet h3{margin:0 0 4px; font-size:19px;}
+  .sheet-sub{color:var(--muted); font-size:11.5px; line-height:1.5; margin-bottom:14px;}
+  .sheet-action{display:flex; align-items:center; gap:12px; width:100%; border:1px solid var(--line); background:#fff; border-radius:17px; padding:13px; margin-bottom:9px; text-align:left; min-height:48px;}
+  .sheet-action .s-icon{width:40px; height:40px; border-radius:13px; background:var(--surface-soft); display:grid; place-items:center; font-size:17px; flex:0 0 40px;}
+  .sheet-action b{display:block; font-size:12.5px;}
+  .sheet-action small{color:var(--muted); font-size:10.5px; display:block; margin-top:2px;}
+  .sheet-close{width:100%; border:0; padding:13px; background:var(--surface-soft); border-radius:14px; font-weight:900; margin-top:6px; min-height:46px;}
+
+  .welcome-overlay{position:absolute; inset:0; z-index:120; display:none; align-items:flex-end; background:rgba(4,14,11,.52); backdrop-filter:blur(8px); padding:14px 14px 94px;}
+  .welcome-overlay.open{display:flex}
+  .welcome-card{width:100%; background:#071f19; color:#fff; border-radius:28px; padding:19px; box-shadow:0 30px 80px rgba(0,0,0,.3); overflow:hidden; position:relative;}
+  .welcome-card::after{content:""; position:absolute; width:170px; height:170px; border-radius:50%; background:rgba(199,255,74,.17); filter:blur(2px); right:-80px; top:-80px;}
+  .welcome-logo{width:48px; height:48px; border-radius:16px; background:var(--lime); color:#082017; display:grid; place-items:center; font-weight:950; margin-bottom:22px;}
+  .welcome-card h2{margin:0 0 8px; font-size:24px; letter-spacing:-.04em; max-width:280px;}
+  .welcome-card>p{margin:0; color:rgba(255,255,255,.62); font-size:12px; line-height:1.5; max-width:290px;}
+  .welcome-points{display:grid; gap:8px; margin:16px 0;}
+  .welcome-point{display:flex; gap:10px; align-items:center; padding:10px; border-radius:14px; background:rgba(255,255,255,.07); font-size:11px;}
+  .welcome-point span{width:27px; height:27px; border-radius:9px; background:rgba(199,255,74,.12); display:grid; place-items:center; flex:0 0 27px;}
+  .welcome-card .start-btn{width:100%; border:0; border-radius:15px; padding:13px; background:var(--lime); color:#092017; font-weight:950; min-height:48px;}
+  .welcome-card .skip-btn{width:100%; border:0; background:transparent; color:rgba(255,255,255,.55); padding:11px; font-size:10px; font-weight:800; min-height:40px;}
+
+  .install-banner{display:none; position:absolute; left:16px; right:16px; bottom:93px; z-index:55; padding:13px; background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:0 18px 45px rgba(0,30,20,.18); align-items:center; gap:10px;}
+  .install-banner.show{display:flex}
+  .install-banner .copy{flex:1}
+  .install-banner b{display:block; font-size:12px;}
+  .install-banner small{color:var(--muted); font-size:9px;}
+  .install-banner button{border:0; border-radius:10px; padding:9px 10px; font-weight:900; font-size:10px; min-height:38px;}
+  .install-banner .install-now{background:var(--brand); color:#fff;}
+  .install-banner .install-close{background:var(--surface-soft);}
+
+  button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid rgba(66,217,200,.42); outline-offset:2px;}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;}
+  #liveStatus{position:absolute; width:1px; height:1px; overflow:hidden;}
+
+  @media (max-width:860px){
+    body{background:var(--bg)}
+    .site-shell{display:block; padding:0; min-height:auto;}
+    .pitch{display:none}
+    .device-wrap{display:block}
+    .device-glow{display:none}
+    .phone{width:100%; height:100dvh; min-height:620px; border:0; border-radius:0; box-shadow:none;}
+    .notch{display:none}
+    .statusbar{padding-top:max(8px, env(safe-area-inset-top)); height:calc(34px + env(safe-area-inset-top));}
+    .bottom-nav{bottom:max(10px, env(safe-area-inset-bottom));}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+<main class="site-shell">
+  <section class="pitch">
+    <div class="eyebrow">🧭 Offline-first supporter safety companion</div>
+    <h1>Travel boldly.<br><span>Stay FanSafe.</span></h1>
+    <p>A standalone, offline-capable prototype for international football supporters: phrase translation, two-way conversation, emergency shortcuts, a private medical card, trusted-contact check-ins, lost-document guidance, and a scam/ticket risk checker.</p>
+    <div class="feature-chips">
+      <span class="feature-chip">Offline phrase pack</span>
+      <span class="feature-chip">Two-way conversation</span>
+      <span class="feature-chip">Private medical card</span>
+      <span class="feature-chip">Hold-to-confirm emergency</span>
+      <span class="feature-chip">Scam / ticket risk checker</span>
+    </div>
+    <div class="prototype-note">
+      <div>🛡️</div>
+      <div>
+        <b>Prototype, not a live safety service</b>
+        <span>FanSafe is not emergency dispatch, a medical provider, an embassy, or a ticket authority. Emergency numbers are sample data — verify locally before you travel.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="device-wrap">
+    <div class="device-glow"></div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="app" id="app">
+        <div class="statusbar">
+          <span id="clock">09:41</span>
+          <span class="status-icons">▮▮▮ ᯤ 87%</span>
+        </div>
+
+        <header class="app-header">
+          <div class="brand-lockup">
+            <div class="brand-mark">FS</div>
+            <div>
+              <div class="brand-name">FanSafe</div>
+              <div class="brand-sub" id="headerContext">Loading…</div>
+            </div>
+          </div>
+          <div class="header-actions">
+            <button class="city-switcher" id="citySwitcher" title="Change active city" aria-haspopup="dialog"><span id="cityFlag">🇲🇽</span> <span id="cityShort">CDMX</span> ⌄</button>
+            <button class="icon-btn" id="offlineIndicator" title="Offline / online status" aria-live="polite">✓</button>
+          </div>
+        </header>
+
+        <div class="screen-container">
+
+          <!-- HOME -->
+          <section class="screen active" data-screen="home" aria-label="Home">
+            <div class="trip-command">
+              <div class="trip-top">
+                <div>
+                  <div class="trip-label">Safety readiness</div>
+                  <h1 id="homeHeadline">Let's get you ready.</h1>
+                  <div class="trip-sub" id="activeCityLabel">Choose your active city to begin</div>
+                </div>
+                <div class="readiness-ring" id="readinessRing" role="img" aria-label="Readiness score"><span id="readinessValue">0%</span></div>
+              </div>
+              <div class="trip-checklist" id="homeChecklist"></div>
+              <div class="trip-actions">
+                <button class="primary-trip" id="runSafetyCheck">Open safety tools</button>
+                <button class="secondary-trip" data-go="translate">Open translator</button>
+              </div>
+            </div>
+
+            <div class="context-next" id="contextNextCard" style="display:none">
+              <div class="icon" id="contextNextIcon">📌</div>
+              <div>
+                <b id="contextNextTitle">Next step</b>
+                <small id="contextNextDesc"></small>
+              </div>
+              <button id="contextNextAction">Go</button>
+            </div>
+
+            <div class="safety-strip">
+              <div>
+                <b>Your trusted circle is standing by</b>
+                <small id="lastCheckinText">No trusted contact added yet</small>
+              </div>
+              <button class="checkin-btn" id="homeCheckin" style="grid-column:1/-1">✓ Send "I'm safe" check-in</button>
+            </div>
+
+            <div class="section-head">
+              <h2>Quick actions</h2>
+              <button data-go="safety">All safety tools</button>
+            </div>
+            <div class="grid-2">
+              <button class="quick-card" id="homeEmergency">
+                <span class="q-icon">🆘</span>
+                <b>Emergency</b>
+                <small>Hold-to-confirm safety actions</small>
+              </button>
+              <button class="quick-card" id="medicalShortcut">
+                <span class="q-icon">🩺</span>
+                <b>Medical card</b>
+                <small>Show allergies and contact</small>
+              </button>
+              <button class="quick-card" id="lostPassportShortcut">
+                <span class="q-icon">🛂</span>
+                <b>Lost passport</b>
+                <small>Step-by-step guidance</small>
+              </button>
+              <button class="quick-card" id="getThereShortcut">
+                <span class="q-icon">🧭</span>
+                <b>Get me there</b>
+                <small>Create a navigation phrase</small>
+              </button>
+            </div>
+
+            <div class="section-head" style="margin-top:22px">
+              <h2>Offline city packs</h2>
+              <button data-go="travel">Manage</button>
+            </div>
+            <div id="homePacks"></div>
+
+            <div class="section-head" style="margin-top:22px">
+              <h2>Recent saved phrase</h2>
+            </div>
+            <div id="homeRecentPhrase"></div>
+
+            <p class="tiny-disclaimer">Prototype city packs contain sample phrases and safety shortcuts, not complete official travel guidance.</p>
+          </section>
+
+          <!-- TRANSLATE -->
+          <section class="screen" data-screen="translate" aria-label="Translate">
+            <div class="screen-kicker">Offline translator</div>
+            <h1 class="screen-title">Speak with confidence.</h1>
+            <p class="screen-desc">Uses a local phrase pack — no internet required. Voice input and text-to-speech depend on browser support.</p>
+
+            <div class="mode-switch" role="tablist">
+              <button class="active" data-translate-mode="phrase" role="tab" aria-selected="true">Phrase mode</button>
+              <button data-translate-mode="conversation" role="tab" aria-selected="false">Two-way conversation</button>
+            </div>
+
+            <div class="translator-panel mode-panel" id="phraseMode">
+              <div class="language-row">
+                <div class="select-shell">
+                  <label class="sr-only" for="sourceLang">Your language</label>
+                  <select id="sourceLang"></select>
+                </div>
+                <button class="swap-btn" id="swapLanguages" aria-label="Swap languages">⇄</button>
+                <div class="select-shell">
+                  <label class="sr-only" for="targetLang">Local language</label>
+                  <select id="targetLang"></select>
+                </div>
+              </div>
+
+              <div class="category-scroller" id="categoryChips" role="tablist" aria-label="Phrase categories"></div>
+
+              <div class="input-block">
+                <div class="block-label">Your phrase</div>
+                <label class="sr-only" for="translationInput">Phrase to translate</label>
+                <textarea id="translationInput" placeholder="e.g. Please call an ambulance"></textarea>
+                <div class="input-actions">
+                  <button class="mini-action" id="clearInput">Clear</button>
+                  <button class="mic-btn" id="voiceInput" title="Voice input">🎙</button>
+                </div>
+              </div>
+
+              <button class="translate-btn" id="translateBtn">Translate offline</button>
+
+              <div class="output-block">
+                <div class="block-label">Translation</div>
+                <div class="output-text" id="translationOutput">Choose a phrase or type one, then translate.</div>
+                <div class="output-actions">
+                  <button class="mini-action" id="savePhrase">☆ Save phrase</button>
+                  <button class="mini-action" id="speakOutput">🔊 Play</button>
+                  <button class="mini-action" id="fullscreenPhrase">⤢ Show large</button>
+                  <button class="mini-action" id="shareOutput">↗ Copy / share</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="conversation-panel mode-panel hidden" id="conversationMode">
+              <div class="conversation-head">
+                <div><b>Live conversation</b><small id="conversationLangLabel">Traveller ⇄ Local</small></div>
+                <label class="transcript-toggle"><input type="checkbox" id="transcriptToggle" style="width:16px;height:16px"> Keep transcript</label>
+              </div>
+              <div class="conversation-feed" id="conversationFeed"></div>
+              <div class="conversation-controls">
+                <button class="talk-btn a" id="talkAsTraveller">🎙 Speak (traveller)</button>
+                <button class="talk-btn b" id="talkAsLocal">🎙 Speak (local)</button>
+              </div>
+              <button class="conversation-clear" id="clearTranscript">Clear transcript</button>
+              <div class="conversation-note">Prototype note: this is local phrase-pack translation, not cloud AI. Browser speech recognition may be unavailable or require internet; a type-to-speak fallback is provided.</div>
+            </div>
+
+            <div class="section-head" style="margin-top:20px">
+              <h2>Tap a quick phrase</h2>
+            </div>
+            <div class="phrase-scroller" id="quickPhrases"></div>
+
+            <div class="section-head" style="margin-top:22px">
+              <h2>Saved phrases</h2>
+              <button id="clearSavedPhrases">Clear all</button>
+            </div>
+            <div id="savedPhraseList"></div>
+
+            <div class="fullscreen-phrase" id="fullscreenPhraseOverlay">
+              <div class="fp-top">
+                <span class="brand-sub">Full-screen phrase</span>
+                <button class="fp-close" id="closeFullscreenPhrase" aria-label="Close">✕</button>
+              </div>
+              <div class="fp-body" id="fullscreenPhraseText"></div>
+              <div class="fp-actions">
+                <button class="fp-play" id="fullscreenPlay">🔊 Play</button>
+                <button class="fp-share" id="fullscreenShare">↗ Copy / share</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- SAFETY -->
+          <section class="screen" data-screen="safety" aria-label="Safety">
+            <div class="sos-header">
+              <div class="location-pill" id="safetyLocationPill">📍 Choose a city · Demo</div>
+              <h1>Need urgent help?</h1>
+              <p>Use local emergency services first when someone is in immediate danger. FanSafe is not emergency dispatch.</p>
+            </div>
+
+            <div class="sos-pulse-card">
+              <h3>Emergency action</h3>
+              <p>Press and hold to prevent an accidental activation.</p>
+              <button class="hold-sos" id="holdSos" aria-label="Press and hold for emergency actions"><span>HOLD<br>FOR HELP<small id="holdLabel">~2 seconds</small></span></button>
+              <div class="sos-ready-line"><span id="sosMedicalReady">🩺 Medical card not set up</span><span id="sosContactReady">👤 No trusted contact</span></div>
+            </div>
+
+            <div class="sos-disclaimer">FanSafe cannot guarantee a call was completed and does not dispatch emergency services. Numbers below are sample data for this prototype — verify current local numbers before you travel.</div>
+
+            <div class="safe-checkin">
+              <span class="pulse-dot">✓</span>
+              <span class="copy"><b>Not an emergency?</b><small>Tell your trusted contact that you're safe.</small></span>
+              <button id="safeCheckin">Check in</button>
+            </div>
+
+            <a href="tel:911" class="emergency-call" id="emergencyCall">
+              <span class="call-icon">☎</span>
+              <span class="copy"><b>Local emergency services</b><small id="emergencyNumberLabel">Sample number for this city</small></span>
+              <span class="number" id="emergencyNumberValue">911</span>
+            </a>
+
+            <button class="emergency-call" id="shareLocationBtn">
+              <span class="call-icon">📍</span>
+              <span class="copy"><b>Share my location</b><small>Compose a location message — nothing is sent automatically</small></span>
+              <span>→</span>
+            </button>
+
+            <button class="emergency-call" id="messageContactBtn">
+              <span class="call-icon">✉</span>
+              <span class="copy"><b>Message trusted contact</b><small>Prepare a help message to copy or share</small></span>
+              <span>→</span>
+            </button>
+
+            <div class="section-head" style="margin-top:21px">
+              <h2>City safety brief</h2>
+            </div>
+            <div class="context-card">
+              <div class="context-top"><b id="safetyCityBrief">Choose a city</b><span class="verified-pill">SAMPLE DATA</span></div>
+              <div class="context-grid" id="safetyContextGrid"></div>
+            </div>
+
+            <div class="section-head">
+              <h2>Emergency phrase cards</h2>
+            </div>
+            <div id="emergencyPhrases"></div>
+
+            <div class="section-head" style="margin-top:22px">
+              <h2>Scam / ticket risk checker</h2>
+            </div>
+            <div class="ticket-checker" id="ticketChecker">
+              <h3>Quick risk check</h3>
+              <p>This does not verify a ticket or seller. It highlights common warning signs before you pay.</p>
+              <div class="risk-options" id="riskOptions"></div>
+              <button class="risk-action" id="calculateRisk" style="width:100%;border:0;border-radius:13px;padding:11px;background:#10271f;color:#fff;font-weight:950;min-height:44px;margin-top:10px;">Check warning signs</button>
+              <div class="risk-result" id="riskResult"></div>
+            </div>
+
+            <div class="section-head" style="margin-top:22px">
+              <h2>Report a non-emergency incident</h2>
+            </div>
+            <div class="safety-report-panel">
+              <h3>Are you currently safe?</h3>
+              <p>This creates a local record only. It is never automatically submitted to police, an embassy, or event organizers.</p>
+              <div class="yn-row">
+                <button id="reportSafeYes">Yes, I'm safe now</button>
+                <button id="reportSafeNo">No, I need help now</button>
+              </div>
+              <div class="form-panel" id="incidentFormPanel">
+                <div class="field">
+                  <label for="incidentCategory">Category</label>
+                  <select id="incidentCategory">
+                    <option value="unsafe_situation">Unsafe situation</option>
+                    <option value="harassment">Harassment</option>
+                    <option value="theft">Theft</option>
+                    <option value="lost_document">Lost document</option>
+                    <option value="suspected_scam">Suspected scam</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="field"><label for="incidentTime">Date / time</label><input type="datetime-local" id="incidentTime" /></div>
+                <div class="field"><label for="incidentLocation">Location label</label><input type="text" id="incidentLocation" placeholder="e.g. Near Estadio Azteca" /></div>
+                <div class="field"><label for="incidentDetails">Details</label><textarea id="incidentDetails" placeholder="What happened?"></textarea></div>
+                <div class="field">
+                  <label for="incidentNextStep">Desired next step</label>
+                  <select id="incidentNextStep">
+                    <option value="no_action">No action needed right now</option>
+                    <option value="guidance">I want guidance</option>
+                    <option value="talk">I want to talk to someone</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <button class="save-btn" id="saveIncident">Create local record</button>
+              </div>
+            </div>
+
+            <div class="section-head" style="margin-top:8px">
+              <h2>My local safety records</h2>
+              <button id="clearCasesFilter">All</button>
+            </div>
+            <div id="caseList"></div>
+            <p class="tiny-disclaimer">Records on this screen are stored only on this device. They are never automatically sent to police, event organizers, or an embassy.</p>
+          </section>
+
+          <!-- TRAVEL -->
+          <section class="screen" data-screen="travel" aria-label="Travel">
+            <div class="screen-kicker">Travel assistant</div>
+            <h1 class="screen-title">Handle the unexpected.</h1>
+            <p class="screen-desc">Offline city packs, destination phrases, and step-by-step guidance for common travel problems.</p>
+
+            <div class="pack-health">
+              <div class="pack-health-top"><b>Offline storage health</b><span id="packHealthCount">0 packs ready</span></div>
+              <div class="storage-bar"><i id="packHealthBar" style="width:0%"></i></div>
+              <small>Pack downloads are simulated in this prototype.</small>
+            </div>
+
+            <div class="section-head"><h2>City packs</h2></div>
+            <div id="travelPacks"></div>
+
+            <div class="destination-builder" id="navigationSection">
+              <h3>"Help me get to…"</h3>
+              <p>Generate a phrase you can show, play, or share.</p>
+              <div class="dest-row">
+                <input id="destinationInput" placeholder="Stadium, hotel, station…" />
+                <button id="makeDestination">Go</button>
+              </div>
+              <div class="dest-result" id="destinationResult"></div>
+            </div>
+
+            <div class="section-head">
+              <h2>Saved places</h2>
+              <button id="addPlaceBtn">+ Add place</button>
+            </div>
+            <div class="form-panel" id="addPlaceForm">
+              <div class="field"><label for="placeTitle">Place name</label><input id="placeTitle" placeholder="e.g. Hotel Reforma" /></div>
+              <div class="field"><label for="placeValue">Note / address (optional)</label><input id="placeValue" placeholder="Optional detail" /></div>
+              <button class="save-btn" id="savePlaceBtn">Save place</button>
+            </div>
+            <div id="savedPlacesList"></div>
+
+            <div class="section-head" style="margin-top:22px" id="passportSection">
+              <h2>Lost passport / document</h2>
+            </div>
+            <div class="danger-question">
+              <b>Is this an ongoing theft or immediate danger?</b>
+              <div class="yn-row">
+                <button id="docDangerYes">Yes, ongoing danger</button>
+                <button id="docDangerNo">No, just missing</button>
+              </div>
+            </div>
+            <div class="danger-warning" id="docDangerWarning">
+              <b>Prioritize your safety first</b>
+              <p>If you are in immediate danger or theft is happening now, use the emergency tools before completing this guide.</p>
+              <button id="docDangerOpenEmergency">Open emergency tools</button>
+            </div>
+
+            <div id="passportSteps">
+              <div class="accordion open">
+                <button class="accordion-head"><span>1. Secure remaining items</span><span class="chev">⌄</span></button>
+                <div class="accordion-body">Move to a safe location, secure your remaining belongings, and stop using public Wi-Fi for sensitive accounts.</div>
+              </div>
+              <div class="accordion">
+                <button class="accordion-head"><span>2. File a local police report</span><span class="chev">⌄</span></button>
+                <div class="accordion-body">Ask for a written report or reference number. Consulates often request it during a replacement process.</div>
+              </div>
+              <div class="accordion">
+                <button class="accordion-head"><span>3. Use an official consular directory</span><span class="chev">⌄</span></button>
+                <div class="accordion-body">Look up your nationality's official government travel/consular directory rather than a search result. FanSafe does not store or guess specific embassy contact details.</div>
+              </div>
+              <div class="accordion">
+                <button class="accordion-head"><span>4. Protect accounts and bookings</span><span class="chev">⌄</span></button>
+                <div class="accordion-body">Notify travel companions, secure airline and hotel accounts, and avoid sending document copies to unverified contacts.</div>
+              </div>
+            </div>
+
+            <div class="form-panel open" id="lostDocForm" style="margin-top:12px">
+              <div class="field"><label for="docType">Document type</label>
+                <select id="docType"><option value="passport">Passport</option><option value="national_id">National ID</option><option value="other">Other travel document</option></select>
+              </div>
+              <div class="field"><label for="docLastLocation">Last known location</label><input id="docLastLocation" placeholder="e.g. Metro station platform" /></div>
+              <div class="field"><label for="docPoliceRef">Police report reference (optional)</label><input id="docPoliceRef" placeholder="Reference number" /></div>
+              <div class="field"><label for="docDepartureDate">Travel / departure date (optional)</label><input type="date" id="docDepartureDate" /></div>
+              <div class="field"><label for="docNotes">Notes (optional)</label><textarea id="docNotes"></textarea></div>
+              <button class="save-btn" id="saveLostDoc">Save local record + generate phrase</button>
+            </div>
+            <div class="dest-result" id="lostDocPhraseResult" style="background:#08271f;color:#fff;border-radius:16px;padding:14px;margin-top:12px;"></div>
+            <div class="directory-note">Guidance only: contact your government's official consular/embassy directory. FanSafe never invents or guesses a specific embassy address or phone number.</div>
+            <div id="lostDocRecords"></div>
+
+            <div class="section-head" style="margin-top:22px">
+              <h2>Travel document checklist</h2>
+              <button id="resetDocChecklist">Reset</button>
+            </div>
+            <div id="docChecklist"></div>
+          </section>
+
+          <!-- ME -->
+          <section class="screen" data-screen="me" aria-label="Me">
+            <div class="profile-card">
+              <div class="profile-row">
+                <div class="avatar" id="avatarInitials">?</div>
+                <div>
+                  <h3 id="profileName">Set your name</h3>
+                  <p id="profileSub">Traveller profile</p>
+                </div>
+                <button class="edit-btn" id="editProfile">Edit</button>
+              </div>
+            </div>
+            <div class="form-panel" id="profileForm">
+              <div class="field"><label for="profNameInput">Full name</label><input id="profNameInput" placeholder="Your name" /></div>
+              <div class="field"><label for="profLangInput">Home language</label>
+                <select id="profLangInput"></select>
+              </div>
+              <div class="field"><label for="profAccessibility">Accessibility preferences (optional)</label><input id="profAccessibility" placeholder="e.g. wheelchair access, hearing assistance" /></div>
+              <div class="field"><label for="profDietary">Dietary notes (optional)</label><input id="profDietary" placeholder="e.g. vegetarian, nut allergy" /></div>
+              <button class="save-btn" id="saveProfile">Save profile</button>
+            </div>
+
+            <div class="section-head">
+              <h2>App readiness</h2>
+            </div>
+            <div class="context-card">
+              <div class="context-top"><b>Overall readiness</b><span class="verified-pill" id="meReadinessPct">0%</span></div>
+              <div class="context-grid" id="meReadinessGrid" style="grid-template-columns:repeat(1,1fr)"></div>
+            </div>
+
+            <div class="section-head">
+              <h2>Emergency medical card</h2>
+              <button id="editMedicalToggle">Edit</button>
+            </div>
+            <div class="medical-card" id="medicalCard"></div>
+            <div class="form-panel" id="medicalForm">
+              <div class="field"><label for="medName">Full name</label><input id="medName" /></div>
+              <div class="field"><label for="medBlood">Blood type</label><input id="medBlood" placeholder="e.g. O+" /></div>
+              <div class="field"><label for="medAllergies">Allergies</label><input id="medAllergies" /></div>
+              <div class="field"><label for="medConditions">Medication / conditions</label><textarea id="medConditions"></textarea></div>
+              <button class="save-btn" id="saveMedical">Save medical card</button>
+              <button class="save-btn secondary" id="deleteMedical" style="margin-top:8px">Delete medical card</button>
+            </div>
+
+            <div class="trusted-card">
+              <div class="trusted-head">
+                <div><h3>Trusted contacts</h3><p>Receive your manual safety check-ins and help messages.</p></div>
+                <button id="addContactBtn">+ Add</button>
+              </div>
+              <div id="contactList"></div>
+            </div>
+            <div class="form-panel" id="contactForm">
+              <div class="field"><label for="contactName">Name</label><input id="contactName" placeholder="e.g. Alex — Family" /></div>
+              <div class="field"><label for="contactChannel">Channel</label>
+                <select id="contactChannel"><option value="phone">Phone call</option><option value="sms">SMS</option><option value="messaging_app">Messaging app</option><option value="email">Email</option></select>
+              </div>
+              <div class="field"><label for="contactValue">Number / handle / email</label><input id="contactValue" placeholder="e.g. +62 812 0000 2210" /></div>
+              <button class="save-btn" id="saveContact">Save contact</button>
+            </div>
+
+            <div class="section-head" style="margin-top:20px">
+              <h2>Saved items</h2>
+            </div>
+            <div id="savedItemsList"></div>
+
+            <div class="section-head" style="margin-top:20px">
+              <h2>App preferences</h2>
+            </div>
+            <div class="setting-row">
+              <span class="setting-icon">🔒</span>
+              <span class="copy"><b>Hide medical card by default</b><small>Require an explicit tap to reveal it</small></span>
+              <button class="toggle on" id="privacyToggle" role="switch" aria-checked="true"></button>
+            </div>
+
+            <div class="privacy-block">
+              <b>How your data is handled</b>
+              Everything you enter — the medical card, trusted contacts, saved phrases, lost-document notes, scam assessments, and safety records — is stored only in this browser's local storage on this device. Nothing is uploaded, synced, or sent anywhere unless you explicitly copy or share it yourself. FanSafe does not have a backend or user accounts in this prototype.
+            </div>
+
+            <div class="danger-zone">
+              <b>Reset all local data</b>
+              <p>Deletes your profile, medical card, trusted contacts, saved phrases/places/document references, lost-document records, scam assessments, safety records, and city pack downloads on this device. This cannot be undone.</p>
+              <button id="resetAllData">Reset demo data</button>
+            </div>
+          </section>
+
+          <nav class="bottom-nav" aria-label="Primary">
+            <button class="nav-btn active" data-go="home"><span class="nav-icon">⌂</span><span>Home</span></button>
+            <button class="nav-btn" data-go="translate"><span class="nav-icon">文</span><span>Translate</span></button>
+            <button class="nav-btn" data-go="safety"><span class="nav-icon">🆘</span><span>Safety</span></button>
+            <button class="nav-btn" data-go="travel"><span class="nav-icon">◎</span><span>Travel</span></button>
+            <button class="nav-btn" data-go="me"><span class="nav-icon">●</span><span>Me</span></button>
+          </nav>
+
+          <div class="toast" id="toast" role="status"></div>
+          <div id="liveStatus" aria-live="polite"></div>
+
+          <div class="install-banner" id="installBanner">
+            <span>📲</span><span class="copy"><b>Install FanSafe</b><small>Keep it available from your home screen.</small></span>
+            <button class="install-close" id="installClose">Later</button><button class="install-now" id="installNow">Install</button>
+          </div>
+
+          <div class="modal-backdrop" id="modalBackdrop">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+              <h3 id="modalTitle">Information</h3>
+              <div id="modalBody"></div>
+              <div class="modal-actions">
+                <button class="secondary" id="modalClose">Close</button>
+                <button class="primary" id="modalConfirm">Continue</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sheet-backdrop" id="citySheetBackdrop">
+            <div class="sheet" role="dialog" aria-modal="true" aria-label="Choose active city">
+              <div class="sheet-handle"></div>
+              <h3>Choose active city</h3>
+              <div class="sheet-sub">Switching cities updates emergency numbers, phrase context, and destination templates.</div>
+              <div id="citySheetList"></div>
+              <button class="sheet-close" id="closeCitySheet">Close</button>
+            </div>
+          </div>
+
+          <div class="sheet-backdrop" id="emergencySheetBackdrop">
+            <div class="sheet" role="dialog" aria-modal="true" aria-label="Emergency actions">
+              <div class="sheet-handle"></div>
+              <h3>What do you need?</h3>
+              <div class="sheet-sub" id="emergencySheetContext">Choose the action that matches your situation.</div>
+              <button class="sheet-action" id="sheetCallEmergency"><span class="s-icon">☎</span><span><b>Call local emergency services</b><small id="sheetEmergencyNumber">911 (sample)</small></span></button>
+              <button class="sheet-action" id="sheetShareLocation"><span class="s-icon">📍</span><span><b>Share my location</b><small>Compose a message — nothing sent automatically</small></span></button>
+              <button class="sheet-action" id="sheetMessageContact"><span class="s-icon">✉</span><span><b>Message trusted contact</b><small>Prepare a help message</small></span></button>
+              <button class="sheet-action" id="sheetRevealMedical"><span class="s-icon">🩺</span><span><b>Reveal medical card</b><small>One tap — no extra confirmation</small></span></button>
+              <button class="sheet-action" id="sheetPlayPhrase"><span class="s-icon">🔊</span><span><b>Play an emergency phrase</b><small>Local-language help phrase</small></span></button>
+              <div class="sos-disclaimer" style="margin-top:6px">FanSafe is not emergency dispatch and cannot guarantee delivery of any message or call.</div>
+              <button class="sheet-close" id="closeEmergencySheet">Close</button>
+            </div>
+          </div>
+
+          <div class="welcome-overlay" id="welcomeOverlay">
+            <div class="welcome-card">
+              <div class="welcome-logo">FS</div>
+              <h2>Prepared, even when the signal disappears.</h2>
+              <p>FanSafe works offline once your city pack is ready. It's a prototype — set up your own demo profile in a few taps.</p>
+              <div class="welcome-points">
+                <div class="welcome-point"><span>文</span>Offline-ready phrase pack</div>
+                <div class="welcome-point"><span>🆘</span>Hold-to-confirm emergency actions</div>
+                <div class="welcome-point"><span>🩺</span>Private, user-controlled medical card</div>
+              </div>
+              <button class="start-btn" id="startDemo">Start setup</button>
+              <button class="skip-btn" id="skipWelcome">Skip intro next time</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+"use strict";
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+
+/* ---------- storage helpers ---------- */
+function safeGet(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(raw === null) return fallback;
+    return JSON.parse(raw);
+  }catch(e){ return fallback; }
+}
+function safeSet(key, value){
+  try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){ /* storage unavailable */ }
+}
+function uid(prefix){
+  return prefix + "-" + Math.random().toString(36).slice(2,7).toUpperCase();
+}
+function nowIso(){ return new Date().toISOString(); }
+
+/* ---------- static demo data ---------- */
+const languages = {
+  id: { name:"Indonesian", flag:"🇮🇩", speech:"id-ID" },
+  en: { name:"English", flag:"🇺🇸", speech:"en-US" },
+  es: { name:"Español", flag:"🇲🇽", speech:"es-MX" },
+  fr: { name:"Français", flag:"🇨🇦", speech:"fr-CA" }
+};
+
+const cityPacks = [
+  { id:"mexico", flag:"🇲🇽", short:"CDMX", city:"Mexico City", country:"Mexico", locale:"es-MX",
+    supportedLanguages:["es","en"], version:"2026.03", updatedAt:"2026-03-01",
+    emergency:{ primary:"911", secondaryLabel:"Locatel non-emergency line", secondary:"55 5658-1111" } },
+  { id:"toronto", flag:"🇨🇦", short:"YYZ", city:"Toronto", country:"Canada", locale:"en-CA",
+    supportedLanguages:["en","fr"], version:"2026.02", updatedAt:"2026-02-14",
+    emergency:{ primary:"911", secondaryLabel:"City / community non-emergency", secondary:"311 / 211" } },
+  { id:"newyork", flag:"🇺🇸", short:"NYC", city:"New York / New Jersey", country:"United States", locale:"en-US",
+    supportedLanguages:["en","es"], version:"2026.01", updatedAt:"2026-01-20",
+    emergency:{ primary:"911", secondaryLabel:"NYC non-emergency", secondary:"311" } },
+  { id:"vancouver", flag:"🇨🇦", short:"YVR", city:"Vancouver", country:"Canada", locale:"en-CA",
+    supportedLanguages:["en"], version:"2026.03", updatedAt:"2026-03-10",
+    emergency:{ primary:"911", secondaryLabel:"Non-emergency (E-Comm)", secondary:"604-717-3321" } }
+];
+
+const categories = [
+  { id:"emergency", label:"Emergency", icon:"🆘" },
+  { id:"medical", label:"Medical", icon:"🩺" },
+  { id:"navigation", label:"Navigation", icon:"🧭" },
+  { id:"transport", label:"Transport", icon:"🚕" },
+  { id:"hotel", label:"Hotel", icon:"🏨" },
+  { id:"police", label:"Police", icon:"👮" },
+  { id:"lost_document", label:"Lost document", icon:"🛂" },
+  { id:"ticket_scam", label:"Ticket / scam", icon:"🎫" }
+];
+
+const phraseBook = [
+  { id:"em1", category:"emergency", values:{ id:"Saya butuh bantuan segera.", en:"I need help urgently.", es:"Necesito ayuda urgente.", fr:"J'ai besoin d'aide de toute urgence." } },
+  { id:"em2", category:"emergency", values:{ id:"Ini keadaan darurat.", en:"This is an emergency.", es:"Esto es una emergencia.", fr:"C'est une urgence." } },
+  { id:"med1", category:"medical", values:{ id:"Tolong panggil ambulans.", en:"Please call an ambulance.", es:"Por favor, llame a una ambulancia.", fr:"Appelez une ambulance, s'il vous plaît." } },
+  { id:"med2", category:"medical", values:{ id:"Saya membutuhkan dokter.", en:"I need a doctor.", es:"Necesito un médico.", fr:"J'ai besoin d'un médecin." } },
+  { id:"med3", category:"medical", values:{ id:"Saya memiliki alergi serius.", en:"I have a serious allergy.", es:"Tengo una alergia grave.", fr:"J'ai une allergie grave." } },
+  { id:"nav1", category:"navigation", values:{ id:"Tolong arahkan saya ke stadion.", en:"Please show me how to get to the stadium.", es:"Por favor, indíqueme cómo llegar al estadio.", fr:"Pouvez-vous m'indiquer comment aller au stade, s'il vous plaît?" } },
+  { id:"nav2", category:"navigation", values:{ id:"Di mana stasiun metro terdekat?", en:"Where is the nearest metro station?", es:"¿Dónde está la estación de metro más cercana?", fr:"Où est la station de métro la plus proche?" } },
+  { id:"trans1", category:"transport", values:{ id:"Berapa tarif taksi ke hotel saya?", en:"How much is a taxi to my hotel?", es:"¿Cuánto cuesta un taxi a mi hotel?", fr:"Combien coûte un taxi jusqu'à mon hôtel?" } },
+  { id:"trans2", category:"transport", values:{ id:"Peron mana yang menuju pusat kota?", en:"Which platform goes downtown?", es:"¿Qué andén va al centro?", fr:"Quel quai va au centre-ville?" } },
+  { id:"hotel1", category:"hotel", values:{ id:"Tolong bantu saya kembali ke hotel.", en:"Please help me return to my hotel.", es:"Por favor, ayúdeme a regresar a mi hotel.", fr:"Aidez-moi à retourner à mon hôtel, s'il vous plaît." } },
+  { id:"hotel2", category:"hotel", values:{ id:"Saya kehilangan kunci kamar saya.", en:"I lost my room key.", es:"Perdí la llave de mi habitación.", fr:"J'ai perdu la clé de ma chambre." } },
+  { id:"pol1", category:"police", values:{ id:"Saya butuh bantuan polisi.", en:"I need police assistance.", es:"Necesito ayuda de la policía.", fr:"J'ai besoin de l'aide de la police." } },
+  { id:"pol2", category:"police", values:{ id:"Saya ingin melaporkan pencurian.", en:"I want to report a theft.", es:"Quiero denunciar un robo.", fr:"Je veux signaler un vol." } },
+  { id:"doc1", category:"lost_document", values:{ id:"Paspor saya hilang.", en:"My passport is missing.", es:"He perdido mi pasaporte.", fr:"J'ai perdu mon passeport." } },
+  { id:"doc2", category:"lost_document", values:{ id:"Saya perlu membuat laporan polisi.", en:"I need to file a police report.", es:"Necesito presentar un informe policial.", fr:"Je dois déposer un rapport de police." } },
+  { id:"tix1", category:"ticket_scam", values:{ id:"Apakah tiket ini resmi?", en:"Is this ticket official?", es:"¿Este boleto es oficial?", fr:"Ce billet est-il officiel?" } },
+  { id:"tix2", category:"ticket_scam", values:{ id:"Saya pikir saya ditipu.", en:"I think I was scammed.", es:"Creo que fui estafado.", fr:"Je pense avoir été escroqué." } }
+];
+
+const riskSignals = [
+  { id:"unofficial", weight:2, label:"The seller is not an official/verified channel" },
+  { id:"pressure", weight:2, label:"I'm being pressured to pay right now" },
+  { id:"payment", weight:3, label:"Payment is crypto, gift card, or bank transfer only" },
+  { id:"otp", weight:3, label:"They asked for my OTP, password, or account access" },
+  { id:"account", weight:3, label:"They asked me to hand over or transfer my account" },
+  { id:"price", weight:1, label:"The price is unusually low" },
+  { id:"proof", weight:2, label:"I only received a screenshot or forwarded barcode" },
+  { id:"offplatform", weight:1, label:"They insist on moving the conversation off-platform" },
+  { id:"official", weight:2, label:"They refuse to use an official or traceable channel" }
+];
+
+const docChecklistItems = [
+  ["photo_copy", "Save a photo of your passport photo page", "Store it somewhere separate from the physical document — not as your only backup."],
+  ["insurance", "Note your travel insurance policy number", "Useful if you need medical or document assistance abroad."],
+  ["directory", "Bookmark your country's official consular directory", "Use an official government site, not a search result, if you ever need it."],
+  ["itinerary", "Share your itinerary with a trusted contact", "Makes it easier for someone to help if plans change unexpectedly."]
+];
+
+/* ---------- state ---------- */
+const state = {
+  profile: safeGet("fansafe.profile", { name:"", homeLanguage:"id", accessibility:"", dietary:"", cityConfirmed:false }),
+  activeCity: safeGet("fansafe.city", "mexico"),
+  cityPackStatus: safeGet("fansafe.city_packs", {}),
+  languages: safeGet("fansafe.languages", { travellerLang:"id", localLang:"es" }),
+  saved: safeGet("fansafe.saved", []),
+  medicalCard: safeGet("fansafe.medical_card", { fullName:"", bloodType:"", allergies:"", medicationsOrConditions:"", hidden:true, updatedAt:"" }),
+  trustedContacts: safeGet("fansafe.trusted_contacts", []),
+  lostDocuments: safeGet("fansafe.lost_documents", []),
+  scamAssessments: safeGet("fansafe.scam_assessments", []),
+  safetyCases: safeGet("fansafe.safety_cases", []),
+  readiness: safeGet("fansafe.readiness", { docChecklist:{} }),
+  ui: safeGet("fansafe.ui", { seenWelcome:false, translateMode:"phrase", activeCategory:null, lastCheckin:"", conversationTranscript:[], keepTranscript:false })
+};
+
+function persist(key, storeKey){ safeSet(key, state[storeKey]); }
+const P = {
+  profile: () => persist("fansafe.profile","profile"),
+  city: () => persist("fansafe.city","activeCity"),
+  packs: () => persist("fansafe.city_packs","cityPackStatus"),
+  languages: () => persist("fansafe.languages","languages"),
+  saved: () => persist("fansafe.saved","saved"),
+  medical: () => persist("fansafe.medical_card","medicalCard"),
+  contacts: () => persist("fansafe.trusted_contacts","trustedContacts"),
+  docs: () => persist("fansafe.lost_documents","lostDocuments"),
+  scams: () => persist("fansafe.scam_assessments","scamAssessments"),
+  cases: () => persist("fansafe.safety_cases","safetyCases"),
+  readiness: () => persist("fansafe.readiness","readiness"),
+  ui: () => persist("fansafe.ui","ui")
+};
+
+function activeCity(){ return cityPacks.find(c => c.id === state.activeCity) || cityPacks[0]; }
+function isPackDownloaded(id){ return !!(state.cityPackStatus[id] && state.cityPackStatus[id].downloaded); }
+
+/* ---------- toast / modal / sheet ---------- */
+let toastTimer = null;
+function showToast(message){
+  const toast = $("#toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  $("#liveStatus").textContent = message;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+let modalAction = null;
+function openModal(title, bodyHTML, confirmText, action){
+  $("#modalTitle").textContent = title;
+  $("#modalBody").innerHTML = bodyHTML;
+  $("#modalConfirm").textContent = confirmText || "Continue";
+  $("#modalConfirm").style.display = action ? "" : "none";
+  modalAction = action || null;
+  $("#modalBackdrop").classList.add("open");
+}
+function closeModal(){ $("#modalBackdrop").classList.remove("open"); modalAction = null; }
+$("#modalClose").addEventListener("click", closeModal);
+$("#modalConfirm").addEventListener("click", () => { const a = modalAction; closeModal(); if(a) a(); });
+$("#modalBackdrop").addEventListener("click", e => { if(e.target === $("#modalBackdrop")) closeModal(); });
+
+function openSheet(id){ $("#"+id).classList.add("open"); }
+function closeSheet(id){ $("#"+id).classList.remove("open"); }
+$$(".sheet-backdrop").forEach(bd => bd.addEventListener("click", e => { if(e.target === bd) bd.classList.remove("open"); }));
+
+/* ---------- share / copy ---------- */
+async function copyOrShare(text, shareTitle){
+  if(navigator.share){
+    try{
+      await navigator.share({ title: shareTitle || "FanSafe", text });
+      showToast("Opened your device share sheet.");
+      return true;
+    }catch(e){ /* user cancelled or share failed — fall through to clipboard */ }
+  }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    try{
+      await navigator.clipboard.writeText(text);
+      showToast("Copied to clipboard — nothing sent automatically.");
+      return true;
+    }catch(e){ /* clipboard blocked — fall through */ }
+  }
+  openModal("Copy this text", "<textarea readonly style='width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:10px'>"+escapeHtml(text)+"</textarea>", "Close", null);
+  return false;
+}
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ---------- speech ---------- */
+function speak(text, langCode){
+  if(!("speechSynthesis" in window)){
+    showToast("Text-to-speech is not supported in this browser.");
+    return;
+  }
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = (languages[langCode] && languages[langCode].speech) || "en-US";
+    u.rate = 0.94;
+    speechSynthesis.speak(u);
+    showToast("Playing audio…");
+  }catch(e){ showToast("Playback failed on this device."); }
+}
+const RecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+function startVoiceInput(langCode, onResult){
+  if(!RecognitionCtor){
+    openModal("Type it instead", "<p>Voice input isn't supported in this browser. Type your phrase below and it will fill the input.</p><div class='field'><textarea id='voiceFallbackInput' style='width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:10px'></textarea></div>",
+      "Use this text", () => { const v = $("#voiceFallbackInput"); if(v && v.value.trim()) onResult(v.value.trim()); });
+    return;
+  }
+  try{
+    const rec = new RecognitionCtor();
+    rec.lang = (languages[langCode] && languages[langCode].speech) || "en-US";
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    showToast("Listening…");
+    rec.onresult = (e) => { const text = e.results[0][0].transcript; onResult(text); };
+    rec.onerror = () => showToast("Voice input failed or was blocked. Try typing instead.");
+    rec.start();
+  }catch(e){ showToast("Voice input unavailable right now."); }
+}
+
+/* ---------- navigation ---------- */
+const screenContext = {
+  home:"Your travel readiness", translate:"Offline phrase translator",
+  safety:"Emergency and safety tools", travel:"Travel assistance", me:"Private traveller profile"
+};
+function goTo(screen){
+  $$(".screen").forEach(s => s.classList.toggle("active", s.dataset.screen === screen));
+  $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.go === screen));
+  $("#headerContext").textContent = screenContext[screen] || "FanSafe";
+  const target = $('.screen[data-screen="'+screen+'"]');
+  if(target) target.scrollTop = 0;
+  if(screen !== "me") lockMedicalCard(false);
+  renderAll();
+}
+$$(".nav-btn").forEach(btn => btn.addEventListener("click", () => goTo(btn.dataset.go)));
+$$('[data-go]').forEach(el => { if(!el.classList.contains("nav-btn")) el.addEventListener("click", () => goTo(el.dataset.go)); });
+
+/* ---------- readiness ---------- */
+function readinessFactors(){
+  const contact = state.trustedContacts.length > 0;
+  const medical = !!(state.medicalCard.fullName && (state.medicalCard.bloodType || state.medicalCard.allergies || state.medicalCard.medicationsOrConditions));
+  const pack = isPackDownloaded(state.activeCity);
+  const cityConfirmed = !!state.profile.cityConfirmed;
+  const docStarted = Object.values(state.readiness.docChecklist || {}).some(Boolean);
+  return [
+    { id:"city", label:"Confirm your active city", done:cityConfirmed, go:"home", action:() => openCitySheet() },
+    { id:"pack", label:"Download the city pack", done:pack, go:"travel" },
+    { id:"contact", label:"Add a trusted contact", done:contact, go:"me", action:() => openContactForm() },
+    { id:"medical", label:"Create your medical card", done:medical, go:"me", action:() => openMedicalForm() },
+    { id:"docs", label:"Start your travel-document checklist", done:docStarted, go:"travel" }
+  ];
+}
+function readinessScore(){
+  const f = readinessFactors();
+  return Math.round((f.filter(x => x.done).length / f.length) * 100);
+}
+
+/* ---------- city switcher ---------- */
+function openCitySheet(){
+  $("#citySheetList").innerHTML = cityPacks.map(c => (
+    '<button class="sheet-action" data-pick-city="'+c.id+'">'+
+      '<span class="s-icon">'+c.flag+'</span>'+
+      '<span><b>'+c.city+'</b><small>'+c.country+' · '+(isPackDownloaded(c.id) ? "Pack ready offline" : "Pack not downloaded")+'</small></span>'+
+    '</button>'
+  )).join("");
+  $$("[data-pick-city]").forEach(btn => btn.addEventListener("click", () => {
+    state.activeCity = btn.dataset.pickCity;
+    state.profile.cityConfirmed = true;
+    P.city(); P.profile();
+    closeSheet("citySheetBackdrop");
+    showToast("Active city set to " + activeCity().city + ".");
+    renderAll();
+  }));
+  openSheet("citySheetBackdrop");
+}
+$("#citySwitcher").addEventListener("click", openCitySheet);
+$("#closeCitySheet").addEventListener("click", () => closeSheet("citySheetBackdrop"));
+
+/* ---------- emergency sheet ---------- */
+function openEmergencySheet(context){
+  const city = activeCity();
+  $("#emergencySheetContext").textContent = context || ("Active city: " + city.city + ". Choose the action that matches your situation.");
+  $("#sheetEmergencyNumber").textContent = city.emergency.primary + " (sample data for " + city.city + ")";
+  openSheet("emergencySheetBackdrop");
+}
+$("#closeEmergencySheet").addEventListener("click", () => closeSheet("emergencySheetBackdrop"));
+$("#sheetCallEmergency").addEventListener("click", () => { window.location.href = "tel:" + activeCity().emergency.primary; });
+$("#sheetShareLocation").addEventListener("click", () => { closeSheet("emergencySheetBackdrop"); shareLocation(); });
+$("#sheetMessageContact").addEventListener("click", () => { closeSheet("emergencySheetBackdrop"); messageContact("help"); });
+$("#sheetRevealMedical").addEventListener("click", () => {
+  closeSheet("emergencySheetBackdrop");
+  if(!state.medicalCard.fullName){ showToast("No medical card saved yet."); goTo("me"); return; }
+  lockMedicalCard(false);
+  goTo("me");
+  setTimeout(() => $("#medicalCard").scrollIntoView({behavior:"smooth", block:"center"}), 200);
+});
+$("#sheetPlayPhrase").addEventListener("click", () => {
+  const p = phraseBook.find(p => p.category === "emergency");
+  const target = activeCity().supportedLanguages[0] || "en";
+  speak(p.values[target] || p.values.en, target);
+});
+
+/* ---------- hold-to-confirm SOS ---------- */
+(function setupHoldSos(){
+  const btn = $("#holdSos");
+  let holdTimer = null, progress = 0, raf = null;
+  const HOLD_MS = 1600;
+  function start(){
+    let startTime = performance.now();
+    function tick(t){
+      progress = Math.min(100, ((t - startTime) / HOLD_MS) * 100);
+      btn.style.setProperty("--hold", progress + "%");
+      if(progress < 100){ raf = requestAnimationFrame(tick); }
+      else { finish(); }
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function cancel(){
+    if(raf) cancelAnimationFrame(raf);
+    progress = 0;
+    btn.style.setProperty("--hold", "0%");
+  }
+  function finish(){
+    cancel();
+    openEmergencySheet();
+  }
+  btn.addEventListener("pointerdown", start);
+  btn.addEventListener("pointerup", cancel);
+  btn.addEventListener("pointerleave", cancel);
+  btn.addEventListener("pointercancel", cancel);
+})();
+$("#homeEmergency").addEventListener("click", () => goTo("safety"));
+
+/* ---------- location share / contact message ---------- */
+function buildLocationMessage(coords){
+  const city = activeCity();
+  if(coords){
+    const mapsUrl = "https://maps.google.com/?q=" + coords.lat + "," + coords.lng;
+    return "I'm currently near " + city.city + ". Approximate location: " + mapsUrl + " (FanSafe demo message — sent manually, not tracked automatically).";
+  }
+  return "I'm currently in " + city.city + ". I don't have precise coordinates available, but wanted to share my general location. (FanSafe demo message — sent manually.)";
+}
+function shareLocation(){
+  if(!("geolocation" in navigator)){
+    copyOrShare(buildLocationMessage(null), "FanSafe location message");
+    return;
+  }
+  showToast("Requesting your location…");
+  navigator.geolocation.getCurrentPosition(
+    pos => copyOrShare(buildLocationMessage({ lat: pos.coords.latitude.toFixed(4), lng: pos.coords.longitude.toFixed(4) }), "FanSafe location message"),
+    () => copyOrShare(buildLocationMessage(null), "FanSafe location message"),
+    { timeout: 8000 }
+  );
+}
+$("#shareLocationBtn").addEventListener("click", (e) => { e.preventDefault(); shareLocation(); });
+
+function primaryContact(){
+  return state.trustedContacts.find(c => c.primary) || state.trustedContacts[0] || null;
+}
+function messageContact(kind){
+  const contact = primaryContact();
+  if(!contact){ showToast("Add a trusted contact first."); goTo("me"); openContactForm(); return; }
+  const city = activeCity();
+  const messages = {
+    safe: "Hi " + contact.name.split(" ")[0] + ", this is a FanSafe check-in: I'm safe right now in " + city.city + ".",
+    help: "Hi " + contact.name.split(" ")[0] + ", I need help. I'm currently in " + city.city + ". This is a FanSafe demo message — please check in with me.",
+    location: buildLocationMessage(null)
+  };
+  copyOrShare(messages[kind] || messages.help, "FanSafe message to " + contact.name);
+}
+$("#messageContactBtn").addEventListener("click", () => messageContact("help"));
+$("#safeCheckin").addEventListener("click", () => { messageContact("safe"); state.ui.lastCheckin = nowIso(); P.ui(); renderHome(); });
+$("#homeCheckin").addEventListener("click", () => { messageContact("safe"); state.ui.lastCheckin = nowIso(); P.ui(); renderHome(); });
+
+/* ---------- phrase translation ---------- */
+function normalizeText(text){
+  return text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[.!?¿¡,'’"]/g,"").trim();
+}
+function destinationPhrase(destination, lang){
+  const templates = {
+    id: "Tolong bantu saya menuju " + destination + ".",
+    en: "Please help me get to " + destination + ".",
+    es: "Por favor, ayúdeme a llegar a " + destination + ".",
+    fr: "Aidez-moi à aller à " + destination + ", s'il vous plaît."
+  };
+  return templates[lang] || templates.en;
+}
+function findTranslation(text, source, target){
+  const normalized = normalizeText(text);
+  let phrase = phraseBook.find(p => normalizeText(p.values[source]) === normalized);
+  if(!phrase) phrase = phraseBook.find(p => Object.values(p.values).some(v => normalizeText(v) === normalized));
+  if(phrase) return { text: phrase.values[target], matched:true };
+  const navMatch = text.match(/(?:ke|to|a|au|à)\s+(.+)$/i);
+  if(navMatch) return { text: destinationPhrase(navMatch[1].replace(/[.?!]$/,""), target), matched:true };
+  const fallback = {
+    id: "[Demo offline] Frasa ini belum ada di paket lokal. Coba gunakan quick phrase di bawah.",
+    en: "[Offline demo] This phrase isn't in the local pack yet. Try a quick phrase below.",
+    es: "[Demo sin conexión] Esta frase aún no está en el paquete local. Pruebe una frase rápida.",
+    fr: "[Démo hors ligne] Cette phrase n'est pas encore dans le pack local. Essayez une phrase rapide."
+  };
+  return { text: fallback[target] || fallback.en, matched:false };
+}
+
+function populateLanguageSelects(){
+  const opts = Object.entries(languages).map(([code,l]) => '<option value="'+code+'">'+l.flag+' '+l.name+'</option>').join("");
+  $("#sourceLang").innerHTML = opts;
+  $("#targetLang").innerHTML = opts;
+  $("#sourceLang").value = state.languages.travellerLang;
+  $("#targetLang").value = state.languages.localLang;
+  $("#profLangInput").innerHTML = opts;
+}
+$("#sourceLang").addEventListener("change", () => { state.languages.travellerLang = $("#sourceLang").value; P.languages(); });
+$("#targetLang").addEventListener("change", () => { state.languages.localLang = $("#targetLang").value; P.languages(); });
+$("#swapLanguages").addEventListener("click", () => {
+  const a = $("#sourceLang").value, b = $("#targetLang").value;
+  $("#sourceLang").value = b; $("#targetLang").value = a;
+  state.languages.travellerLang = b; state.languages.localLang = a;
+  P.languages();
+  doTranslate();
+});
+
+function renderCategoryChips(){
+  $("#categoryChips").innerHTML = categories.map(c =>
+    '<button class="category-chip'+(state.ui.activeCategory===c.id?" active":"")+'" data-cat="'+c.id+'" role="tab" aria-selected="'+(state.ui.activeCategory===c.id)+'">'+c.icon+' '+c.label+'</button>'
+  ).join("");
+  $$("[data-cat]").forEach(btn => btn.addEventListener("click", () => {
+    state.ui.activeCategory = state.ui.activeCategory === btn.dataset.cat ? null : btn.dataset.cat;
+    P.ui();
+    renderCategoryChips();
+    renderQuickPhrases();
+  }));
+}
+function renderQuickPhrases(){
+  const list = state.ui.activeCategory ? phraseBook.filter(p => p.category === state.ui.activeCategory) : phraseBook;
+  $("#quickPhrases").innerHTML = list.map(p =>
+    '<button class="phrase-pill" data-phrase="'+p.id+'">'+p.values[state.languages.travellerLang]+'</button>'
+  ).join("") || '<span class="tiny-disclaimer">No phrases in this category yet.</span>';
+  $$("[data-phrase]").forEach(btn => btn.addEventListener("click", () => {
+    const phrase = phraseBook.find(p => p.id === btn.dataset.phrase);
+    $("#translationInput").value = phrase.values[state.languages.travellerLang];
+    doTranslate();
+  }));
+}
+function doTranslate(){
+  const input = $("#translationInput").value.trim();
+  if(!input){ showToast("Enter a phrase first."); return; }
+  const result = findTranslation(input, $("#sourceLang").value, $("#targetLang").value);
+  $("#translationOutput").textContent = result.text;
+  $("#translationOutput").dataset.original = input;
+}
+$("#translateBtn").addEventListener("click", doTranslate);
+$("#clearInput").addEventListener("click", () => { $("#translationInput").value = ""; });
+$("#voiceInput").addEventListener("click", () => {
+  startVoiceInput($("#sourceLang").value, (text) => { $("#translationInput").value = text; doTranslate(); });
+});
+$("#speakOutput").addEventListener("click", () => speak($("#translationOutput").textContent, $("#targetLang").value));
+$("#shareOutput").addEventListener("click", () => copyOrShare($("#translationOutput").textContent, "FanSafe phrase"));
+$("#savePhrase").addEventListener("click", () => {
+  const original = $("#translationInput").value.trim();
+  const translated = $("#translationOutput").textContent.trim();
+  if(!original || !translated){ showToast("Translate a phrase first."); return; }
+  state.saved.unshift({ id: uid("phrase"), type:"phrase", title: original, value: translated, createdAt: nowIso() });
+  P.saved();
+  showToast("Phrase saved.");
+  renderSavedPhrases(); renderHome(); renderSavedItems();
+});
+$("#clearSavedPhrases").addEventListener("click", () => {
+  if(!state.saved.some(s => s.type === "phrase")){ showToast("No saved phrases yet."); return; }
+  openModal("Clear saved phrases?", "<p>This removes all saved phrases from this device.</p>", "Clear", () => {
+    state.saved = state.saved.filter(s => s.type !== "phrase");
+    P.saved(); renderSavedPhrases(); renderHome(); renderSavedItems();
+    showToast("Saved phrases cleared.");
+  });
+});
+function renderSavedPhrases(){
+  const items = state.saved.filter(s => s.type === "phrase");
+  const container = $("#savedPhraseList");
+  if(!items.length){ container.innerHTML = '<div class="empty-note">No saved phrases yet. Translate something and tap "Save phrase."</div>'; return; }
+  container.innerHTML = items.map(item => (
+    '<div class="phrase-card">'+
+      '<div class="original">'+escapeHtml(item.title)+'</div>'+
+      '<div class="translated">'+escapeHtml(item.value)+'</div>'+
+      '<div class="phrase-card-actions">'+
+        '<button data-speak-saved="'+item.id+'">🔊 Play</button>'+
+        '<button data-show-saved="'+item.id+'">⤢ Show large</button>'+
+        '<button data-delete-saved="'+item.id+'">Remove</button>'+
+      '</div></div>'
+  )).join("");
+  $$("[data-speak-saved]").forEach(btn => btn.addEventListener("click", () => {
+    const item = items.find(i => i.id === btn.dataset.speakSaved);
+    speak(item.value, $("#targetLang").value);
+  }));
+  $$("[data-show-saved]").forEach(btn => btn.addEventListener("click", () => {
+    const item = items.find(i => i.id === btn.dataset.showSaved);
+    showFullscreenPhrase(item.value);
+  }));
+  $$("[data-delete-saved]").forEach(btn => btn.addEventListener("click", () => {
+    state.saved = state.saved.filter(s => s.id !== btn.dataset.deleteSaved);
+    P.saved(); renderSavedPhrases(); renderHome(); renderSavedItems();
+  }));
+}
+function showFullscreenPhrase(text){
+  $("#fullscreenPhraseText").textContent = text;
+  $("#fullscreenPhraseOverlay").classList.add("open");
+}
+$("#fullscreenPhrase").addEventListener("click", () => showFullscreenPhrase($("#translationOutput").textContent));
+$("#closeFullscreenPhrase").addEventListener("click", () => $("#fullscreenPhraseOverlay").classList.remove("open"));
+$("#fullscreenPlay").addEventListener("click", () => speak($("#fullscreenPhraseText").textContent, $("#targetLang").value));
+$("#fullscreenShare").addEventListener("click", () => copyOrShare($("#fullscreenPhraseText").textContent, "FanSafe phrase"));
+
+/* ---------- translate mode switch ---------- */
+$$('[data-translate-mode]').forEach(btn => btn.addEventListener("click", () => {
+  $$('[data-translate-mode]').forEach(b => { b.classList.remove("active"); b.setAttribute("aria-selected","false"); });
+  btn.classList.add("active"); btn.setAttribute("aria-selected","true");
+  state.ui.translateMode = btn.dataset.translateMode;
+  P.ui();
+  $("#phraseMode").classList.toggle("hidden", state.ui.translateMode !== "phrase");
+  $("#conversationMode").classList.toggle("hidden", state.ui.translateMode !== "conversation");
+}));
+
+/* ---------- conversation mode ---------- */
+function renderConversationFeed(){
+  const feed = $("#conversationFeed");
+  const t = state.languages.travellerLang, l = state.languages.localLang;
+  $("#conversationLangLabel").textContent = languages[t].name + " ⇄ " + languages[l].name;
+  const items = state.ui.conversationTranscript || [];
+  if(!items.length){
+    feed.innerHTML = '<div class="empty-note" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.6)">No messages yet. Use the buttons below to speak or type.</div>';
+    return;
+  }
+  feed.innerHTML = items.map(m => (
+    '<div class="talk-bubble '+(m.speaker==="traveller"?"a":"b")+'"><small>'+(m.speaker==="traveller"?"You · "+languages[t].name:"Local · "+languages[l].name)+'</small>'+escapeHtml(m.text)+'</div>'
+  )).join("");
+  feed.scrollTop = feed.scrollHeight;
+}
+function addConversationTurn(speaker, rawText){
+  const t = state.languages.travellerLang, l = state.languages.localLang;
+  const from = speaker === "traveller" ? t : l;
+  const to = speaker === "traveller" ? l : t;
+  const result = findTranslation(rawText, from, to);
+  state.ui.conversationTranscript = state.ui.conversationTranscript || [];
+  state.ui.conversationTranscript.push({ speaker, text: result.text, at: nowIso() });
+  if(state.ui.keepTranscript) P.ui();
+  renderConversationFeed();
+  speak(result.text, to);
+}
+function talkTurn(speaker){
+  const lang = speaker === "traveller" ? state.languages.travellerLang : state.languages.localLang;
+  startVoiceInput(lang, (text) => addConversationTurn(speaker, text));
+}
+$("#talkAsTraveller").addEventListener("click", () => talkTurn("traveller"));
+$("#talkAsLocal").addEventListener("click", () => talkTurn("local"));
+$("#clearTranscript").addEventListener("click", () => {
+  state.ui.conversationTranscript = [];
+  P.ui();
+  renderConversationFeed();
+  showToast("Transcript cleared.");
+});
+$("#transcriptToggle").addEventListener("change", (e) => {
+  state.ui.keepTranscript = e.target.checked;
+  if(!state.ui.keepTranscript){ state.ui.conversationTranscript = []; renderConversationFeed(); }
+  P.ui();
+});
+
+/* ---------- city packs ---------- */
+function packDetailText(pack){
+  const count = phraseBook.length;
+  const langs = pack.supportedLanguages.map(c => languages[c].name).join(" + ");
+  return langs + " · " + count + " curated phrases · v" + pack.version;
+}
+function packCardHtml(pack, source){
+  const downloaded = isPackDownloaded(pack.id);
+  return (
+    '<div class="pack-card" data-pack="'+pack.id+'-'+source+'">'+
+      '<div class="pack-flag">'+pack.flag+'</div>'+
+      '<div class="pack-copy"><b>'+pack.city+'</b><small>'+packDetailText(pack)+'</small>'+
+        '<div class="progress"><span></span></div></div>'+
+      '<button class="download-btn '+(downloaded?"downloaded":"")+'" data-download="'+pack.id+'" data-source="'+source+'">'+(downloaded?"✓ Ready":"Download")+'</button>'+
+    '</div>'
+  );
+}
+function renderPackLists(){
+  $("#homePacks").innerHTML = cityPacks.slice(0,3).map(p => packCardHtml(p,"home")).join("");
+  $("#travelPacks").innerHTML = cityPacks.map(p => packCardHtml(p,"travel")).join("");
+  $$("[data-download]").forEach(btn => btn.addEventListener("click", () => downloadPack(btn.dataset.download, btn.dataset.source)));
+  const readyCount = cityPacks.filter(p => isPackDownloaded(p.id)).length;
+  $("#packHealthCount").textContent = readyCount + " of " + cityPacks.length + " packs ready";
+  $("#packHealthBar").style.width = Math.round((readyCount/cityPacks.length)*100) + "%";
+}
+function downloadPack(packId, source){
+  const card = $('[data-pack="'+packId+'-'+source+'"]');
+  const btn = $('[data-download="'+packId+'"][data-source="'+source+'"]');
+  const progress = $(".progress", card), bar = $(".progress span", card);
+  if(isPackDownloaded(packId)){
+    openModal("Remove city pack?", "<p>This removes the pack's offline-ready state on this device. Phrase content itself stays available.</p>", "Remove", () => {
+      state.cityPackStatus[packId] = { downloaded:false, version: cityPacks.find(p=>p.id===packId).version, updatedAt: nowIso() };
+      P.packs(); renderAll(); showToast("City pack removed.");
+    });
+    return;
+  }
+  btn.disabled = true; btn.textContent = "0%"; progress.style.display = "block";
+  let value = 0;
+  const timer = setInterval(() => {
+    value += 10;
+    bar.style.width = value + "%"; btn.textContent = value + "%";
+    if(value >= 100){
+      clearInterval(timer);
+      state.cityPackStatus[packId] = { downloaded:true, version: cityPacks.find(p=>p.id===packId).version, updatedAt: nowIso() };
+      P.packs();
+      setTimeout(() => { renderAll(); showToast("City pack ready offline."); }, 250);
+    }
+  }, 90);
+}
+
+/* ---------- destination phrase (Travel) ---------- */
+$("#makeDestination").addEventListener("click", () => {
+  const dest = $("#destinationInput").value.trim();
+  if(!dest){ showToast("Enter a destination first."); return; }
+  const target = state.languages.localLang;
+  const phrase = destinationPhrase(dest, target);
+  const box = $("#destinationResult");
+  box.style.display = "block";
+  box.innerHTML = escapeHtml(phrase) + '<div class="dest-result-actions"><button id="destPlay">🔊 Play</button><button id="destShare">↗ Copy / share</button><button id="destSave">☆ Save</button></div>';
+  $("#destPlay").addEventListener("click", () => speak(phrase, target));
+  $("#destShare").addEventListener("click", () => copyOrShare(phrase, "FanSafe destination phrase"));
+  $("#destSave").addEventListener("click", () => {
+    state.saved.unshift({ id: uid("phrase"), type:"phrase", title: "Help me get to " + dest, value: phrase, createdAt: nowIso() });
+    P.saved(); renderSavedPhrases(); renderSavedItems(); showToast("Phrase saved.");
+  });
+});
+$("#getThereShortcut").addEventListener("click", () => { goTo("travel"); setTimeout(() => $("#navigationSection").scrollIntoView({behavior:"smooth"}), 150); });
+
+/* ---------- saved places ---------- */
+$("#addPlaceBtn").addEventListener("click", () => $("#addPlaceForm").classList.toggle("open"));
+$("#savePlaceBtn").addEventListener("click", () => {
+  const title = $("#placeTitle").value.trim();
+  if(!title){ showToast("Enter a place name."); return; }
+  state.saved.unshift({ id: uid("place"), type:"place", title, value: $("#placeValue").value.trim(), createdAt: nowIso() });
+  P.saved();
+  $("#placeTitle").value = ""; $("#placeValue").value = "";
+  $("#addPlaceForm").classList.remove("open");
+  renderSavedPlaces(); renderSavedItems();
+  showToast("Place saved.");
+});
+function renderSavedPlaces(){
+  const items = state.saved.filter(s => s.type === "place");
+  const container = $("#savedPlacesList");
+  if(!items.length){ container.innerHTML = '<div class="empty-note">No saved places yet.</div>'; return; }
+  container.innerHTML = items.map(item => (
+    '<div class="place-card"><div class="p-icon">📍</div><div class="copy"><b>'+escapeHtml(item.title)+'</b>'+(item.value?'<small>'+escapeHtml(item.value)+'</small>':'')+'</div><button data-delete-place="'+item.id+'">Remove</button></div>'
+  )).join("");
+  $$("[data-delete-place]").forEach(btn => btn.addEventListener("click", () => {
+    state.saved = state.saved.filter(s => s.id !== btn.dataset.deletePlace);
+    P.saved(); renderSavedPlaces(); renderSavedItems();
+  }));
+}
+
+/* ---------- lost document ---------- */
+let docDangerAnswer = null;
+$("#docDangerYes").addEventListener("click", () => {
+  docDangerAnswer = true;
+  $("#docDangerYes").classList.add("selected"); $("#docDangerNo").classList.remove("selected");
+  $("#docDangerWarning").classList.add("show");
+});
+$("#docDangerNo").addEventListener("click", () => {
+  docDangerAnswer = false;
+  $("#docDangerNo").classList.add("selected"); $("#docDangerYes").classList.remove("selected");
+  $("#docDangerWarning").classList.remove("show");
+});
+$("#docDangerOpenEmergency").addEventListener("click", () => openEmergencySheet("Lost document with ongoing danger — choose the action that helps you right now."));
+$("#saveLostDoc").addEventListener("click", () => {
+  const record = {
+    id: uid("DOC"), documentType: $("#docType").value, ongoingDanger: !!docDangerAnswer,
+    lastKnownLocation: $("#docLastLocation").value.trim(), policeReference: $("#docPoliceRef").value.trim(),
+    departureDate: $("#docDepartureDate").value, notes: $("#docNotes").value.trim(),
+    status:"open", createdAt: nowIso()
+  };
+  state.lostDocuments.unshift(record);
+  P.docs();
+  const phrase = phraseBook.find(p => p.id === "doc1").values[state.languages.localLang];
+  $("#lostDocPhraseResult").style.display = "block";
+  $("#lostDocPhraseResult").innerHTML = "Local-language phrase: <b>" + escapeHtml(phrase) + "</b>" +
+    '<div class="dest-result-actions"><button id="lostDocPlay">🔊 Play</button><button id="lostDocShareBtn">↗ Copy / share</button></div>';
+  $("#lostDocPlay").addEventListener("click", () => speak(phrase, state.languages.localLang));
+  $("#lostDocShareBtn").addEventListener("click", () => copyOrShare(phrase, "FanSafe lost document phrase"));
+  showToast("Local record saved (record " + record.id + ").");
+  renderLostDocRecords(); renderHome();
+});
+function renderLostDocRecords(){
+  const container = $("#lostDocRecords");
+  if(!state.lostDocuments.length){ container.innerHTML = ""; return; }
+  container.innerHTML = '<div class="section-head" style="margin-top:16px"><h2>Saved document records</h2></div>' +
+    state.lostDocuments.map(r => (
+      '<div class="case-card"><div class="case-top"><div><b>'+r.documentType.replace("_"," ")+' — '+r.id+'</b><small>'+new Date(r.createdAt).toLocaleString()+'</small></div>'+
+      '<span class="case-status '+(r.status==="resolved"?"closed":"active")+'">'+r.status+'</span></div>'+
+      '<div class="case-detail">'+(r.lastKnownLocation?"Last seen: "+escapeHtml(r.lastKnownLocation)+"<br>":"")+(r.policeReference?"Police ref: "+escapeHtml(r.policeReference)+"<br>":"")+(r.notes?escapeHtml(r.notes):"")+'</div>'+
+      '<div class="case-local-label">Local record only — not submitted anywhere</div>'+
+      '<div class="case-actions"><button data-resolve-doc="'+r.id+'">'+(r.status==="resolved"?"Reopen":"Mark resolved")+'</button><button data-delete-doc="'+r.id+'">Delete</button></div></div>'
+    )).join("");
+  $$("[data-resolve-doc]").forEach(btn => btn.addEventListener("click", () => {
+    const rec = state.lostDocuments.find(r => r.id === btn.dataset.resolveDoc);
+    rec.status = rec.status === "resolved" ? "open" : "resolved";
+    P.docs(); renderLostDocRecords();
+  }));
+  $$("[data-delete-doc]").forEach(btn => btn.addEventListener("click", () => {
+    state.lostDocuments = state.lostDocuments.filter(r => r.id !== btn.dataset.deleteDoc);
+    P.docs(); renderLostDocRecords();
+  }));
+}
+$("#lostPassportShortcut").addEventListener("click", () => { goTo("travel"); setTimeout(() => $("#passportSection").scrollIntoView({behavior:"smooth"}), 150); });
+
+/* ---------- accordions ---------- */
+$$(".accordion-head").forEach(head => head.addEventListener("click", () => head.closest(".accordion").classList.toggle("open")));
+
+/* ---------- travel document checklist ---------- */
+function renderDocChecklist(){
+  $("#docChecklist").innerHTML = docChecklistItems.map(([id,title,desc]) => (
+    '<label class="check-item"><input type="checkbox" data-doc-check="'+id+'" '+(state.readiness.docChecklist[id]?"checked":"")+'><span><b>'+title+'</b><small>'+desc+'</small></span></label>'
+  )).join("");
+  $$("[data-doc-check]").forEach(cb => cb.addEventListener("change", () => {
+    state.readiness.docChecklist[cb.dataset.docCheck] = cb.checked;
+    P.readiness(); renderHome(); renderMe();
+  }));
+}
+$("#resetDocChecklist").addEventListener("click", () => {
+  state.readiness.docChecklist = {};
+  P.readiness(); renderDocChecklist(); renderHome(); renderMe();
+  showToast("Checklist reset.");
+});
+
+/* ---------- scam / ticket checker ---------- */
+function renderRiskOptions(){
+  $("#riskOptions").innerHTML = riskSignals.map(s => (
+    '<label class="risk-option"><span>'+s.label+'</span><input type="checkbox" data-risk="'+s.weight+'" data-risk-id="'+s.id+'"></label>'
+  )).join("");
+}
+$("#calculateRisk").addEventListener("click", () => {
+  const checked = $$("#riskOptions input:checked");
+  const score = checked.reduce((sum, el) => sum + Number(el.dataset.risk), 0);
+  const reasons = checked.map(el => riskSignals.find(s => s.id === el.dataset.riskId).label);
+  let level = "low", actions = ["Continue with normal caution.", "Prefer official or verified sellers when possible."];
+  if(score >= 6){
+    level = "high";
+    actions = ["Do not send payment or account access.", "Walk away from off-platform or irreversible payment requests.", "Consider reporting this to the platform or local authorities."];
+  } else if(score >= 3){
+    level = "medium";
+    actions = ["Slow down and verify the seller through an official channel.", "Avoid irreversible payment methods.", "Never share an OTP or password with a seller."];
+  }
+  const result = $("#riskResult");
+  result.className = "risk-result " + level;
+  result.innerHTML = "<b>Risk level: " + level.toUpperCase() + "</b> (this checks for warning signs — it never confirms a ticket is real or fake)" +
+    (reasons.length ? "<ul>" + reasons.map(r => "<li>"+r+"</li>").join("") + "</ul>" : "<p>No warning signs selected.</p>") +
+    "<div style='margin-top:6px'><b>Suggested next actions</b><ul>" + actions.map(a => "<li>"+a+"</li>").join("") + "</ul></div>" +
+    "<div class='risk-actions'><button class='save-risk' id='saveRiskAssessment'>Save assessment</button><button class='case-risk' id='makeRiskCase'>Create local record</button></div>";
+  result.dataset.level = level; result.dataset.reasons = JSON.stringify(reasons); result.dataset.actions = JSON.stringify(actions);
+  $("#saveRiskAssessment").addEventListener("click", () => {
+    state.scamAssessments.unshift({ id: uid("SCAM"), riskLevel: level, reasons, createdAt: nowIso() });
+    P.scams();
+    showToast("Assessment saved (never claims a ticket is real or fake).");
+  });
+  $("#makeRiskCase").addEventListener("click", () => {
+    createCase({ kind:"scam_assessment", caseType:"suspected_scam", currentlySafe:true, details:"Scam/ticket risk check — " + level.toUpperCase() + " risk. Signals: " + (reasons.join("; ") || "none selected") + ".", riskLevel: level, reasons });
+  });
+});
+
+/* ---------- safety cases (incidents + scam records, unified store) ---------- */
+function createCase(partial){
+  const record = Object.assign({
+    id: uid("FS"), kind:"incident", caseType:"other", currentlySafe:true,
+    locationLabel:"", occurredAt:"", details:"", desiredNextStep:"", status:"draft",
+    updates:[], createdAt: nowIso()
+  }, partial);
+  state.safetyCases.unshift(record);
+  P.cases();
+  renderCaseList();
+  showToast("Local record created (" + record.id + "). Not submitted anywhere.");
+  return record;
+}
+function renderCaseList(){
+  const container = $("#caseList");
+  if(!state.safetyCases.length){ container.innerHTML = '<div class="empty-note">No local safety records yet.</div>'; return; }
+  container.innerHTML = state.safetyCases.map(c => (
+    '<div class="case-card"><div class="case-top"><div><b>'+c.id+' · '+c.caseType.replace(/_/g," ")+'</b><small>'+new Date(c.createdAt).toLocaleString()+(c.riskLevel?" · risk: "+c.riskLevel:"")+'</small></div>'+
+    '<span class="case-status '+c.status+'">'+c.status+'</span></div>'+
+    '<div class="case-detail">'+escapeHtml(c.details||"")+'</div>'+
+    (c.updates.length ? '<div class="case-updates">'+c.updates.map(u => '<div class="case-update-row">'+new Date(u.at).toLocaleString()+' — '+escapeHtml(u.text)+'</div>').join("")+'</div>' : "") +
+    '<div class="case-local-label">Local record only — not sent to police, an embassy, or event organizers</div>'+
+    '<div class="case-actions">'+
+      '<button data-add-update="'+c.id+'">+ Add update</button>'+
+      '<button data-cycle-status="'+c.id+'">'+(c.status==="draft"?"Mark active":c.status==="active"?"Mark closed":"Reopen")+'</button>'+
+      '<button data-delete-case="'+c.id+'">Delete</button>'+
+    '</div></div>'
+  )).join("");
+  $$("[data-add-update]").forEach(btn => btn.addEventListener("click", () => {
+    openModal("Add an update", "<div class='field'><textarea id='caseUpdateText' style='width:100%;min-height:90px;border:1px solid var(--line);border-radius:12px;padding:10px' placeholder='What changed?'></textarea></div>", "Add update", () => {
+      const text = $("#caseUpdateText").value.trim();
+      if(!text) return;
+      const c = state.safetyCases.find(c => c.id === btn.dataset.addUpdate);
+      c.updates.push({ text, at: nowIso() });
+      P.cases(); renderCaseList();
+    });
+  }));
+  $$("[data-cycle-status]").forEach(btn => btn.addEventListener("click", () => {
+    const c = state.safetyCases.find(c => c.id === btn.dataset.cycleStatus);
+    c.status = c.status === "draft" ? "active" : c.status === "active" ? "closed" : "draft";
+    P.cases(); renderCaseList();
+  }));
+  $$("[data-delete-case]").forEach(btn => btn.addEventListener("click", () => {
+    state.safetyCases = state.safetyCases.filter(c => c.id !== btn.dataset.deleteCase);
+    P.cases(); renderCaseList();
+  }));
+}
+
+/* ---------- non-emergency incident report ---------- */
+let reportSafeAnswer = null;
+$("#reportSafeYes").addEventListener("click", () => {
+  reportSafeAnswer = true;
+  $("#reportSafeYes").classList.add("selected"); $("#reportSafeNo").classList.remove("selected");
+  $("#incidentFormPanel").classList.add("open");
+});
+$("#reportSafeNo").addEventListener("click", () => {
+  reportSafeAnswer = false;
+  $("#reportSafeNo").classList.add("selected"); $("#reportSafeYes").classList.remove("selected");
+  $("#incidentFormPanel").classList.remove("open");
+  openEmergencySheet("You indicated you are not currently safe. Choose the action that helps you right now.");
+});
+$("#saveIncident").addEventListener("click", () => {
+  const record = createCase({
+    kind:"incident",
+    caseType: $("#incidentCategory").value,
+    currentlySafe: true,
+    occurredAt: $("#incidentTime").value,
+    locationLabel: $("#incidentLocation").value.trim(),
+    details: $("#incidentDetails").value.trim() || "(no details entered)",
+    desiredNextStep: $("#incidentNextStep").value,
+    status:"active"
+  });
+  $("#incidentFormPanel").classList.remove("open");
+  $("#incidentDetails").value = ""; $("#incidentLocation").value = "";
+  openModal("Record created", "<p>Case <b>"+record.id+"</b> was saved locally on this device with status <b>active</b>. It has not been sent to police, an embassy, or event organizers.</p>", "Close", null);
+});
+
+/* ---------- medical card ---------- */
+let medicalRevealed = false;
+function lockMedicalCard(revealed){ medicalRevealed = !!revealed; renderMedicalCard(); }
+function renderMedicalCard(){
+  const card = state.medicalCard;
+  const hasData = !!card.fullName;
+  const container = $("#medicalCard");
+  if(!hasData){
+    container.innerHTML = '<div class="medical-card-head"><b>MEDICAL INFORMATION</b><span>✚</span></div><div class="medical-hidden-state"><div class="lock-icon">🩺</div><p>No medical card yet. Add one so it can be shown to responders in an emergency.</p><button id="createMedicalBtn">Create medical card</button></div>';
+    $("#createMedicalBtn").addEventListener("click", openMedicalForm);
+    return;
+  }
+  if(card.hidden && !medicalRevealed){
+    container.innerHTML = '<div class="medical-card-head"><b>MEDICAL INFORMATION</b><span>🔒</span></div><div class="medical-hidden-state"><div class="lock-icon">🔒</div><p>This card is hidden by default. Reveal it only when needed.</p><button id="revealMedicalBtn">Reveal medical card</button></div>';
+    $("#revealMedicalBtn").addEventListener("click", () => lockMedicalCard(true));
+    return;
+  }
+  container.innerHTML = (
+    '<div class="medical-card-head"><b>MEDICAL INFORMATION</b><span>✚</span></div>'+
+    '<div class="medical-card-body"><div class="med-grid">'+
+      '<div class="med-field"><label>Full name</label><div>'+escapeHtml(card.fullName)+'</div></div>'+
+      '<div class="med-field"><label>Blood type</label><div>'+escapeHtml(card.bloodType||"Not set")+'</div></div>'+
+      '<div class="med-field full"><label>Allergies</label><div>'+escapeHtml(card.allergies||"None listed")+'</div></div>'+
+      '<div class="med-field full"><label>Medication / conditions</label><div>'+escapeHtml(card.medicationsOrConditions||"None listed")+'</div></div>'+
+      '<div class="med-field full"><label>Emergency contact</label><div>'+(primaryContact()?escapeHtml(primaryContact().name):"Add a trusted contact")+'</div></div>'+
+    '</div></div>'+
+    '<div class="medical-card-actions">'+
+      (card.hidden ? '<button id="hideMedicalBtn">Hide again</button>' : '') +
+      '<button id="copyMedicalBtn">Copy / share</button>'+
+    '</div>'+
+    '<div class="shared-device-warning">On a shared or public device, hide this card again after use. It is a local prototype label, not medical advice.</div>'
+  );
+  if(card.hidden) $("#hideMedicalBtn").addEventListener("click", () => lockMedicalCard(false));
+  $("#copyMedicalBtn").addEventListener("click", () => {
+    const text = "FanSafe medical card — " + card.fullName + ". Blood type: " + (card.bloodType||"not set") + ". Allergies: " + (card.allergies||"none listed") + ". Medication/conditions: " + (card.medicationsOrConditions||"none listed") + ". (Local prototype data, not medical advice.)";
+    copyOrShare(text, "FanSafe medical card");
+  });
+}
+function openMedicalForm(){
+  const c = state.medicalCard;
+  $("#medName").value = c.fullName||""; $("#medBlood").value = c.bloodType||"";
+  $("#medAllergies").value = c.allergies||""; $("#medConditions").value = c.medicationsOrConditions||"";
+  $("#medicalForm").classList.add("open");
+  $("#medicalForm").scrollIntoView({behavior:"smooth", block:"center"});
+}
+$("#editMedicalToggle").addEventListener("click", () => $("#medicalForm").classList.toggle("open"));
+$("#medicalShortcut").addEventListener("click", () => { goTo("me"); lockMedicalCard(false); setTimeout(() => $("#medicalCard").scrollIntoView({behavior:"smooth"}), 150); });
+$("#saveMedical").addEventListener("click", () => {
+  state.medicalCard.fullName = $("#medName").value.trim();
+  state.medicalCard.bloodType = $("#medBlood").value.trim();
+  state.medicalCard.allergies = $("#medAllergies").value.trim();
+  state.medicalCard.medicationsOrConditions = $("#medConditions").value.trim();
+  state.medicalCard.updatedAt = nowIso();
+  P.medical();
+  $("#medicalForm").classList.remove("open");
+  lockMedicalCard(false);
+  showToast("Medical card saved.");
+  renderAll();
+});
+$("#deleteMedical").addEventListener("click", () => {
+  openModal("Delete medical card?", "<p>This permanently removes the medical card from this device.</p>", "Delete", () => {
+    state.medicalCard = { fullName:"", bloodType:"", allergies:"", medicationsOrConditions:"", hidden:true, updatedAt:"" };
+    P.medical(); $("#medicalForm").classList.remove("open"); renderAll();
+    showToast("Medical card deleted.");
+  });
+});
+$("#privacyToggle").addEventListener("click", () => {
+  state.medicalCard.hidden = !state.medicalCard.hidden;
+  P.medical();
+  $("#privacyToggle").classList.toggle("on", state.medicalCard.hidden);
+  $("#privacyToggle").setAttribute("aria-checked", state.medicalCard.hidden);
+  lockMedicalCard(false);
+});
+
+/* ---------- trusted contacts ---------- */
+function openContactForm(){
+  $("#contactName").value=""; $("#contactValue").value=""; $("#contactChannel").value="phone";
+  $("#contactForm").classList.add("open");
+  $("#contactForm").scrollIntoView({behavior:"smooth", block:"center"});
+}
+$("#addContactBtn").addEventListener("click", openContactForm);
+$("#saveContact").addEventListener("click", () => {
+  const name = $("#contactName").value.trim(), value = $("#contactValue").value.trim();
+  if(!name || !value){ showToast("Enter a name and a contact value."); return; }
+  state.trustedContacts.push({ id: uid("contact"), name, channel: $("#contactChannel").value, value, primary: state.trustedContacts.length === 0 });
+  P.contacts();
+  $("#contactForm").classList.remove("open");
+  showToast("Contact saved.");
+  renderAll();
+});
+function renderContacts(){
+  const container = $("#contactList");
+  if(!state.trustedContacts.length){ container.innerHTML = '<div class="empty-note" style="margin-top:12px">No trusted contacts yet.</div>'; return; }
+  container.innerHTML = state.trustedContacts.map(c => (
+    '<div class="contact-row"><div class="contact-avatar">'+c.name.slice(0,2).toUpperCase()+'</div>'+
+    '<div class="copy"><b>'+escapeHtml(c.name)+(c.primary?'<span class="primary-badge">PRIMARY</span>':'')+'</b><small>'+escapeHtml(c.value)+' · '+c.channel.replace("_"," ")+'</small></div>'+
+    '<div class="contact-actions">'+
+      (!c.primary ? '<button data-make-primary="'+c.id+'" title="Make primary">★</button>' : '') +
+      '<button data-delete-contact="'+c.id+'" title="Delete">✕</button>'+
+    '</div></div>'
+  )).join("");
+  $$("[data-make-primary]").forEach(btn => btn.addEventListener("click", () => {
+    state.trustedContacts.forEach(c => c.primary = (c.id === btn.dataset.makePrimary));
+    P.contacts(); renderContacts();
+  }));
+  $$("[data-delete-contact]").forEach(btn => btn.addEventListener("click", () => {
+    state.trustedContacts = state.trustedContacts.filter(c => c.id !== btn.dataset.deleteContact);
+    if(state.trustedContacts.length && !state.trustedContacts.some(c => c.primary)) state.trustedContacts[0].primary = true;
+    P.contacts(); renderAll();
+  }));
+}
+
+/* ---------- saved items (Me) ---------- */
+function renderSavedItems(){
+  const container = $("#savedItemsList");
+  if(!state.saved.length){ container.innerHTML = '<div class="empty-note">Nothing saved yet.</div>'; return; }
+  const typeLabel = { phrase:"Phrase", place:"Place", document_reference:"Document reference" };
+  container.innerHTML = state.saved.map(item => (
+    '<div class="place-card"><div class="p-icon">'+(item.type==="phrase"?"💬":item.type==="place"?"📍":"🗂")+'</div>'+
+    '<div class="copy"><b>'+escapeHtml(item.title)+'</b><small>'+typeLabel[item.type]+(item.value?" · "+escapeHtml(item.value):"")+'</small></div>'+
+    '<button data-delete-saved-item="'+item.id+'">Remove</button></div>'
+  )).join("");
+  $$("[data-delete-saved-item]").forEach(btn => btn.addEventListener("click", () => {
+    state.saved = state.saved.filter(s => s.id !== btn.dataset.deleteSavedItem);
+    P.saved(); renderSavedItems(); renderSavedPhrases(); renderSavedPlaces(); renderHome();
+  }));
+}
+
+/* ---------- profile ---------- */
+$("#editProfile").addEventListener("click", () => {
+  $("#profNameInput").value = state.profile.name||"";
+  $("#profLangInput").value = state.profile.homeLanguage||"id";
+  $("#profAccessibility").value = state.profile.accessibility||"";
+  $("#profDietary").value = state.profile.dietary||"";
+  $("#profileForm").classList.toggle("open");
+});
+$("#saveProfile").addEventListener("click", () => {
+  state.profile.name = $("#profNameInput").value.trim();
+  state.profile.homeLanguage = $("#profLangInput").value;
+  state.profile.accessibility = $("#profAccessibility").value.trim();
+  state.profile.dietary = $("#profDietary").value.trim();
+  P.profile();
+  $("#profileForm").classList.remove("open");
+  showToast("Profile saved.");
+  renderAll();
+});
+
+/* ---------- reset ---------- */
+$("#resetAllData").addEventListener("click", () => {
+  openModal("Reset all local data?", "<p>This permanently deletes your profile, medical card, trusted contacts, saved phrases/places/document references, lost-document records, scam assessments, safety records, and city pack downloads on this device. This cannot be undone.</p>", "Reset everything", () => {
+    Object.keys(localStorage).filter(k => k.startsWith("fansafe.")).forEach(k => localStorage.removeItem(k));
+    showToast("Demo data reset.");
+    setTimeout(() => window.location.reload(), 700);
+  });
+});
+
+/* ---------- welcome overlay ---------- */
+$("#startDemo").addEventListener("click", () => { $("#welcomeOverlay").classList.remove("open"); goTo("home"); });
+$("#skipWelcome").addEventListener("click", () => {
+  state.ui.seenWelcome = true; P.ui();
+  $("#welcomeOverlay").classList.remove("open");
+});
+
+/* ---------- install banner (PWA only — no-op if unsupported) ---------- */
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  $("#installBanner").classList.add("show");
+});
+$("#installNow").addEventListener("click", async () => {
+  $("#installBanner").classList.remove("show");
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+});
+$("#installClose").addEventListener("click", () => $("#installBanner").classList.remove("show"));
+
+/* ---------- render orchestration ---------- */
+function renderHome(){
+  const city = activeCity();
+  const score = readinessScore();
+  $("#readinessRing").style.setProperty("--value", score);
+  $("#readinessValue").textContent = score + "%";
+  $("#homeHeadline").textContent = score >= 80 ? "You're ready for today." : score >= 40 ? "Almost ready." : "Let's get you ready.";
+  $("#activeCityLabel").textContent = state.profile.cityConfirmed ? (city.city + " · " + (isPackDownloaded(city.id) ? "pack ready" : "pack not downloaded")) : "Choose your active city to begin";
+
+  const factors = readinessFactors();
+  $("#homeChecklist").innerHTML = factors.map(f => (
+    '<button class="trip-check-item'+(f.done?" done":"")+'" data-checklist="'+f.id+'"><span class="dot">'+(f.done?"✓":"")+'</span>'+f.label+'</button>'
+  )).join("");
+  $$("[data-checklist]").forEach(btn => btn.addEventListener("click", () => {
+    const f = factors.find(f => f.id === btn.dataset.checklist);
+    if(f.action) f.action(); else goTo(f.go);
+  }));
+
+  const nextUndone = factors.find(f => !f.done);
+  const activeCases = state.safetyCases.filter(c => c.status === "active");
+  const openDocs = state.lostDocuments.filter(d => d.status === "open");
+  const contextCard = $("#contextNextCard");
+  if(activeCases.length){
+    contextCard.style.display = "flex";
+    $("#contextNextIcon").textContent = "📋";
+    $("#contextNextTitle").textContent = "Active local safety record";
+    $("#contextNextDesc").textContent = activeCases[0].id + " — " + activeCases[0].caseType.replace(/_/g," ");
+    $("#contextNextAction").onclick = () => goTo("safety");
+  } else if(openDocs.length){
+    contextCard.style.display = "flex";
+    $("#contextNextIcon").textContent = "🛂";
+    $("#contextNextTitle").textContent = "Open lost-document record";
+    $("#contextNextDesc").textContent = openDocs[0].id + " — " + openDocs[0].documentType.replace("_"," ");
+    $("#contextNextAction").onclick = () => goTo("travel");
+  } else if(nextUndone){
+    contextCard.style.display = "flex";
+    $("#contextNextIcon").textContent = "📌";
+    $("#contextNextTitle").textContent = "Next step";
+    $("#contextNextDesc").textContent = nextUndone.label;
+    $("#contextNextAction").onclick = () => { if(nextUndone.action) nextUndone.action(); else goTo(nextUndone.go); };
+  } else {
+    contextCard.style.display = "none";
+  }
+
+  $("#lastCheckinText").textContent = state.trustedContacts.length
+    ? (state.ui.lastCheckin ? "Last check-in: " + new Date(state.ui.lastCheckin).toLocaleString() : "No check-in sent yet")
+    : "No trusted contact added yet";
+
+  const recent = state.saved.filter(s => s.type === "phrase")[0];
+  $("#homeRecentPhrase").innerHTML = recent
+    ? '<div class="phrase-card"><div class="original">'+escapeHtml(recent.title)+'</div><div class="translated">'+escapeHtml(recent.value)+'</div></div>'
+    : '<div class="empty-note">No saved phrases yet.</div>';
+}
+
+function renderSafety(){
+  const city = activeCity();
+  $("#safetyLocationPill").textContent = "📍 " + city.city + " · Demo";
+  $("#emergencyNumberLabel").textContent = "Sample number for " + city.city;
+  $("#emergencyNumberValue").textContent = city.emergency.primary;
+  $("#emergencyCall").href = "tel:" + city.emergency.primary;
+  $("#sosMedicalReady").textContent = state.medicalCard.fullName ? "🩺 Medical card ready" : "🩺 Medical card not set up";
+  $("#sosContactReady").textContent = state.trustedContacts.length ? "👤 Trusted contact ready" : "👤 No trusted contact";
+  $("#safetyCityBrief").textContent = city.city + " safety brief";
+  $("#safetyContextGrid").innerHTML =
+    '<div class="context-cell"><span>☎️</span><b>'+city.emergency.primary+'</b><small>emergency (sample)</small></div>'+
+    '<div class="context-cell"><span>🏥</span><b>'+city.emergency.secondary+'</b><small>'+city.emergency.secondaryLabel+'</small></div>';
+  $("#emergencyPhrases").innerHTML = phraseBook.filter(p => ["emergency","medical","police"].includes(p.category)).map(p => (
+    '<div class="phrase-card"><div class="original">'+p.values[state.languages.travellerLang]+'</div><div class="translated">'+p.values[city.supportedLanguages[0]]+'</div>'+
+    '<div class="phrase-card-actions"><button data-speak-em="'+p.id+'">🔊 Play</button></div></div>'
+  )).join("");
+  $$("[data-speak-em]").forEach(btn => btn.addEventListener("click", () => {
+    const p = phraseBook.find(p => p.id === btn.dataset.speakEm);
+    speak(p.values[city.supportedLanguages[0]], city.supportedLanguages[0]);
+  }));
+  renderCaseList();
+}
+
+function renderTravel(){
+  renderPackLists();
+  renderSavedPlaces();
+  renderLostDocRecords();
+  renderDocChecklist();
+}
+
+function renderMe(){
+  $("#avatarInitials").textContent = state.profile.name ? state.profile.name.slice(0,2).toUpperCase() : "?";
+  $("#profileName").textContent = state.profile.name || "Set your name";
+  $("#profileSub").textContent = state.profile.name
+    ? languages[state.profile.homeLanguage].name + " · travelling supporter"
+    : "Traveller profile";
+  const score = readinessScore();
+  $("#meReadinessPct").textContent = score + "%";
+  $("#meReadinessGrid").innerHTML = readinessFactors().map(f =>
+    '<div class="context-cell" style="text-align:left;padding:10px 12px"><span>'+(f.done?"✅":"⭕")+'</span><b style="margin-top:2px">'+f.label+'</b></div>'
+  ).join("");
+  renderMedicalCard();
+  renderContacts();
+  renderSavedItems();
+  $("#privacyToggle").classList.toggle("on", state.medicalCard.hidden);
+  $("#privacyToggle").setAttribute("aria-checked", state.medicalCard.hidden);
+}
+
+function renderShellChrome(){
+  const city = activeCity();
+  $("#cityFlag").textContent = city.flag;
+  $("#cityShort").textContent = city.short;
+  const now = new Date();
+  $("#clock").textContent = String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+  $("#offlineIndicator").textContent = navigator.onLine === false ? "⚠" : "✓";
+  $("#offlineIndicator").title = navigator.onLine === false ? "Offline — using local data" : "Online";
+  const activeScreen = $(".screen.active");
+  if(activeScreen) $("#headerContext").textContent = screenContext[activeScreen.dataset.screen] || "FanSafe";
+}
+
+function renderAll(){
+  renderShellChrome();
+  populateLanguageSelects();
+  renderCategoryChips();
+  renderQuickPhrases();
+  renderSavedPhrases();
+  renderConversationFeed();
+  renderHome();
+  renderSafety();
+  renderTravel();
+  renderMe();
+}
+
+window.addEventListener("online", renderShellChrome);
+window.addEventListener("offline", renderShellChrome);
+
+/* ---------- init ---------- */
+renderRiskOptions();
+$("#phraseMode").classList.toggle("hidden", state.ui.translateMode !== "phrase" && !!state.ui.translateMode);
+$("#conversationMode").classList.toggle("hidden", state.ui.translateMode !== "conversation");
+if(state.ui.translateMode === "conversation"){
+  $$('[data-translate-mode]').forEach(b => { b.classList.toggle("active", b.dataset.translateMode === "conversation"); });
+}
+$("#transcriptToggle").checked = !!state.ui.keepTranscript;
+renderAll();
+
+if(!state.ui.seenWelcome){
+  $("#welcomeOverlay").classList.add("open");
+}
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* unsupported context (e.g. file://) — ignored */ });
+  });
+}
+})();
+</script>
+</body>
+</html>

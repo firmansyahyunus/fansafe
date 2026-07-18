@@ -1,0 +1,9 @@
+# Redundant packaged duplicate of FanSafe_PWA/ — regenerated ad hoc, not a
+# build artifact of any tooling in this repo, and would otherwise duplicate
+# the whole app's bytes in every commit that touches it. See README.md.
+FanSafe_PWA.zip
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
