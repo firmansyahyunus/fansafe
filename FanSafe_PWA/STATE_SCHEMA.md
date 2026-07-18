@@ -7,8 +7,8 @@ missing keys or malformed JSON.
 | Key | Shape | Notes |
 |---|---|---|
 | `fansafe.profile` | `{ name, homeLanguage, accessibility, dietary, cityConfirmed }` | `cityConfirmed` is a readiness factor, set true only via the city switcher |
-| `fansafe.city` | `string` (city id) | one of `mexico`, `toronto`, `newyork`, `vancouver` |
-| `fansafe.city_packs` | `{ [cityId]: { downloaded, version, updatedAt } }` | simulated download state |
+| `fansafe.city` | `string` (city id) | one of `mexico`, `toronto`, `newyork`, `vancouver`; legacy New York/New Jersey ids are migrated to `newyork` on startup |
+| `fansafe.city_packs` | `{ [cityId]: { downloaded, version, updatedAt } }` | simulated download state; a legacy New York/New Jersey status is copied to `newyork` only when no current New York City status exists |
 | `fansafe.languages` | `{ travellerLang, localLang }` | ISO-ish codes: `id`, `en`, `es`, `fr` |
 | `fansafe.saved` | `SavedItem[]` | unified store — `type: "phrase" \| "place" \| "document_reference"` |
 | `fansafe.medical_card` | `{ fullName, bloodType, allergies, medicationsOrConditions, hidden, updatedAt }` | never auto-revealed |
@@ -28,3 +28,5 @@ missing keys or malformed JSON.
   builds a one-off string and does not write coordinates to any store.
 - `Reset demo data` deletes every key with the `fansafe.` prefix via
   `Object.keys(localStorage).filter(k => k.startsWith("fansafe."))`.
+- Migration maps only three known historical New York/New Jersey identifiers
+  to `newyork`; an existing `newyork` status is never overwritten.

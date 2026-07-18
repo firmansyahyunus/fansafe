@@ -1,7 +1,7 @@
 # Sources — Toronto pack
 
-**Status: VERIFIED against official primary sources on 2026-07-19, with one
-scope caveat noted below.**
+**Status: sourced against official primary sources on 2026-07-19; not
+independently human-reviewed.**
 
 | Fact | Value | Organization | Page title | Source URL | Accessed | Scope |
 |---|---|---|---|---|---|---|
@@ -11,24 +11,19 @@ scope caveat noted below.**
 
 ## Result
 
-`pack.json`'s primary (`911`) and secondary (`311 / 211`) values **match
-official sources exactly.**
+`pack.json` records `911` as the emergency number and keeps the two distinct
+non-emergency services as typed entries: `services.city_services` is **311**
+and `services.community_services` is **211**. It does not present either
+service as police non-emergency.
 
-## Scope caveat — found during this verification, not previously flagged
+## Service taxonomy
 
-Toronto Police Service's own **police-specific** non-emergency number is
-**416-808-2222** (source: https://www.tps.ca/contact/416-808-2222-police-non-emergency/,
-accessed 2026-07-19) — a *different* number from the `311`/`211` pair
-currently in `pack.json`. `311` routes to general city services and `211`
-to community/social services; neither is the number Toronto Police
-Service itself directs people to for a non-emergency police matter (e.g.
-"my bike was stolen and the thief is gone"). This is not a data error —
-`pack.json`'s existing `secondaryLabel` says "City / community
-non-emergency," which is accurate for what `311`/`211` actually are — but
-it means a traveller with a non-emergency *police* need specifically has
-no dedicated number in this pack today. Flagged for a future pack update,
-not fixed in this session (schema/data structure change, not a provenance
-fix).
+Toronto Police Service lists a separate police-specific non-emergency number
+(416-808-2222, https://www.tps.ca/contact/416-808-2222-police-non-emergency/,
+accessed 2026-07-19). This pack does **not** include or label a
+`police_non_emergency` service, because no independently reviewed police
+entry has been approved. The Toronto UI and pack label now distinguish only
+the sourced `city_services` (311) and `community_services` (211) values.
 
 ## Reviewer
 

@@ -1070,11 +1070,12 @@ const cityPacks = [
     reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"Locatel non-emergency line", secondary:"55 5658-1111" } },
   { id:"toronto", flag:"🇨🇦", short:"YYZ", city:"Toronto", country:"Canada", locale:"en-CA",
-    supportedLanguages:["en","fr"], version:"2026.02", updatedAt:"2026-02-14",
+    supportedLanguages:["en","fr"], version:"2026.03", updatedAt:"2026-07-19",
     reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
-    emergency:{ primary:"911", secondaryLabel:"City / community non-emergency", secondary:"311 / 211" } },
-  { id:"newyork", flag:"🇺🇸", short:"NYC", city:"New York / New Jersey", country:"United States", locale:"en-US",
-    supportedLanguages:["en","es"], version:"2026.01", updatedAt:"2026-01-20",
+    emergency:{ primary:"911" },
+    services:{ city_services:{ label:"City services", number:"311" }, community_services:{ label:"Community referral", number:"211" } } },
+  { id:"newyork", flag:"🇺🇸", short:"NYC", city:"New York City", country:"United States", locale:"en-US",
+    supportedLanguages:["en","es"], version:"2026.02", updatedAt:"2026-07-19",
     reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"NYC non-emergency", secondary:"311" } },
   { id:"vancouver", flag:"🇨🇦", short:"YVR", city:"Vancouver", country:"Canada", locale:"en-CA",
@@ -1146,10 +1147,31 @@ const docChecklistItems = [
 ];
 
 /* ---------- state ---------- */
+const LEGACY_CITY_IDS = {
+  "newyork-newjersey":"newyork",
+  "new_york_new_jersey":"newyork",
+  "new-york-new-jersey":"newyork"
+};
+function migrateLegacyCityState(){
+  const storedCity = safeGet("fansafe.city", "mexico");
+  const activeCity = LEGACY_CITY_IDS[storedCity] || storedCity;
+  if(activeCity !== storedCity) safeSet("fansafe.city", activeCity);
+
+  const cityPackStatus = safeGet("fansafe.city_packs", {});
+  for(const legacyId of Object.keys(LEGACY_CITY_IDS)){
+    if(cityPackStatus[legacyId] && !cityPackStatus.newyork){
+      cityPackStatus.newyork = cityPackStatus[legacyId];
+      delete cityPackStatus[legacyId];
+      safeSet("fansafe.city_packs", cityPackStatus);
+    }
+  }
+  return { activeCity, cityPackStatus };
+}
+const migratedCityState = migrateLegacyCityState();
 const state = {
   profile: safeGet("fansafe.profile", { name:"", homeLanguage:"id", accessibility:"", dietary:"", cityConfirmed:false }),
-  activeCity: safeGet("fansafe.city", "mexico"),
-  cityPackStatus: safeGet("fansafe.city_packs", {}),
+  activeCity: migratedCityState.activeCity,
+  cityPackStatus: migratedCityState.cityPackStatus,
   languages: safeGet("fansafe.languages", { travellerLang:"id", localLang:"es" }),
   saved: safeGet("fansafe.saved", []),
   medicalCard: safeGet("fansafe.medical_card", { fullName:"", bloodType:"", allergies:"", medicationsOrConditions:"", hidden:true, updatedAt:"" }),
@@ -2132,9 +2154,13 @@ function renderSafety(){
   $("#sosMedicalReady").textContent = state.medicalCard.fullName ? "🩺 Medical card ready" : "🩺 Medical card not set up";
   $("#sosContactReady").textContent = state.trustedContacts.length ? "👤 Trusted contact ready" : "👤 No trusted contact";
   $("#safetyCityBrief").textContent = city.city + " safety brief";
+  const explicitServices = city.services ? Object.values(city.services) : [];
+  const legacyService = city.emergency.secondary ? [{ number:city.emergency.secondary, label:city.emergency.secondaryLabel }] : [];
   $("#safetyContextGrid").innerHTML =
     '<div class="context-cell"><span>☎️</span><b>'+city.emergency.primary+'</b><small>emergency (sample)</small></div>'+
-    '<div class="context-cell"><span>🏥</span><b>'+city.emergency.secondary+'</b><small>'+city.emergency.secondaryLabel+'</small></div>';
+    explicitServices.concat(legacyService).map(service =>
+      '<div class="context-cell"><span>🏥</span><b>'+service.number+'</b><small>'+service.label+'</small></div>'
+    ).join("");
   $("#emergencyPhrases").innerHTML = phraseBook.filter(p => ["emergency","medical","police"].includes(p.category)).map(p => (
     '<div class="phrase-card"><div class="original">'+p.values[state.languages.travellerLang]+'</div><div class="translated">'+p.values[city.supportedLanguages[0]]+'</div>'+
     '<div class="phrase-card-actions"><button data-speak-em="'+p.id+'">🔊 Play</button></div></div>'

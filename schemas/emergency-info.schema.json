@@ -5,7 +5,7 @@
   "description": "Emergency and non-emergency contact numbers for a single city pack. Mirrors the `emergency` object currently hardcoded per-city in FanSafe_PWA/index.html's `cityPacks` array. Not yet consumed at runtime — see docs/architecture.md Phase 2.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["primary", "secondaryLabel", "secondary"],
+  "required": ["primary"],
   "properties": {
     "primary": {
       "type": "string",
@@ -14,12 +14,12 @@
     },
     "secondaryLabel": {
       "type": "string",
-      "description": "Human-readable label for the non-emergency number, e.g. 'City / community non-emergency'.",
+      "description": "Legacy label for a non-emergency number. New packs should use typed services entries instead.",
       "minLength": 1
     },
     "secondary": {
       "type": "string",
-      "description": "The non-emergency number or service, e.g. '311 / 211'.",
+      "description": "Legacy non-emergency number or service. New packs should use a separately typed services entry.",
       "minLength": 1
     },
     "sourceUrl": {

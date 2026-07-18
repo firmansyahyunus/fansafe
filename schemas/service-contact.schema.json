@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://fansafe.example/schemas/service-contact.schema.json",
+  "title": "FanSafe Service Contact",
+  "description": "A non-emergency service contact with an explicit service taxonomy. Do not use city or community services as a police contact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["label", "number", "sourceUrl", "sourceAccessedOn"],
+  "properties": {
+    "label": { "type": "string", "minLength": 1 },
+    "number": { "type": "string", "minLength": 1 },
+    "sourceUrl": { "type": "string", "format": "uri" },
+    "sourceAccessedOn": { "type": "string", "format": "date" }
+  }
+}

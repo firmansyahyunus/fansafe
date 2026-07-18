@@ -47,7 +47,7 @@ purpose (a bystander helping in a real incident).
 
 ## City emergency data
 
-All four demo cities (Mexico City, Toronto, New York/New Jersey, Vancouver) legitimately
+All four demo cities (Mexico City, Toronto, New York City, Vancouver) legitimately
 share `911` as the primary number (they're all NANP countries), so instead of
 inventing artificial per-city variation, each city pack also carries a real,
 distinct **non-emergency** number/service (Locatel for CDMX, 311/211 for Toronto,
@@ -112,7 +112,20 @@ exception: `renderContacts()`'s contact-avatar initials
 exploitability was low (only 2 characters reach the sink), but it was
 inconsistent with the rest of the file. Fixed by wrapping the same
 expression in `escapeHtml()` — no behavior change for any normal contact
-name, since escaping only affects the 5 characters `& < > " '`. This is the
-only functional change made to `index.html` in this session; everything
-else in this repository's public-release work is documentation, schemas,
-and tooling around the unchanged app.
+name, since escaping only affects the 5 characters `& < > " '`. This was the
+only functional change made to `index.html` in the earlier gate-0 session;
+later gate work is recorded separately below.
+
+## City-pack scope and service taxonomy correction (2026-07-19)
+
+The New York pack is now labeled **New York City** throughout the running
+app and its reference artifacts. Its cited 311 information is NYC-specific;
+retaining a New Jersey claim would imply coverage that the pack does not
+have. A separate New Jersey pack needs its own official sources and review.
+
+Toronto's two non-emergency entries remain 311 and 211, but their user-facing
+label now calls out the distinct services: 311 is city services and 211 is
+community services. Neither is called police non-emergency. Toronto Police's
+separate non-emergency number is not added here because independent human
+source review has not been completed. This is a label/scope correction, not
+a claim that the whole city-pack data model has been independently verified.

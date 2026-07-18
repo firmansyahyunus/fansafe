@@ -6,15 +6,27 @@
   "country": "Canada",
   "locale": "en-CA",
   "supportedLanguages": ["en", "fr"],
-  "version": "2026.02",
-  "updatedAt": "2026-02-14",
+  "version": "2026.03",
+  "updatedAt": "2026-07-19",
   "reviewByDate": "2027-01-19",
   "revoked": false,
   "emergency": {
     "primary": "911",
-    "secondaryLabel": "City / community non-emergency",
-    "secondary": "311 / 211",
     "sourceUrl": "https://www.tps.ca/contact/9-1-1-emergency/",
     "sourceAccessedOn": "2026-07-19"
+  },
+  "services": {
+    "city_services": {
+      "label": "City services",
+      "number": "311",
+      "sourceUrl": "https://www.toronto.ca/home/311-toronto-at-your-service/",
+      "sourceAccessedOn": "2026-07-19"
+    },
+    "community_services": {
+      "label": "Community referral",
+      "number": "211",
+      "sourceUrl": "https://211ontario.ca/",
+      "sourceAccessedOn": "2026-07-19"
+    }
   }
 }

@@ -57,6 +57,16 @@
       "default": false,
       "description": "If true, this pack must not be presented as ready-offline until re-reviewed."
     },
-    "emergency": { "$ref": "./emergency-info.schema.json" }
+    "emergency": { "$ref": "./emergency-info.schema.json" },
+    "services": {
+      "type": "object",
+      "description": "Optional explicit non-emergency service taxonomy. police_non_emergency must not be used for city or community referral services.",
+      "additionalProperties": false,
+      "properties": {
+        "city_services": { "$ref": "./service-contact.schema.json" },
+        "community_services": { "$ref": "./service-contact.schema.json" },
+        "police_non_emergency": { "$ref": "./service-contact.schema.json" }
+      }
+    }
   }
 }

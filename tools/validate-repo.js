@@ -28,6 +28,8 @@
  *  11. A static heuristic scan of known user-controlled fields inserted
  *      into innerHTML without escapeHtml() (see docs/threat-model.md, T3)
  *  12. The minimum set of public-repository files exists
+ *  13. Gate-1 Toronto taxonomy, NYC scope, localStorage migration, and
+ *      trusted-contact escaping checks (delegates to validate-gate1.js)
  */
 
 const fs = require("fs");
@@ -172,6 +174,15 @@ function checkPhrases() {
   }
 }
 
+function checkGate1Regression() {
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, "validate-gate1.js")], { stdio: "inherit" });
+    pass("Gate-1 regression validation passed (see output above)");
+  } catch (e) {
+    fail("Gate-1 regression validation failed (see output above)");
+  }
+}
+
 function checkCityPackProvenance() {
   if (!fs.existsSync(CITY_PACKS_DIR)) {
     fail("city-packs/ directory not found");
@@ -284,7 +295,7 @@ function checkRequiredFiles() {
     "docs/open-source-strategy.md", "docs/funding-readiness.md", "docs/pilot-plan.md",
     "docs/content-licensing-matrix.md",
     "schemas/city-pack.schema.json", "schemas/phrase.schema.json", "schemas/emergency-info.schema.json",
-    "tools/validate-city-pack.js", "tools/validate-phrases.js", "tools/validate-repo.js",
+    "tools/validate-city-pack.js", "tools/validate-phrases.js", "tools/validate-gate1.js", "tools/validate-repo.js",
   ];
   const missing = required.filter((f) => !fs.existsSync(path.join(ROOT, f)));
   if (missing.length === 0) {
@@ -303,6 +314,7 @@ function main() {
   checkStandaloneCopy(html);
   checkCityPacks();
   checkPhrases();
+  checkGate1Regression();
   checkCityPackProvenance();
   checkPlaceholderContacts();
   checkFundingYml();

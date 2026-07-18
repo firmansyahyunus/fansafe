@@ -65,8 +65,8 @@ beyond what the browser already provides — see "Deliberately not doing yet."
 
 ### T3 — XSS / injection via phrase, city-pack, or saved-item content
 
-**Status: audited exhaustively and closed for all currently-existing sinks,
-2026-07-19 (public-release gate-0 session).**
+**Status: code-reviewed and regression-tested for the currently-existing
+sinks, 2026-07-19 (public-release gate-0 / gate-1 work).**
 
 Every `innerHTML` assignment in `FanSafe_PWA/index.html` (24 sites) was
 read and classified by input source:
@@ -116,11 +116,12 @@ future fix, out of scope for this security pass.
   contributions are accepted (`docs/content-governance.md`), that content
   flows into sinks classified above as "static trusted constant" — human
   PR review is the actual control there, same conclusion as before.
-- **Evidence:** direct line-by-line reading of all `innerHTML` assignments
-  in `FanSafe_PWA/index.html` during this session; `node tools/validate-
-  repo.js` re-run after the fix (still passes, id/reference counts
-  unchanged: script now 65,057 chars post-fix vs 65,045 before, ids still
-  180 unique, 174 references resolve).
+- **Regression control:** `tools/validate-gate1.js` checks that the escaped
+  trusted-contact initials sink remains present. The focused browser evidence
+  in `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`
+  records three inert injection attempts, including a trusted-contact render
+  path. This is regression evidence, not a substitute for future review of
+  newly added DOM sinks.
 
 ### T4 — Incorrect emergency-number data reaching a real traveller
 
