@@ -7,12 +7,21 @@ flow, a private medical card, trusted-contact check-ins, and a scam/fake-ticket
 risk checker — all running from a single static file, with no account, no
 server, and no data leaving the device.
 
-> **Status: prototype, not yet a released open-source project.** There is no
-> license grant yet (see [`LICENSE-PROPOSAL.md`](LICENSE-PROPOSAL.md)), no CI
-> has run in a real pipeline yet, and there is no evidence of real users. Read
-> [`docs/open-source-strategy.md`](docs/open-source-strategy.md) for the full,
-> evidence-based readiness assessment before assuming this is contributor- or
-> sponsor-ready.
+**Not officially affiliated with FIFA, any World Cup organizing body, or any
+government or emergency service.** See [`TRADEMARK.md`](TRADEMARK.md).
+
+> **Status: credible public repository, release-candidate for public
+> preview — not yet there.** Code is licensed (Apache-2.0, see
+> [`LICENSE`](LICENSE)); city-pack and phrase **content** is not yet licensed
+> for reuse (see [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md)).
+> Emergency-number sources were checked against official primary sources,
+> but **no independent human has verified that sourcing yet** — for a
+> safety app, that is the one gap that matters most before calling this a
+> "preview." Read [`docs/open-source-strategy.md`](docs/open-source-strategy.md)
+> and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
+> before assuming this is contributor-, sponsor-, or pilot-ready — see
+> "Current maturity" below for the honest classification and the two
+> specific, cheap items that gate the next tier.
 
 FanSafe is the only active product scope. **FanLocal** (a possible future
 marketplace/booking companion) is not implemented anywhere in this repository
@@ -20,28 +29,93 @@ and must not be inferred from anything here — see
 [`docs/architecture.md`](docs/architecture.md#fanlocal-boundary) for the one
 paragraph where it is acknowledged as a future, separate concern.
 
-## What's in this repository
+## What FanSafe does today
 
-| Path | What it is |
+- **Offline city packs** — download-simulated per-city bundles with a
+  primary and non-emergency contact number.
+- **Phrase translation** — 17 curated phrases across 8 categories
+  (emergency, medical, navigation, transport, hotel, police, lost document,
+  ticket/scam), in Indonesian, English, Spanish, and French.
+- **Two-way conversation mode** — a simple bubble feed for speaking or
+  typing back and forth in two languages.
+- **Emergency action flow** — a hold-to-confirm SOS button and a
+  contextual action sheet (call, share location, message a contact, reveal
+  medical card, play an emergency phrase).
+- **Private medical card** — hidden by default, local-only.
+- **Trusted contacts and check-ins** — "I am safe" / "I need help" /
+  location-share messages via clipboard or the device share sheet.
+- **Scam / fake-ticket risk checker** — a weighted checklist producing a
+  risk level and suggested next actions.
+- **Lost-document guidance** — a short flow plus a local record and a
+  generated local-language phrase.
+- **Local incident records** — unified, local-only case store for
+  incidents and scam assessments.
+- **PWA install + offline caching** via a service worker.
+
+### What is functional vs. simulated
+
+| Functional (real, on-device logic) | Simulated / demo-only |
 |---|---|
-| `FanSafe_PWA/` | The actual application: `index.html` (all HTML/CSS/JS, no build step, no dependencies), `manifest.json`, `sw.js`, icons, and its own `README.md`, `DECISION_LOG.md`, `SCREEN_MAP.md`, `STATE_SCHEMA.md`, `TEST_REPORT.md` |
-| `FanSafe_Standalone_Prototype.html` | Byte-identical copy of `FanSafe_PWA/index.html`, kept for double-click/`file://` use without a local server |
-| `FanSafe_PWA.zip` | A packaged copy of `FanSafe_PWA/`, regenerated ad hoc — not a build artifact of this repo's tooling; not required for anything documented here |
-| `docs/` | Architecture, threat model, content-governance, pilot-plan, funding-readiness, and open-source-strategy documents produced by the repository audit |
-| `schemas/` | Draft JSON Schemas for city packs, phrases, and emergency info (the shapes the app currently hardcodes in `index.html`; not yet wired into the running app — see `docs/architecture.md`) |
-| `city-packs/` | Reference extraction of the 4 demo city packs into schema-conformant JSON, with source/review templates — reference artifacts for a future extraction, not consumed by the running app yet |
-| `tools/` | `validate-city-pack.js`, a zero-dependency validator, and `validate-repo.js`, the script the CI workflow runs |
-| `.github/` | Issue templates, PR template, funding config draft, CI workflow |
+| Phrase translation and playback (`speechSynthesis`) | City-pack "download" is a progress animation, not a real network fetch of a content bundle (the data is already bundled in the page) |
+| Medical card storage, hide/reveal, delete | Emergency numbers are **sample data for 4 demo cities** — see "Content provenance" below |
+| Trusted contact storage and check-in message composition | The scam/ticket checker flags risk signals — it **never confirms** a ticket is real or fake |
+| Local incident/case records (`localStorage`) | "Two-way conversation" quality depends entirely on the browser's `SpeechRecognition` support — no server-side translation |
+| Geolocation-based location message (only on explicit tap, coordinates never persisted) | — |
+| Service worker offline caching | — |
 
-## Running it
+Messages are **never claimed to be "sent" or "delivered"** — only copied to
+the clipboard or handed to the device's native share sheet, because a
+successful share-sheet call does not guarantee the message reached anyone.
+Local records always carry a "local record only" label.
+
+## Safety limitations (read this before relying on FanSafe for anything real)
+
+- FanSafe is **not** a live emergency, medical, embassy, or
+  ticket-authentication service.
+- Emergency numbers shown are **sample data for 4 demo cities** (Mexico
+  City, Toronto, New York City, Vancouver) — see "Content provenance"
+  below for exactly what was and wasn't verified.
+- The scam/ticket risk checker is a heuristic checklist, not an
+  authentication service.
+- No claim of translation accuracy — see "Content provenance."
+- See [`FanSafe_PWA/TEST_REPORT.md`](FanSafe_PWA/TEST_REPORT.md) for the
+  exhaustive list of what has and hasn't actually been tested (audio
+  playback, live speech recognition, geolocation success/denial paths,
+  true offline reload, screen readers, and cross-browser/cross-device are
+  all currently **untested**).
+
+## Privacy model
+
+All data lives in the browser's `localStorage`, namespaced `fansafe.*`.
+Nothing is transmitted to any server — verified: zero analytics, zero
+telemetry, zero third-party network calls (the only literal external URL
+in the source is a Google Maps link built client-side for a share message;
+it is never fetched by the app). Geolocation is requested only after an
+explicit tap, and precise coordinates are never persisted. Full detail:
+[`PRIVACY.md`](PRIVACY.md) and [`docs/threat-model.md`](docs/threat-model.md).
+
+## Supported cities and languages
+
+| City | Country | Primary number | Non-emergency | Languages supported |
+|---|---|---|---|---|
+| Mexico City | Mexico | 911 | Locatel — 55 5658-1111 | Spanish, English |
+| Toronto | Canada | 911 | 311 (city) / 211 (community) | English, French |
+| New York City | United States | 911 | 311 | English, Spanish |
+| Vancouver | Canada | 911 | 604-717-3321 (police, E-Comm) | English |
+
+Phrase content covers Indonesian, English, Spanish, and French. **All
+numbers above are sample data — verify locally before you travel.** See
+"Content provenance."
+
+## Quick-start
 
 No build step, no `npm install`, no API keys, no mandatory CDN.
 
 **Fastest:** double-click `FanSafe_Standalone_Prototype.html` in any modern
 desktop or mobile browser.
 
-**As an installable PWA** (recommended — this is what exercises the service
-worker and offline caching):
+**As an installable PWA** (recommended — this exercises the service worker
+and offline caching):
 
 ```bash
 cd FanSafe_PWA
@@ -50,25 +124,124 @@ python -m http.server 8080
 
 Then open `http://localhost:8080/` and use your browser's "Install app" option.
 
-## Honesty about what has and hasn't been verified
+## Offline behavior
 
-`FanSafe_PWA/TEST_REPORT.md` is the authoritative record of what was actually
-tested (static checks + a driven interactive browser session) versus what is
-explicitly untested (audio output, live speech recognition, geolocation
-success/denial paths, clipboard/share-sheet final state, true offline reload,
-screen-reader passes, cross-browser/cross-device). This root README does not
-repeat or soften those distinctions — read that file directly for claims about
-functionality.
+`FanSafe_PWA/sw.js` caches the app shell (`index.html`, `manifest.json`,
+icons) on install using a stale-while-revalidate strategy, and falls back
+to the cached `index.html` when the network is unavailable. **This has
+been code-reviewed but not exercised by actually disconnecting the network
+and reloading** — see `TEST_REPORT.md`, "Not tested."
 
-## Contributing, security, and privacy
+## Validating city packs and phrases
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md), and
-[`PRIVACY.md`](PRIVACY.md). FanSafe stores medical and location-adjacent data
-locally; anyone touching those code paths should read `PRIVACY.md` and
-`docs/threat-model.md` first.
+```bash
+node tools/validate-repo.js         # full repository validation (CI runs this)
+node tools/validate-city-pack.js    # city-packs/<city>/pack.json against schemas/city-pack.schema.json
+node tools/validate-phrases.js      # phrases/*.json against schemas/phrase.schema.json
+```
+
+All three are zero-dependency Node scripts (no `ajv`, no build step). See
+[`docs/content-governance.md`](docs/content-governance.md) for the full
+city-pack/phrase contribution and review process.
+
+## Content provenance
+
+City-pack emergency numbers were checked against official primary sources
+on 2026-07-19 (government/police/311-311-service sites — not travel blogs
+or SEO content). Three of four packs matched their official sources
+exactly with no open questions; the Toronto pack has a noted scope gap
+(its listed non-emergency numbers are general city/community services, not
+the police-specific non-emergency line), and the New York pack's stated
+"New York / New Jersey" scope was only verified for the New York City side.
+Full per-city detail, exact source URLs, and access dates:
+`city-packs/<city>/SOURCES.md` and `REVIEW.md`.
+
+**None of this sourcing has been independently reviewed by a second
+person** — see each city's `REVIEW.md`. Keep treating all numbers as
+sample data to verify locally, per the in-app labeling.
+
+Phrase content has **no recorded translator or authorship provenance** —
+see [`phrases/REVIEW_STATUS.md`](phrases/REVIEW_STATUS.md). This is also
+why phrase content is not yet openly licensed (see License, below).
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for setup, validation, and PR
+conventions, and [`docs/content-governance.md`](docs/content-governance.md)
+for the city-pack/phrase-specific sourcing and review process. Issue
+templates: [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/).
+
+## Security reporting
+
+**Do not open a public issue for a security report.** See
+[`SECURITY.md`](SECURITY.md) — email `moonwalkingpenguins@gmail.com`.
+This is also not an emergency contact channel: if you are in immediate
+danger, contact your local emergency number directly.
+
+## Roadmap
+
+See [`ROADMAP.md`](ROADMAP.md) for the full phase breakdown (evidence
+baseline → credible open-source release → reusable toolkit → pilot →
+funding readiness) and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
+for exactly what gates this specific public-preview release.
+
+## Pilot participation
+
+No pilot has run yet and no pilot partner is confirmed. If you represent a
+travel/supporter community, university, or similar group interested in
+being an early pilot participant, see
+[`docs/PILOT_RECRUITMENT.md`](docs/PILOT_RECRUITMENT.md) and
+[`docs/pilot-plan.md`](docs/pilot-plan.md), and reach out via the security
+contact above (there is no dedicated pilot inbox yet).
+
+## Current maturity: **credible public repository — release-candidate for public preview**
+
+Above "prototype only" (there is now a finalized code license, CI,
+security/privacy policy, and officially-sourced — if not yet independently
+reviewed — content), but deliberately **not** labeled "public preview" yet,
+and not "contributor-ready" or "pilot-ready" (no external contributor or
+pilot has used this repository). An independent advisory review of this
+session's work concluded the label should stay one notch conservative
+until two specific, low-cost items clear:
+
+1. **A second human verifies the four cities' emergency numbers** against
+   the sources cited in `city-packs/<city>/SOURCES.md` — the current
+   sourcing pass was done by the same process that audited the repository,
+   with no independent check yet. For a safety app, this is the one
+   verification that matters most.
+2. **One manual browser pass** confirming the new provenance indicators
+   (Safety-screen pill, Travel-screen pack detail, Translate-screen note)
+   actually render as intended — they were added without browser access in
+   the session that wrote them (see `FanSafe_PWA/TEST_REPORT.md` §4).
+
+Both are feasible within a day for the maintainer. Until then, the honest
+label is "credible public repository, pending independent data
+verification" rather than "public preview." See
+[`docs/open-source-strategy.md`](docs/open-source-strategy.md) for the full
+scored assessment and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
+for the exact gate status.
+
+## What's in this repository
+
+| Path | What it is |
+|---|---|
+| `FanSafe_PWA/` | The actual application: `index.html`, `manifest.json`, `sw.js`, icons, and its own `README.md`, `DECISION_LOG.md`, `SCREEN_MAP.md`, `STATE_SCHEMA.md`, `TEST_REPORT.md` |
+| `FanSafe_Standalone_Prototype.html` | Byte-identical copy of `FanSafe_PWA/index.html`, for double-click/`file://` use |
+| `FanSafe_PWA.zip` | A packaged copy of `FanSafe_PWA/`, git-ignored — not required for anything documented here |
+| `docs/` | Architecture, threat model, content-governance, pilot-plan, funding-readiness, content-licensing-matrix, and open-source-strategy documents |
+| `schemas/` | JSON Schemas for city packs, phrases, and emergency info (the shapes the app currently hardcodes; not yet wired into the running app — see `docs/architecture.md`) |
+| `city-packs/` | Reference extraction of the 4 demo city packs, with `SOURCES.md`/`REVIEW.md` per city |
+| `phrases/` | Reference extraction of the safety-critical phrase categories, with `reviewStatus` tracking |
+| `tools/` | Zero-dependency validators (`validate-repo.js`, `validate-city-pack.js`, `validate-phrases.js`, `lib/json-schema-lite.js`) |
+| `.github/` | Issue templates, PR template, funding config draft, CI workflow |
 
 ## License
 
-Not yet finalized. See [`LICENSE-PROPOSAL.md`](LICENSE-PROPOSAL.md) for the
-recommended (but not yet legally confirmed) license split between code,
-documentation, and data.
+- **Code and tooling:** Apache-2.0 — see [`LICENSE`](LICENSE). Final, not a
+  draft.
+- **Documentation:** CC-BY-4.0.
+- **City-pack data and phrase content:** not yet licensed for reuse —
+  translation/authorship provenance has not been verified. See
+  [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md).
+- **"FanSafe" name, wordmark, and icons:** all rights reserved — see
+  [`TRADEMARK.md`](TRADEMARK.md).
