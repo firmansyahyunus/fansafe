@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run repository validation (tools/validate-repo.js)
+        run: node tools/validate-repo.js
+
+      # No `npm install` step: FanSafe deliberately has no dependencies
+      # (see FanSafe_PWA/README.md and NOTICE). If a package.json is ever
+      # introduced, add an install step here in the same change.
