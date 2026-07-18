@@ -32,4 +32,3 @@ Create: `bug`, `documentation`, `security`, `testing`, `content-governance`,
 Only apply `good first issue` to bounded documentation, test, or tooling work
 that does not let a new contributor alter safety-critical facts without a
 maintainer's independent source review.
-
