@@ -5,7 +5,7 @@
   "description": "Schema for a single entry in the phrasebook. Mirrors the shape currently hardcoded in FanSafe_PWA/index.html's `const phraseBook = [...]` array (index.html around line 1086). Reference schema only — not yet consumed at runtime, see docs/architecture.md Phase 2.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "category", "values"],
+  "required": ["id", "category", "values", "reviewStatus"],
   "properties": {
     "id": {
       "type": "string",
@@ -32,9 +32,14 @@
         "fr": { "type": "string", "minLength": 1, "description": "French" }
       }
     },
+    "reviewStatus": {
+      "type": "string",
+      "description": "Required, added 2026-07-19 (public-release gate-0 session). Do not claim 'native-speaker-reviewed' or 'professionally-translated' without an entry in reviewedBy providing evidence — see docs/content-governance.md. All phrases carried over from the original hardcoded phraseBook default to 'unreviewed' because no translator/authorship record exists for them.",
+      "enum": ["unreviewed", "maintainer-authored", "native-speaker-reviewed", "professionally-translated"]
+    },
     "reviewedBy": {
       "type": "array",
-      "description": "Per docs/content-governance.md: a fluent/native speaker reviewer per language, for emergency/medical category phrases especially. Optional here so existing demo phrases (authored pre-process) still validate.",
+      "description": "Per docs/content-governance.md: a fluent/native speaker reviewer per language, for emergency/medical category phrases especially. Required when reviewStatus is 'native-speaker-reviewed' or 'professionally-translated' (enforced by tools/validate-phrases.js, not expressible in this draft-07 schema subset without if/then support).",
       "items": {
         "type": "object",
         "required": ["language", "reviewer"],

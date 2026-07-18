@@ -8,9 +8,13 @@
   "supportedLanguages": ["es", "en"],
   "version": "2026.03",
   "updatedAt": "2026-03-01",
+  "reviewByDate": "2027-01-19",
+  "revoked": false,
   "emergency": {
     "primary": "911",
     "secondaryLabel": "Locatel non-emergency line",
-    "secondary": "55 5658-1111"
+    "secondary": "55 5658-1111",
+    "sourceUrl": "https://www.gob.mx/911",
+    "sourceAccessedOn": "2026-07-19"
   }
 }

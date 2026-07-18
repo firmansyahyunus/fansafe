@@ -8,9 +8,13 @@
   "supportedLanguages": ["en", "es"],
   "version": "2026.01",
   "updatedAt": "2026-01-20",
+  "reviewByDate": "2027-01-19",
+  "revoked": false,
   "emergency": {
     "primary": "911",
     "secondaryLabel": "NYC non-emergency",
-    "secondary": "311"
+    "secondary": "311",
+    "sourceUrl": "https://www.nyc.gov/site/nypd/about/about-nypd/contact-us.page",
+    "sourceAccessedOn": "2026-07-19"
   }
 }

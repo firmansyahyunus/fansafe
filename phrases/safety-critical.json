@@ -1,0 +1,101 @@
+[
+  {
+    "id": "em1",
+    "category": "emergency",
+    "values": {
+      "id": "Saya butuh bantuan segera.",
+      "en": "I need help urgently.",
+      "es": "Necesito ayuda urgente.",
+      "fr": "J'ai besoin d'aide de toute urgence."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "em2",
+    "category": "emergency",
+    "values": {
+      "id": "Ini keadaan darurat.",
+      "en": "This is an emergency.",
+      "es": "Esto es una emergencia.",
+      "fr": "C'est une urgence."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "med1",
+    "category": "medical",
+    "values": {
+      "id": "Tolong panggil ambulans.",
+      "en": "Please call an ambulance.",
+      "es": "Por favor, llame a una ambulancia.",
+      "fr": "Appelez une ambulance, s'il vous plaît."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "med2",
+    "category": "medical",
+    "values": {
+      "id": "Saya membutuhkan dokter.",
+      "en": "I need a doctor.",
+      "es": "Necesito un médico.",
+      "fr": "J'ai besoin d'un médecin."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "med3",
+    "category": "medical",
+    "values": {
+      "id": "Saya memiliki alergi serius.",
+      "en": "I have a serious allergy.",
+      "es": "Tengo una alergia grave.",
+      "fr": "J'ai une allergie grave."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "pol1",
+    "category": "police",
+    "values": {
+      "id": "Saya butuh bantuan polisi.",
+      "en": "I need police assistance.",
+      "es": "Necesito ayuda de la policía.",
+      "fr": "J'ai besoin de l'aide de la police."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "pol2",
+    "category": "police",
+    "values": {
+      "id": "Saya ingin melaporkan pencurian.",
+      "en": "I want to report a theft.",
+      "es": "Quiero denunciar un robo.",
+      "fr": "Je veux signaler un vol."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "doc1",
+    "category": "lost_document",
+    "values": {
+      "id": "Paspor saya hilang.",
+      "en": "My passport is missing.",
+      "es": "He perdido mi pasaporte.",
+      "fr": "J'ai perdu mon passeport."
+    },
+    "reviewStatus": "unreviewed"
+  },
+  {
+    "id": "doc2",
+    "category": "lost_document",
+    "values": {
+      "id": "Saya perlu membuat laporan polisi.",
+      "en": "I need to file a police report.",
+      "es": "Necesito presentar un informe policial.",
+      "fr": "Je dois déposer un rapport de police."
+    },
+    "reviewStatus": "unreviewed"
+  }
+]

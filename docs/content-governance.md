@@ -101,10 +101,18 @@ CC0-1.0, distinct from the Apache-2.0 code license.
 
 `schemas/city-pack.schema.json`, `schemas/phrase.schema.json`, and
 `schemas/emergency-info.schema.json` define the required shape.
-`tools/validate-city-pack.js` is a zero-dependency validator (no `ajv` or
-other package, consistent with the project's no-build-step principle) that
-checks any `city-packs/*/pack.json` file against them; it runs in
+`tools/validate-city-pack.js` and `tools/validate-phrases.js` are
+zero-dependency validators (no `ajv` or other package, consistent with the
+project's no-build-step principle, sharing logic via
+`tools/lib/json-schema-lite.js`) that check `city-packs/<city>/pack.json`
+and `phrases/*.json` files against them; both run in
 `.github/workflows/ci.yml`.
+
+`phrase.schema.json` requires a `reviewStatus` field (added 2026-07-19):
+`"unreviewed"`, `"maintainer-authored"`, `"native-speaker-reviewed"`, or
+`"professionally-translated"`. Claiming either of the latter two without a
+corresponding `reviewedBy` entry is a validation failure, not just a
+convention — see `phrases/REVIEW_STATUS.md`.
 
 ## Do not claim community-generated content is reliable without review
 

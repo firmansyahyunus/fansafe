@@ -8,9 +8,13 @@
   "supportedLanguages": ["en"],
   "version": "2026.03",
   "updatedAt": "2026-03-10",
+  "reviewByDate": "2027-01-19",
+  "revoked": false,
   "emergency": {
     "primary": "911",
     "secondaryLabel": "Non-emergency (E-Comm)",
-    "secondary": "604-717-3321"
+    "secondary": "604-717-3321",
+    "sourceUrl": "https://vpd.ca/contact-us/",
+    "sourceAccessedOn": "2026-07-19"
   }
 }

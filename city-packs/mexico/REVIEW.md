@@ -4,10 +4,13 @@
 |---|---|---|---|
 | Original authoring (hardcoded in `index.html`) | FanSafe prototype build | 2026-07-18 (file timestamp) | Not attributed to a named individual |
 | Extraction to `city-packs/mexico/pack.json` | Repository audit | 2026-07-19 | Mechanical extraction, schema-validated |
-| Source citation (`SOURCES.md`) | — | — | **Not done** — required before this pack can move past "sample data" status |
-| Independent content review | — | — | **Not done** |
+| Source citation (`SOURCES.md`) | Repository audit (web search against gob.mx / c5.cdmx.gob.mx / 311locatel.cdmx.gob.mx) | 2026-07-19 | **Done** — both numbers matched official sources exactly |
+| Independent human review | — | — | **Not done** — sourcing was performed by the same audit process that extracted the data; no second, independent person has confirmed it |
 
-This pack is **not yet reviewed** per `docs/content-governance.md`'s
-process. It is a reference extraction of pre-existing demo data, not a new
-reviewed contribution. Do not remove the "SAMPLE DATA — verify locally"
-UI labeling on the strength of this file's existence alone.
+**Status: sourced, not independently reviewed.** Per `docs/content-governance.md`,
+a second reviewer distinct from the submitter is required once the project
+has more than one trusted contributor — until then, the maintainer verifying
+the source URLs directly is the substitute. That maintainer verification
+has **not** happened yet for this pack; only the automated sourcing pass has.
+Keep the "SAMPLE DATA — verify locally" UI labeling until a human maintainer
+has actually opened the cited URLs and confirmed them.
