@@ -65,19 +65,62 @@ beyond what the browser already provides — see "Deliberately not doing yet."
 
 ### T3 — XSS / injection via phrase, city-pack, or saved-item content
 
-- **Mitigation in place:** none confirmed by this audit beyond the fact that
-  current content is maintainer-authored, not user- or contributor-
-  submitted. `TEST_REPORT.md` confirms 4 ids are populated via `innerHTML`
-  (`voiceFallbackInput`, `saveRiskAssessment`, `makeRiskCase`,
-  `caseUpdateText`) — these were reviewed in code per the test report, but
-  no automated XSS test exists.
-- **Missing:** an automated check that phrase/city-pack JSON content (once
-  contributions are accepted, per `docs/content-governance.md`) cannot
-  contain executable markup; a lint rule or code-review checklist item
-  flagging any new `innerHTML` usage for review.
-- **Residual risk:** low today (no external content pipeline exists yet),
-  **rising** the moment city-pack contributions are accepted without this
-  mitigation. Treat closing this gap as a Phase 1/2 blocker, not later.
+**Status: audited exhaustively and closed for all currently-existing sinks,
+2026-07-19 (public-release gate-0 session).**
+
+Every `innerHTML` assignment in `FanSafe_PWA/index.html` (24 sites) was
+read and classified by input source:
+
+| Input classification | Example | Handling |
+|---|---|---|
+| Static trusted constant (maintainer-authored arrays: `cityPacks`, `phraseBook`, `categories`, `languages`, `riskSignals`, `docChecklistItems`) | City names, phrase text, category labels | Not escaped — correct, since these are not user input and are part of the source under the same trust boundary as the code itself |
+| Browser-derived from a constrained `<select>` (fixed enum options in the HTML) | `caseType`, `documentType`, `channel` | Not escaped — correct, the value space is limited to a handful of hardcoded `<option>` values; no free text can reach these fields |
+| User-controlled free text (`<input>`/`<textarea>` values, or values read back from `localStorage` that originated from such fields) | Medical card fields, trusted-contact name/value, saved phrase/place titles, incident/case details and updates, lost-document notes, conversation transcript text | **Escaped via the existing `escapeHtml()` helper** (`index.html:1207-1209`) in 23 of 24 sites — confirmed correct by direct reading, not assumed |
+
+**Finding:** one site was NOT escaped: `renderContacts()`
+(`index.html`, `contact-avatar` div) inserted
+`c.name.slice(0,2).toUpperCase()` — derived from the trusted-contact name,
+a free-text `<input>` field (`#contactName`, no `<select>` constraint) —
+directly into `innerHTML` without calling `escapeHtml()`. Practical
+exploitability was low (only the first 2 characters of the name reach the
+sink, too short to construct a functioning tag or event-handler attribute
+in isolation), but it was inconsistent with every other user-controlled
+sink in the same file and is exactly the class of defect this audit was
+asked to close regardless of immediate exploitability.
+
+**Fix applied:** wrapped the same expression in the existing `escapeHtml()`
+helper — `escapeHtml(c.name.slice(0,2).toUpperCase())`
+(`FanSafe_PWA/index.html`, `renderContacts()`). No new dependency added
+(the helper already existed and is already used everywhere else). The
+byte-identical `FanSafe_Standalone_Prototype.html` copy was regenerated
+from the fixed file (`md5sum` re-verified to match).
+
+**Also found, not a security issue but noted for completeness:** the
+non-emergency, `SafetyCase.locationLabel` field (captured from a free-text
+`<input>` in the incident-report form) is stored in `localStorage` but is
+**never rendered anywhere** in `renderCaseList()` — a product/UX
+completeness gap, not an injection risk (nothing unescaped happens because
+nothing happens with it at all). Flagged for the maintainer as a possible
+future fix, out of scope for this security pass.
+
+- **Residual risk after fix:** low. All 24 `innerHTML` sites in the shipped
+  code now either handle only trusted/constrained input, or escape
+  user-controlled input consistently. Residual risk is limited to (a) any
+  *new* code introducing an unescaped sink in the future — mitigated by the
+  PR template checklist item added this session and by
+  `tools/validate-repo.js`'s ability to be extended with a static grep-based
+  check (see `docs/content-governance.md`'s automated-validation section for
+  the equivalent city-pack/phrase pattern; a full static analyzer for this
+  is not built, since it would require parsing JS AST — out of scope for a
+  zero-dependency validator); and (b) once external phrase/city-pack
+  contributions are accepted (`docs/content-governance.md`), that content
+  flows into sinks classified above as "static trusted constant" — human
+  PR review is the actual control there, same conclusion as before.
+- **Evidence:** direct line-by-line reading of all `innerHTML` assignments
+  in `FanSafe_PWA/index.html` during this session; `node tools/validate-
+  repo.js` re-run after the fix (still passes, id/reference counts
+  unchanged: script now 65,057 chars post-fix vs 65,045 before, ids still
+  180 unique, 174 references resolve).
 
 ### T4 — Incorrect emergency-number data reaching a real traveller
 

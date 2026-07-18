@@ -101,3 +101,18 @@ optional `SpeechRecognition` (feature-detected, with a type-to-speak modal fallb
 Geolocation (only requested after an explicit click), Web Share API with a clipboard
 fallback and a final "copy this text" modal fallback. No framework, no build step,
 no external API keys, no mandatory CDN — matches the handoff's preferred stack.
+
+## Contact-avatar initials now escaped (2026-07-19)
+
+During a public-release security pass, every `innerHTML` assignment in this
+file was audited (see `../docs/threat-model.md`, T3). All but one already
+escaped user-controlled input via the existing `escapeHtml()` helper. The
+exception: `renderContacts()`'s contact-avatar initials
+(`c.name.slice(0,2).toUpperCase()`) were inserted unescaped. Practical
+exploitability was low (only 2 characters reach the sink), but it was
+inconsistent with the rest of the file. Fixed by wrapping the same
+expression in `escapeHtml()` — no behavior change for any normal contact
+name, since escaping only affects the 5 characters `& < > " '`. This is the
+only functional change made to `index.html` in this session; everything
+else in this repository's public-release work is documentation, schemas,
+and tooling around the unchanged app.

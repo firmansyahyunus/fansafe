@@ -113,4 +113,25 @@ All of the following were driven live in a browser, not inferred from source:
   information.** All such content is explicitly labeled sample/demo data in the
   UI and must not be treated as verified.
 
+## 4. 2026-07-19 public-release gate-0 changes — what was and wasn't (re-)verified
+
+Two functional changes were made to `index.html` this session (see
+`DECISION_LOG.md`): escaping the contact-avatar initials, and adding the
+`reviewStatus`/`packReviewLabel()` provenance display (dynamic pill on the
+Safety screen, extra detail text on Travel pack cards, a static note on the
+Translate screen about phrase review status).
+
+- **Re-verified (static/automated):** `node tools/validate-repo.js` passes
+  — JS syntax valid, all 181 ids unique, all `$()/getElementById`
+  references resolve, `FanSafe_Standalone_Prototype.html` re-synced and
+  confirmed byte-identical.
+- **NOT re-verified interactively.** This session did not have interactive
+  browser automation available. The new pill text, tooltip, and note have
+  **not** been visually confirmed to render correctly, and the
+  contact-avatar escaping fix has not been re-driven through the actual
+  "add a trusted contact" flow in a live browser. Static validation catches
+  syntax errors and dangling id references; it does not catch CSS layout
+  issues or confirm the pill/tooltip actually reads as intended on screen.
+  Treat this as an open item for the next session with browser access.
+
 No claim in this report extends beyond what is listed above as tested.

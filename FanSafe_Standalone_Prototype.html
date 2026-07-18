@@ -588,6 +588,8 @@
               <button data-translate-mode="conversation" role="tab" aria-selected="false">Two-way conversation</button>
             </div>
 
+            <div class="empty-note" style="text-align:left;margin-bottom:14px" title="See phrases/REVIEW_STATUS.md in the FanSafe repository for detail">Phrases are maintainer-authored and not yet reviewed by a native speaker of the target language — verify anything safety-critical before relying on it under pressure.</div>
+
             <div class="translator-panel mode-panel" id="phraseMode">
               <div class="language-row">
                 <div class="select-shell">
@@ -710,7 +712,7 @@
               <h2>City safety brief</h2>
             </div>
             <div class="context-card">
-              <div class="context-top"><b id="safetyCityBrief">Choose a city</b><span class="verified-pill">SAMPLE DATA</span></div>
+              <div class="context-top"><b id="safetyCityBrief">Choose a city</b><span class="verified-pill" id="safetyDataPill" title="Sample data">SAMPLE DATA</span></div>
               <div class="context-grid" id="safetyContextGrid"></div>
             </div>
 
@@ -1057,20 +1059,41 @@ const languages = {
   fr: { name:"Français", flag:"🇨🇦", speech:"fr-CA" }
 };
 
+// reviewStatus/sourceAccessedOn/reviewByDate added 2026-07-19 (public-release
+// gate-0 session) to mirror the provenance recorded in city-packs/<city>/
+// SOURCES.md and REVIEW.md — see docs/content-governance.md. "sourced-
+// unreviewed" means an official primary source was cited for the numbers
+// below, but no second, independent human has yet confirmed that citation.
 const cityPacks = [
   { id:"mexico", flag:"🇲🇽", short:"CDMX", city:"Mexico City", country:"Mexico", locale:"es-MX",
     supportedLanguages:["es","en"], version:"2026.03", updatedAt:"2026-03-01",
+    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"Locatel non-emergency line", secondary:"55 5658-1111" } },
   { id:"toronto", flag:"🇨🇦", short:"YYZ", city:"Toronto", country:"Canada", locale:"en-CA",
     supportedLanguages:["en","fr"], version:"2026.02", updatedAt:"2026-02-14",
+    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"City / community non-emergency", secondary:"311 / 211" } },
   { id:"newyork", flag:"🇺🇸", short:"NYC", city:"New York / New Jersey", country:"United States", locale:"en-US",
     supportedLanguages:["en","es"], version:"2026.01", updatedAt:"2026-01-20",
+    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"NYC non-emergency", secondary:"311" } },
   { id:"vancouver", flag:"🇨🇦", short:"YVR", city:"Vancouver", country:"Canada", locale:"en-CA",
     supportedLanguages:["en"], version:"2026.03", updatedAt:"2026-03-10",
+    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"Non-emergency (E-Comm)", secondary:"604-717-3321" } }
 ];
+
+// Human-readable labels for cityPacks[].reviewStatus — keep in sync with
+// schemas/city-pack.schema.json's implied vocabulary and
+// docs/content-governance.md.
+const PACK_REVIEW_LABELS = {
+  "sample": { pill:"SAMPLE DATA", detail:"Sample data — verify locally" },
+  "sourced-unreviewed": { pill:"SOURCED · UNREVIEWED", detail:"Official source cited, not yet independently reviewed — verify locally" },
+  "community-reviewed": { pill:"COMMUNITY-REVIEWED", detail:"Reviewed by a second contributor — still verify locally before relying on it" }
+};
+function packReviewLabel(pack){
+  return PACK_REVIEW_LABELS[pack.reviewStatus] || PACK_REVIEW_LABELS.sample;
+}
 
 const categories = [
   { id:"emergency", label:"Emergency", icon:"🆘" },
@@ -1590,7 +1613,7 @@ $("#transcriptToggle").addEventListener("change", (e) => {
 function packDetailText(pack){
   const count = phraseBook.length;
   const langs = pack.supportedLanguages.map(c => languages[c].name).join(" + ");
-  return langs + " · " + count + " curated phrases · v" + pack.version;
+  return langs + " · " + count + " curated phrases · v" + pack.version + " · " + packReviewLabel(pack).detail;
 }
 function packCardHtml(pack, source){
   const downloaded = isPackDownloaded(pack.id);
@@ -1958,7 +1981,7 @@ function renderContacts(){
   const container = $("#contactList");
   if(!state.trustedContacts.length){ container.innerHTML = '<div class="empty-note" style="margin-top:12px">No trusted contacts yet.</div>'; return; }
   container.innerHTML = state.trustedContacts.map(c => (
-    '<div class="contact-row"><div class="contact-avatar">'+c.name.slice(0,2).toUpperCase()+'</div>'+
+    '<div class="contact-row"><div class="contact-avatar">'+escapeHtml(c.name.slice(0,2).toUpperCase())+'</div>'+
     '<div class="copy"><b>'+escapeHtml(c.name)+(c.primary?'<span class="primary-badge">PRIMARY</span>':'')+'</b><small>'+escapeHtml(c.value)+' · '+c.channel.replace("_"," ")+'</small></div>'+
     '<div class="contact-actions">'+
       (!c.primary ? '<button data-make-primary="'+c.id+'" title="Make primary">★</button>' : '') +
@@ -2100,6 +2123,9 @@ function renderHome(){
 function renderSafety(){
   const city = activeCity();
   $("#safetyLocationPill").textContent = "📍 " + city.city + " · Demo";
+  const reviewLabel = packReviewLabel(city);
+  $("#safetyDataPill").textContent = reviewLabel.pill;
+  $("#safetyDataPill").title = reviewLabel.detail + (city.reviewByDate ? " · next review " + city.reviewByDate : "");
   $("#emergencyNumberLabel").textContent = "Sample number for " + city.city;
   $("#emergencyNumberValue").textContent = city.emergency.primary;
   $("#emergencyCall").href = "tel:" + city.emergency.primary;
