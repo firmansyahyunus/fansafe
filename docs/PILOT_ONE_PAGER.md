@@ -30,4 +30,3 @@ claimed by this document.
 Before recruiting external travellers, obtain independent human review of
 city-pack sources, resolve the denied-geolocation fallback evidence gap, and
 agree a participant-consent and incident-escalation plan with the pilot host.
-

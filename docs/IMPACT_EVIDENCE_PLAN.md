@@ -21,4 +21,3 @@ Publish aggregate, de-identified observations only after consent and approval
 from the pilot host. Report participant count, tasks, limitations, adverse
 events, and missing data. Absence of complaints is not evidence of safety or
 impact.
-

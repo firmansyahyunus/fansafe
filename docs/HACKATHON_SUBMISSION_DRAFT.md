@@ -30,4 +30,3 @@ not ready to claim external pilot outcomes.
 Choose a target hackathon; check its rules for licence, team, asset, privacy,
 and AI-use disclosures; obtain owner approval; then tailor this text. Do not
 submit this generic draft as-is.
-

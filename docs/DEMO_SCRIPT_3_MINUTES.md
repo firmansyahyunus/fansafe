@@ -32,4 +32,3 @@ public demo.
 “The code is ready for inspection, but public alpha is still blocked by
 independent review of city data and a denied-geolocation fallback check.
 Safety-critical translations are intentionally marked unreviewed.”
-
