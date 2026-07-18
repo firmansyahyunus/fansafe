@@ -28,14 +28,14 @@ the exact two items that gate the "public preview" label, and
   `CODE_OF_CONDUCT.md`, `SECURITY.md`, `PRIVACY.md`, `GOVERNANCE.md`,
   `ROADMAP.md`, `CHANGELOG.md`, `CITATION.cff`, `TRADEMARK.md`)
 - Official-source citations for all 4 demo cities' emergency numbers
-  (`city-packs/<city>/SOURCES.md`) — three matched exactly, two have noted
-  scope gaps (see `docs/PUBLIC_RELEASE_CHECKLIST.md`)
+  (`city-packs/<city>/SOURCES.md`) — all remain sourced but not
+  independently human-reviewed
 - Phrase review-status tracking for all 9 safety-critical phrases
   (`phrases/`)
 - In-app provenance indicators: city-pack sourcing status pill (Safety
   screen), pack detail text (Travel screen), phrase review note (Translate
   screen)
-- Extended CI validation: 12 automated check categories
+- Extended CI validation: 13 automated check categories
   (`tools/validate-repo.js`), including a static heuristic scan for
   unescaped user-controlled data in HTML rendering
 - GitHub issue/PR templates, funding-config draft, CI workflow
@@ -51,13 +51,16 @@ the exact two items that gate the "public preview" label, and
 ### Known gaps in this release
 
 - No independent (second-person) review of sourced emergency numbers yet.
-- Interactive browser testing of this release's UI changes has not been
-  performed (no browser automation available in the session that produced
-  them) — see `FanSafe_PWA/TEST_REPORT.md` §4.
-- Toronto pack's non-emergency numbers are general city/community
-  services, not the police-specific non-emergency line.
-- "New York / New Jersey" pack is verified for New York City only.
+- Browser smoke testing is recorded in
+  `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`; the
+  denied-geolocation fallback remains unverified.
+- Toronto's 311 and 211 entries are city/community services, respectively;
+  neither is represented as police non-emergency.
+- New York City is the pack's explicit scope; New Jersey is not covered.
 - No pilot has run; no external contributor has used this repository yet.
+- The current git-ignored `FanSafe_PWA.zip` is integrity-valid but not aligned
+  with this source tree; regenerate it from the approved release commit before
+  any distribution.
 
 ### Not included (by design)
 

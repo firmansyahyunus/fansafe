@@ -5,6 +5,15 @@ There are no tagged releases yet — everything below is `Unreleased`.
 
 ## [Unreleased]
 
+### Changed
+
+- Toronto's 311 and 211 service label now distinguishes city services from
+  community services and makes no police-non-emergency claim.
+- The `newyork` pack and the running app now explicitly cover New York City
+  only; New Jersey is not represented without separately sourced data.
+- Legacy New York/New Jersey localStorage values are migrated safely to the
+  `newyork` city id without overwriting an existing New York City pack status.
+
 ### Added
 
 - Repository-level open-source and funding-readiness audit
@@ -18,23 +27,23 @@ There are no tagged releases yet — everything below is `Unreleased`.
   `.github/FUNDING.yml` (draft, inert placeholders), `.github/workflows/ci.yml`.
 - `tools/validate-repo.js` (static repo checks) and
   `tools/validate-city-pack.js` (zero-dependency JSON Schema-style validator).
+- `tools/validate-gate1.js`, `schemas/service-contact.schema.json`, and
+  typed Toronto `services` fields for city/community contacts.
 - `schemas/city-pack.schema.json`, `schemas/phrase.schema.json`,
   `schemas/emergency-info.schema.json`.
 - `city-packs/<city>/pack.json` + `SOURCES.md` + `REVIEW.md` for the four
-  existing demo cities (Mexico City, Toronto, New York/New Jersey,
-  Vancouver), extracted as reference artifacts from the data already
-  hardcoded in `FanSafe_PWA/index.html`. **The running app is unchanged and
-  still uses its own inline arrays** — this is documentation/tooling, not a
-  behavior change.
+  then-current demo cities, extracted as reference artifacts from the data
+  already hardcoded in `FanSafe_PWA/index.html`. **At that point the running
+  app was unchanged and still used its own inline arrays** — this was
+  documentation/tooling, not a behavior change.
 
-### Unchanged (explicitly, to avoid ambiguity)
+### Current implementation boundary
 
-- `FanSafe_PWA/index.html`, `sw.js`, `manifest.json`, and the icons were not
-  modified.
-- `FanSafe_Standalone_Prototype.html` remains byte-identical to
-  `FanSafe_PWA/index.html` (re-verified: `md5sum` matches).
-- `FanSafe_PWA/README.md`, `DECISION_LOG.md`, `SCREEN_MAP.md`,
-  `STATE_SCHEMA.md`, `TEST_REPORT.md` were not modified.
+- `FanSafe_PWA/index.html` now renders the typed Toronto services and the
+  New York City scope; `FanSafe_Standalone_Prototype.html` remains
+  byte-identical to it.
+- `sw.js`, `manifest.json`, and the icons were not changed in this release
+  preparation.
 
 ### Prior history
 

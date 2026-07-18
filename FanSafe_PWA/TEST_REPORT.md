@@ -101,9 +101,9 @@ All of the following were driven live in a browser, not inferred from source:
 - **True PWA install + standalone window.** Chrome's install banner appeared
   (proof the manifest + service worker are recognized as installable), but the app
   was not actually installed and reopened in standalone display mode.
-- **True offline reload.** The service worker's cache-first/offline fallback
-  behavior was reviewed in code (`sw.js`) but not exercised by disconnecting the
-  network and reloading.
+- **Offline reliability beyond one smoke context.** The release-evidence
+  HeadlessChrome check exercised an offline reload successfully, but there is
+  no cross-browser, device, or installed-PWA offline verification yet.
 - **Screen reader / assistive technology.** No NVDA, VoiceOver, or TalkBack pass was
   performed. Semantic headings, form labels, focus-visible styling, and `aria-*`
   attributes were code-reviewed only.
@@ -113,7 +113,7 @@ All of the following were driven live in a browser, not inferred from source:
   information.** All such content is explicitly labeled sample/demo data in the
   UI and must not be treated as verified.
 
-## 4. 2026-07-19 public-release gate-0 changes — what was and wasn't (re-)verified
+## 4. 2026-07-19 public-release gates — what was and wasn't (re-)verified
 
 Two functional changes were made to `index.html` this session (see
 `DECISION_LOG.md`): escaping the contact-avatar initials, and adding the
@@ -125,13 +125,15 @@ Translate screen about phrase review status).
   — JS syntax valid, all 181 ids unique, all `$()/getElementById`
   references resolve, `FanSafe_Standalone_Prototype.html` re-synced and
   confirmed byte-identical.
-- **NOT re-verified interactively.** This session did not have interactive
-  browser automation available. The new pill text, tooltip, and note have
-  **not** been visually confirmed to render correctly, and the
-  contact-avatar escaping fix has not been re-driven through the actual
-  "add a trusted contact" flow in a live browser. Static validation catches
-  syntax errors and dangling id references; it does not catch CSS layout
-  issues or confirm the pill/tooltip actually reads as intended on screen.
-  Treat this as an open item for the next session with browser access.
+- **Re-verified in a real browser on 2026-07-19.** The provenance pill,
+  Travel pack detail, Translate review note, Toronto's separate 911/311/211
+  contexts, and New York City scope rendered as intended in HeadlessChrome.
+  The trusted-contact flow rendered three hostile-looking strings as inert
+  text and the first remained inert after reload. A focused follow-up also
+  confirmed legacy New York/New Jersey localStorage migration. Evidence,
+  environment, screenshots, and the offline reload result are in
+  `../docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`.
+- **Still not fully complete:** the test browser left geolocation permission
+  pending, so the denied-geolocation fallback is not claimed as verified.
 
 No claim in this report extends beyond what is listed above as tested.

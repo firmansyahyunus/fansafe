@@ -5,7 +5,9 @@ privacy-preserving prototype originally built for football/World Cup-style
 supporter travel: offline city packs, phrase translation, an emergency action
 flow, a private medical card, trusted-contact check-ins, and a scam/fake-ticket
 risk checker — all running from a single static file, with no account, no
-server, and no data leaving the device.
+server, and no data leaving the device. Its secondary positioning is an
+**open-source supporter-safety reference application for large international
+events**; it is not event emergency infrastructure.
 
 **Not officially affiliated with FIFA, any World Cup organizing body, or any
 government or emergency service.** See [`TRADEMARK.md`](TRADEMARK.md).
@@ -20,8 +22,8 @@ government or emergency service.** See [`TRADEMARK.md`](TRADEMARK.md).
 > "preview." Read [`docs/open-source-strategy.md`](docs/open-source-strategy.md)
 > and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
 > before assuming this is contributor-, sponsor-, or pilot-ready — see
-> "Current maturity" below for the honest classification and the two
-> specific, cheap items that gate the next tier.
+> "Current maturity" below for the honest classification and the remaining
+> verification gates.
 
 FanSafe is the only active product scope. **FanLocal** (a possible future
 marketplace/booking companion) is not implemented anywhere in this repository
@@ -79,10 +81,10 @@ Local records always carry a "local record only" label.
   authentication service.
 - No claim of translation accuracy — see "Content provenance."
 - See [`FanSafe_PWA/TEST_REPORT.md`](FanSafe_PWA/TEST_REPORT.md) for the
-  exhaustive list of what has and hasn't actually been tested (audio
-  playback, live speech recognition, geolocation success/denial paths,
-  true offline reload, screen readers, and cross-browser/cross-device are
-  all currently **untested**).
+  exhaustive list of what has and hasn't actually been tested. Audio playback,
+  live speech recognition, geolocation success/denial paths, screen readers,
+  and cross-browser/cross-device remain **untested**; a single-browser offline
+  reload smoke check is not broader compatibility evidence.
 
 ## Privacy model
 
@@ -128,9 +130,9 @@ Then open `http://localhost:8080/` and use your browser's "Install app" option.
 
 `FanSafe_PWA/sw.js` caches the app shell (`index.html`, `manifest.json`,
 icons) on install using a stale-while-revalidate strategy, and falls back
-to the cached `index.html` when the network is unavailable. **This has
-been code-reviewed but not exercised by actually disconnecting the network
-and reloading** — see `TEST_REPORT.md`, "Not tested."
+to the cached `index.html` when the network is unavailable. One HeadlessChrome
+smoke check exercised an offline reload; it is not proof of cross-browser or
+device reliability. See `TEST_REPORT.md` and the release evidence.
 
 ## Validating city packs and phrases
 
@@ -146,14 +148,12 @@ city-pack/phrase contribution and review process.
 
 ## Content provenance
 
-City-pack emergency numbers were checked against official primary sources
-on 2026-07-19 (government/police/311-311-service sites — not travel blogs
-or SEO content). Three of four packs matched their official sources
-exactly with no open questions; the Toronto pack has a noted scope gap
-(its listed non-emergency numbers are general city/community services, not
-the police-specific non-emergency line), and the New York pack's stated
-"New York / New Jersey" scope was only verified for the New York City side.
-Full per-city detail, exact source URLs, and access dates:
+City-pack emergency numbers were sourced from official primary sources on
+2026-07-19 (government/police/311-service sites — not travel blogs or SEO
+content). Toronto distinguishes its city-services 311 and community-services
+211 entries and does not call either a police line. The New York pack is
+scoped to New York City, the scope of its cited sources. Full per-city
+detail, exact source URLs, and access dates:
 `city-packs/<city>/SOURCES.md` and `REVIEW.md`.
 
 **None of this sourcing has been independently reviewed by a second
@@ -201,20 +201,21 @@ security/privacy policy, and officially-sourced — if not yet independently
 reviewed — content), but deliberately **not** labeled "public preview" yet,
 and not "contributor-ready" or "pilot-ready" (no external contributor or
 pilot has used this repository). An independent advisory review of this
-session's work concluded the label should stay one notch conservative
-until two specific, low-cost items clear:
+session's work concluded the label should stay one notch conservative until
+the remaining verification gates clear:
 
 1. **A second human verifies the four cities' emergency numbers** against
    the sources cited in `city-packs/<city>/SOURCES.md` — the current
    sourcing pass was done by the same process that audited the repository,
    with no independent check yet. For a safety app, this is the one
    verification that matters most.
-2. **One manual browser pass** confirming the new provenance indicators
-   (Safety-screen pill, Travel-screen pack detail, Translate-screen note)
-   actually render as intended — they were added without browser access in
-   the session that wrote them (see `FanSafe_PWA/TEST_REPORT.md` §4).
+2. **The denied-geolocation fallback check.** A real-browser smoke pass has
+   confirmed the provenance indicators, city labels, injection handling,
+   medical-card reveal, reset, service-worker control, and offline reload;
+   its browser context did not resolve a denied geolocation request. See
+   `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`.
 
-Both are feasible within a day for the maintainer. Until then, the honest
+Both are feasible for the maintainer. Until then, the honest
 label is "credible public repository, pending independent data
 verification" rather than "public preview." See
 [`docs/open-source-strategy.md`](docs/open-source-strategy.md) for the full

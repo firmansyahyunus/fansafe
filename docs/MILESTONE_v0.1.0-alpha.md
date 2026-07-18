@@ -11,22 +11,22 @@ boundaries (no push, no release, no remote configuration without approval).
 
 ## Description (proposed)
 
-> Tracks the two items that gate the "public preview" label (see
-> `docs/PUBLIC_RELEASE_CHECKLIST.md` items 12–13): interactive browser
-> re-verification of the 2026-07-19 UI changes, and independent
-> (second-person) review of `city-packs/*/SOURCES.md`. Also tracks
-> resolving the Toronto police-non-emergency gap and the New York/New
-> Jersey scope gap, and any fixes surfaced by actually exercising the app
-> in a real browser session.
+> Tracks the remaining verification gates in
+> `docs/PUBLIC_RELEASE_CHECKLIST.md`: the denied-geolocation browser fallback
+> and independent (second-person) review of `city-packs/*/SOURCES.md`. The
+> real-browser pass, Toronto city/community-service taxonomy correction, and
+> New York City scope correction are recorded in
+> `docs/release-evidence/v0.1.0-alpha/`.
 
 ## Proposed issues to attach
 
-1. **Interactive browser re-verification of gate-0 UI changes**
+1. **Complete denied-geolocation fallback verification**
    Labels: `testing`, `priority-high`
-   Body: verify the city-pack review-status pill (Safety screen), pack
-   card detail text (Travel screen), and phrase-review note (Translate
-   screen) actually render correctly; re-drive the "add trusted contact"
-   flow to confirm the escaping fix doesn't break normal names.
+   Body: the browser smoke test verified navigation, provenance displays,
+   Toronto taxonomy, New York City scope, trusted-contact escaping, medical
+   reveal, reset, and offline reload. Its browser context left geolocation
+   pending, so explicitly exercise a denied permission and confirm the safe
+   general-location fallback. Update the smoke-test evidence with the result.
 
 2. **Independent review of city-pack emergency-number sources**
    Labels: `content-governance`, `priority-high`
@@ -34,20 +34,7 @@ boundaries (no push, no release, no remote configuration without approval).
    opens each URL in `city-packs/<city>/SOURCES.md` and confirms the cited
    number matches. Update each `REVIEW.md` accordingly.
 
-3. **Resolve Toronto police-non-emergency number gap**
-   Labels: `content-governance`, `priority-medium`
-   Body: `city-packs/toronto/SOURCES.md` found that TPS's own
-   police-specific non-emergency number (416-808-2222) differs from the
-   `311`/`211` city/community numbers currently in the pack. Decide
-   whether to add a dedicated field or a second pack entry.
-
-4. **Resolve New York / New Jersey pack scope**
-   Labels: `content-governance`, `priority-medium`
-   Body: `city-packs/newyork/SOURCES.md` found the pack's stated scope
-   ("New York / New Jersey") is only verified for NYC. Split the pack or
-   narrow its `city` field.
-
-5. **city-pack schema: express "reviewedBy required if reviewStatus claims
+3. **city-pack schema: express "reviewedBy required if reviewStatus claims
    review" in schema itself, or document as JS-only rule**
    Labels: `tooling`, `priority-low`
    Body: `schemas/phrase.schema.json` documents this rule in prose because
@@ -55,7 +42,7 @@ boundaries (no push, no release, no remote configuration without approval).
    if/then support; `tools/validate-phrases.js` enforces it in code. Decide
    if this is sufficient long-term or needs a schema-level fix.
 
-6. **Phase 2 architecture: wire city-packs/*/pack.json into the running app**
+4. **Phase 2 architecture: wire city-packs/*/pack.json into the running app**
    Labels: `architecture`, `priority-low`
    Body: per `docs/architecture.md`, Phase 2 — `index.html` still uses its
    own inline `cityPacks` array; the `city-packs/` extraction is reference-

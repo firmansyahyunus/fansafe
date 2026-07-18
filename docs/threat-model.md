@@ -137,8 +137,9 @@ future fix, out of scope for this security pass.
 
 - **Mitigation in place:** cache is same-origin; `sw.js` uses a versioned
   cache name (`fansafe-cache-v1`) and clears old caches on `activate`.
-- **Missing:** no integrity/signature check on cached content; not tested
-  under a true offline reload (`TEST_REPORT.md`, "Not tested").
+- **Missing:** no integrity/signature check on cached content; the offline
+  reload evidence is limited to one HeadlessChrome smoke context and is not
+  cross-browser or installed-PWA assurance.
 - **Residual risk:** low while there is no server-side deployment and no
   update channel other than redeploying the static files wholesale.
 

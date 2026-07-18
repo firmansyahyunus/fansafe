@@ -67,6 +67,6 @@ No build step, no `npm install`, no API keys, no mandatory CDN.
   browser/device. Both are feature-detected with graceful fallbacks (a type-to-speak
   modal, and a "not supported" toast, respectively).
 - Emergency numbers are sample/demo data for four cities (Mexico City, Toronto,
-  New York/New Jersey, Vancouver) and must be verified locally before real travel.
+  New York City, Vancouver) and must be verified locally before real travel.
 - Flag emoji render as two-letter codes on Windows/Chrome — a known OS font
   limitation, not an app bug (Mac/iOS render real flags).

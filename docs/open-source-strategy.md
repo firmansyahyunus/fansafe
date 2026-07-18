@@ -215,8 +215,9 @@ cannot move — that is intentional, not an oversight.
 
 - **Evidence:** working, honestly-tested prototype; `TEST_REPORT.md`
   explicitly lists major untested paths (audio playback, live speech
-  recognition, geolocation success/denial, true offline reload, screen
-  readers, cross-browser/cross-device).
+  recognition, geolocation success/denial, screen readers, and
+  cross-browser/cross-device; one HeadlessChrome offline reload smoke check
+  exists but is not broader offline compatibility evidence).
 - **Missing evidence:** all of the above "not tested" items.
 - **Confidence:** high (directly from the test report, independently spot-
   checked).
