@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: >-
+  If you use or reference FanSafe in academic, civic-tech, or research work,
+  please cite it using the metadata below. This is a prototype-stage
+  project — cite the commit/version you actually used.
+title: FanSafe
+type: software
+abstract: >-
+  An offline-first, privacy-preserving safety, translation, and
+  travel-assistance prototype for international travellers: offline city
+  packs, phrase translation, two-way conversation, an emergency action flow,
+  a local-only medical card, trusted-contact check-ins, lost-document
+  guidance, and a scam/fake-ticket risk checker. Single-file (no build step,
+  no server, no external dependencies); all data stays on-device.
+authors:
+  - name: "FanSafe project contributors"
+# license is PROVISIONAL — tracks the recommendation in LICENSE-PROPOSAL.md,
+# not a finalized grant. Update once a human owner confirms it (see that file).
+license: Apache-2.0
+license-url: "https://github.com/PLACEHOLDER/fansafe/blob/main/LICENSE-PROPOSAL.md"
+repository-code: "PLACEHOLDER — no remote configured yet; update once this repository has one (see Git handoff section of the audit report)"
+date-released: "PLACEHOLDER — update on first tagged release"
+keywords:
+  - offline-first
+  - privacy
+  - travel-safety
+  - progressive-web-app
+  - accessibility

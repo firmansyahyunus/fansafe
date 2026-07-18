@@ -1,0 +1,22 @@
+FanSafe
+Copyright (c) 2026 the FanSafe project contributors
+
+This NOTICE file is a draft, prepared ahead of a final license decision.
+See LICENSE-PROPOSAL.md — no license has been finalized as of this writing.
+
+When finalized, the intended split is:
+
+  - Application source code: Apache License, Version 2.0
+  - Documentation:           Creative Commons Attribution 4.0 (CC-BY-4.0)
+  - Phrase/translation content and city emergency-number data:
+                              Creative Commons Zero 1.0 (CC0-1.0)
+  - "FanSafe" name, wordmark, and app icons: all rights reserved
+                              (see TRADEMARK.md)
+
+Third-party dependencies: NONE. FanSafe_PWA/index.html has no build step, no
+package manager dependencies, and loads no external script, font, or CDN
+resource at runtime (verified: no <script src="http...">, no external
+stylesheet links, and the only literal external URL in the source is a
+Google Maps deep link constructed client-side for a "get directions"
+message — it is never fetched by the app itself). This section will be
+updated the moment any third-party dependency is introduced.
