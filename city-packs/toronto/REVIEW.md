@@ -2,15 +2,13 @@
 
 | Stage | Who | Date | Status |
 |---|---|---|---|
-| Original authoring (hardcoded in `index.html`) | FanSafe prototype build | 2026-07-18 | Not attributed to a named individual |
-| Extraction to `city-packs/toronto/pack.json` | Repository audit | 2026-07-19 | Mechanical extraction, schema-validated |
-| Service taxonomy correction | Repository gate-1 maintenance | 2026-07-19 | 311 is city services and 211 is community referral; neither is police non-emergency |
-| Source citation (`SOURCES.md`) | Repository audit | 2026-07-19 | Sources recorded |
-| Submitted human-review decision | SABR | 2026-07-19 | `APPROVE` decision supplied; reviewed commit was left as a placeholder |
+| Original authoring | FanSafe prototype build | 2026-07-18 | Not attributed to a named individual |
+| Extraction and taxonomy correction | Repository audit and gate-1 maintenance | 2026-07-19 | Schema-validated; 311 city services and 211 community referral |
+| Independent human source review | SABR | 2026-07-19 | APPROVE; commit `383a08ebbe337f1f9d43ab5299953cf6038d6316` |
 
-**Status: sourced, review decision metadata incomplete.** The supplied
-decision confirms 911 as emergency, 311 as City of Toronto services, and 211
-as Ontario community/social-services referral. It also confirms that the pack
-intentionally omits a police non-emergency service. It cannot close the
-independent-review gate until the reviewer records the actual commit reviewed.
-Keep the "SAMPLE DATA - verify locally" UI labeling.
+SABR re-opened the cited Toronto Police Service, City of Toronto, and 211
+Ontario sources and approved 911, 311 city services, and 211 community
+referral. No police non-emergency service was added or claimed.
+
+**Status: independently reviewed.** Keep the "SAMPLE DATA - verify locally"
+UI label: the review confirms cited facts as of its date, not future accuracy.

@@ -1062,25 +1062,26 @@ const languages = {
 // reviewStatus/sourceAccessedOn/reviewByDate added 2026-07-19 (public-release
 // gate-0 session) to mirror the provenance recorded in city-packs/<city>/
 // SOURCES.md and REVIEW.md — see docs/content-governance.md. "sourced-
-// unreviewed" means an official primary source was cited for the numbers
-// below, but no second, independent human has yet confirmed that citation.
+// unreviewed" means an official primary source was cited but no independent
+// review was recorded. "community-reviewed" records SABR's 2026-07-19 review;
+// all displayed numbers remain sample data to verify locally.
 const cityPacks = [
   { id:"mexico", flag:"🇲🇽", short:"CDMX", city:"Mexico City", country:"Mexico", locale:"es-MX",
-    supportedLanguages:["es","en"], version:"2026.03", updatedAt:"2026-03-01",
-    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
+    supportedLanguages:["es","en"], version:"2026.04", updatedAt:"2026-07-19",
+    reviewStatus:"community-reviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"Locatel non-emergency line", secondary:"55 5658-1111" } },
   { id:"toronto", flag:"🇨🇦", short:"YYZ", city:"Toronto", country:"Canada", locale:"en-CA",
-    supportedLanguages:["en","fr"], version:"2026.03", updatedAt:"2026-07-19",
-    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
+    supportedLanguages:["en","fr"], version:"2026.04", updatedAt:"2026-07-19",
+    reviewStatus:"community-reviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911" },
     services:{ city_services:{ label:"City services", number:"311" }, community_services:{ label:"Community referral", number:"211" } } },
   { id:"newyork", flag:"🇺🇸", short:"NYC", city:"New York City", country:"United States", locale:"en-US",
-    supportedLanguages:["en","es"], version:"2026.02", updatedAt:"2026-07-19",
-    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
+    supportedLanguages:["en","es"], version:"2026.03", updatedAt:"2026-07-19",
+    reviewStatus:"community-reviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"NYC non-emergency", secondary:"311" } },
   { id:"vancouver", flag:"🇨🇦", short:"YVR", city:"Vancouver", country:"Canada", locale:"en-CA",
-    supportedLanguages:["en"], version:"2026.04", updatedAt:"2026-07-19",
-    reviewStatus:"sourced-unreviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
+    supportedLanguages:["en"], version:"2026.05", updatedAt:"2026-07-19",
+    reviewStatus:"community-reviewed", sourceAccessedOn:"2026-07-19", reviewByDate:"2027-01-19",
     emergency:{ primary:"911", secondaryLabel:"Vancouver Police Department non-emergency", secondary:"604-717-3321" } }
 ];
 
@@ -1090,7 +1091,7 @@ const cityPacks = [
 const PACK_REVIEW_LABELS = {
   "sample": { pill:"SAMPLE DATA", detail:"Sample data — verify locally" },
   "sourced-unreviewed": { pill:"SOURCED · UNREVIEWED", detail:"Official source cited, not yet independently reviewed — verify locally" },
-  "community-reviewed": { pill:"COMMUNITY-REVIEWED", detail:"Reviewed by a second contributor — still verify locally before relying on it" }
+  "community-reviewed": { pill:"INDEPENDENTLY REVIEWED", detail:"Official sources re-checked by SABR — still verify locally before relying on them" }
 };
 function packReviewLabel(pack){
   return PACK_REVIEW_LABELS[pack.reviewStatus] || PACK_REVIEW_LABELS.sample;

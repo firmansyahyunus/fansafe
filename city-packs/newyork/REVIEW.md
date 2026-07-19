@@ -2,15 +2,13 @@
 
 | Stage | Who | Date | Status |
 |---|---|---|---|
-| Original authoring (hardcoded in `index.html`) | FanSafe prototype build | 2026-07-18 | Not attributed to a named individual |
-| Scope correction to New York City | Repository gate-1 maintenance | 2026-07-19 | Pack/UI narrowed to cited NYC scope; no New Jersey claim remains |
-| Source citation (`SOURCES.md`) | Repository audit | 2026-07-19 | NYC citations recorded |
-| Submitted human-review decision | SABR | 2026-07-19 | `APPROVE` decision supplied; reviewed commit was left as a placeholder |
+| Original authoring | FanSafe prototype build | 2026-07-18 | Not attributed to a named individual |
+| Scope correction to New York City | Repository gate-1 maintenance | 2026-07-19 | No New Jersey claim remains |
+| Independent human source review | SABR | 2026-07-19 | APPROVE; commit `383a08ebbe337f1f9d43ab5299953cf6038d6316` |
 
-**Status: sourced for New York City, review decision metadata incomplete.**
-The supplied decision says NYPD 911 and NYC311 311 match their cited sources,
-and confirms that no New Jersey or statewide claim remains. It cannot close
-the independent-review gate until the reviewer records the actual commit
-reviewed. Keep the "SAMPLE DATA - verify locally" UI labeling; a separate
-New Jersey pack has not been
-researched or reviewed.
+SABR re-opened the cited NYPD and NYC311 sources and approved 911, 311 city
+services, and New York City-only scope. No New Jersey or statewide claim was
+approved.
+
+**Status: independently reviewed.** Keep the "SAMPLE DATA - verify locally"
+UI label: the review confirms cited facts as of its date, not future accuracy.

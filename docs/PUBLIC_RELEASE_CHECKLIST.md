@@ -52,6 +52,19 @@ still a literal placeholder. Item 13 therefore remains open: the reviewer must
 record that commit before the decisions can count as auditable, independent
 confirmation.
 
+## Gate 1 completion update (2026-07-19)
+
+This update supersedes the earlier table's preliminary status for items 5, 12,
+and 13. SABR independently reviewed all four city packs at commit
+`383a08ebbe337f1f9d43ab5299953cf6038d6316`; the four `REVIEW.md` files and
+release evidence record the approvals. The manual tester also recorded a
+denied-geolocation fallback pass for that commit. Safety-critical translations
+remain deliberately `unreviewed`.
+
+Items 14-16 remain outside this completion update: no remote or publication is
+authorized, and the ZIP must be regenerated from the final release candidate
+before any distribution.
+
 ## What "credible public repository, release-candidate for public preview" means given the above
 
 This repository already lets a stranger:

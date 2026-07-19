@@ -24,7 +24,7 @@
 | Reset demo data | Pass | Confirmation listed the affected local data; confirming restored an empty 0% first-run state. |
 | Service worker / offline reload | Pass | `navigator.serviceWorker.controller` returned `true`; after setting browser network state to offline, reload retained the app shell and bundled city/phrase content. UI still described the data as sample/prototype, not live external data. |
 | Geolocation requested only after click | Pass | No request was made during initial load; `Share my location` initiated the request after an explicit click. |
-| Denied geolocation fallback | Not verified | This browser context left the permission request pending and did not resolve it as denied. No pass is claimed. |
+| Denied geolocation fallback | Pass | Manual tester selected `Never allow`; the permission prompt closed and the device share/email sheet opened with the general-location fallback. No email was sent and no console errors were reported. |
 
 The first attempt opened the repository-root directory listing rather than the
 PWA path; it was discarded as harness setup, not treated as app evidence. The
@@ -78,10 +78,20 @@ clicked. The final screenshot also shows the safe general-location fallback:
 `I'm currently in Mexico City. I don't have precise coordinates available...`
 and no precise coordinates or delivery claim.
 
-**Result: partial pass, not a denied-permission pass.** The browser prompt is
-still visible with a `Never allow` option in the final screenshot. Therefore
-the evidence does not show that the user selected denial or that the browser
-returned a permission-denied callback; the fallback may have followed the
-application timeout. A final test must select `Never allow`, wait for the
-prompt to disappear, confirm the same fallback, and record browser/OS version,
-tested commit, and console result.
+**Result: pass by manual tester attestation.** The tester subsequently selected
+`Never allow`; the prompt closed and the device share/email sheet opened with
+the same general-location fallback. The tester reports that no email was sent
+and the Console had no errors. The final post-selection screenshot was not
+supplied, so this is a documented manual attestation rather than a screenshot
+of the completed browser state.
+
+### Completed denial follow-up
+
+- Date: 2026-07-19
+- OS: Microsoft Windows 11 Pro 10.0.26200
+- Browser: Google Chrome 150.0.7871.125
+- Local origin: `http://127.0.0.1:8081`
+- Commit tested: `383a08ebbe337f1f9d43ab5299953cf6038d6316`
+- Result: `Never allow` selected; permission prompt closed; email/share sheet
+  opened with the general-location fallback; no email sent; Console errors
+  reported by tester: none.

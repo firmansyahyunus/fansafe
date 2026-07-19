@@ -21,6 +21,16 @@ licensed for reuse. See `docs/PUBLIC_RELEASE_CHECKLIST.md` items 12–13 for
 the exact two items that gate the "public preview" label, and
 `docs/open-source-strategy.md` for the full readiness assessment.
 
+### Gate 1 verification completion update
+
+The earlier preliminary wording about independent source review and denied
+geolocation is superseded by the final evidence. SABR approved all four city
+packs at commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`. A manual tester
+selected `Never allow` for geolocation at the same commit; the safe
+general-location fallback opened through the device email/share sheet, with no
+email sent and no Console errors reported. Safety-critical translations remain
+`unreviewed`.
+
 ### Added this release
 
 - Apache-2.0 license for code and tooling (`LICENSE`)
