@@ -38,6 +38,9 @@ proper PWA route had no console errors during the recorded checks.
 | `screenshots/translation-review-status.png` | `AC60DFBA04B56529405C03F436BAF48BF89E042EC3D7EF7B040709FBDB8B2D34` |
 | `screenshots/trusted-contact-injection.png` | `DF2334836F2E1A605F371E5D467A26062C9F6C52A06000996F94B3B5BFD26FDD` |
 | `screenshots/offline-reload.png` | `F40C7766C7F0CA516BA7D726A829AF09C3AF1891A42FD399D94024F0FEEF1D99` |
+| `screenshots/denied-geolocation-city-selection.png` | `7896F5DC26320BF72A9F100F93702CB8197E15684EE3B09D320EAEA20DD1847D` |
+| `screenshots/denied-geolocation-before-request.png` | `95401436C508AB8C0E0EDB416BD85B7EF78BA9883261948A09EDCC2839766277` |
+| `screenshots/denied-geolocation-pending-permission-fallback.png` | `68B3DBA69340E70313635930B6FA211B70602CCC4BE878752B59D49D298F8728` |
 
 ## Gate conclusion
 
@@ -62,3 +65,23 @@ translation-review claim is elevated by this evidence.
 This small follow-up only covers the modified taxonomy and migration paths. It
 does not change the earlier evidence limitation: denied-geolocation fallback
 and independent human source review remain unverified.
+
+## User-supplied geolocation evidence (partial)
+
+- Evidence received: 2026-07-19
+- Local origin visible in the permission prompt: `http://127.0.0.1:8081`
+- Browser and operating-system versions: not supplied
+
+The screenshots show the city-selection screen, the Safety screen before the
+request, and a location-permission prompt after `Share my location` was
+clicked. The final screenshot also shows the safe general-location fallback:
+`I'm currently in Mexico City. I don't have precise coordinates available...`
+and no precise coordinates or delivery claim.
+
+**Result: partial pass, not a denied-permission pass.** The browser prompt is
+still visible with a `Never allow` option in the final screenshot. Therefore
+the evidence does not show that the user selected denial or that the browser
+returned a permission-denied callback; the fallback may have followed the
+application timeout. A final test must select `Never allow`, wait for the
+prompt to disappear, confirm the same fallback, and record browser/OS version,
+tested commit, and console result.
