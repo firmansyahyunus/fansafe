@@ -69,27 +69,16 @@ having applied to, or been accepted by, any of these programs.
 - **Effort/timing/risk:** cannot be assessed responsibly without a
   candidate partner — do not treat this as "coming soon."
 
-## Competitive opportunities (hackathons, civic-tech/accessibility/travel-tech/public-safety challenges)
+## Builder, startup, open-source, and AI-credit programs
 
-- **Current fit:** medium-high — the product concept and working demo are
-  genuinely hackathon/challenge-submission-shaped today (a judged demo does
-  not require a pilot or funding history, just a working, honestly-described
-  prototype).
-- **Fit after improvements:** high, once README/license/docs exist (done
-  this audit) so judges can evaluate it without extra explanation.
-- **Prerequisites:** whichever specific competition's rules require (varies
-  per event; **requires verification per competition** — not generically
-  listed here since "civic-tech challenge" is a category, not one program).
-- **Blocking gaps:** none structural; the remaining gap is finding and
-  entering an actual open competition with a submission window.
-- **Effort:** low-medium per submission.
-- **Likely reward type:** one-time prize money, visibility, sometimes
-  mentorship — not recurring funding.
-- **Realistic timing:** could be attempted as soon as Phase 1 is complete
-  (this audit largely gets it there); this is the **most immediately
-  realistic channel** given current evidence.
-- **Risk of wasted effort:** low — even a non-win produces useful external
-  feedback.
+- **Current fit:** assess program-by-program; no application is currently
+  selected or submitted.
+- **Prerequisites:** current official terms, geography, funding/company
+  requirements, business-email requirements, and any partner referral must
+  be checked for the selected program.
+- **Repository preparation:** see `docs/BUILDER_PROGRAM_READINESS.md`.
+- **Claim boundary:** do not claim eligibility, credits, acceptance, or a
+  partnership before written confirmation from the program.
 - **Official source requiring verification:** none generic to cite; verify
   the specific competition's current rules before submitting.
 
@@ -183,10 +172,9 @@ having applied to, or been accepted by, any of these programs.
 
 - **Current fit:** none confirmed — no partner relationship exists in any
   repository evidence.
-- **This is exactly the gap `docs/pilot-plan.md` is meant to start
-  closing** — a pilot partner (e.g., a university international-student
-  office or a supporters' club) is both pilot-recruitment and a potential
-  future institutional partner.
+- **Current approach:** no formal pilot is planned. Any institutional
+  relationship would require an independent owner decision and must not be
+  implied from community feedback or repository activity.
 
 ## Category separation (per audit requirement)
 
@@ -209,9 +197,8 @@ having applied to, or been accepted by, any of these programs.
 
 ## Bottom line
 
-**The single most realistic near-term channel is a hackathon or civic-tech
-challenge submission** — it requires nothing this audit couldn't already
-provide (a working, honestly-documented prototype) and doesn't gate on
-funding-specific prerequisites like legal entities or pilot evidence.
-Everything else in this matrix is genuinely gated on Phase 1–3 work
-(`ROADMAP.md`), not on repository polish alone.
+**The next planned activity is builder-program readiness, not a hackathon.**
+Identify a current official program, compare its eligibility against actual
+facts, and prepare only the required repository artifacts. See
+`docs/BUILDER_PROGRAM_READINESS.md`. No application should be submitted
+without explicit owner approval.

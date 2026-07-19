@@ -14,7 +14,7 @@ double-click/`file://` path remains supported.
 ## Scope and current status
 
 All 17 phrases are marked `"reviewStatus": "unreviewed"`. The creation
-provenance and license decision are now recorded in `PROVENANCE.md`: the
+provenance and MIT license decision are now recorded in `PROVENANCE.md`: the
 content was AI-assisted, then reviewed, edited, and approved by the project
 maintainer. No translation text was changed when this record was added.
 

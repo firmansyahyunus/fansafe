@@ -12,10 +12,10 @@ events**; it is not event emergency infrastructure.
 **Not officially affiliated with FIFA, any World Cup organizing body, or any
 government or emergency service.** See [`TRADEMARK.md`](TRADEMARK.md).
 
-> **Status: public preview.** Code is licensed (Apache-2.0, see
-> [`LICENSE`](LICENSE)); phrase/translation content is licensed CC-BY-4.0,
-> while city-pack data is not yet licensed for reuse (see
-> [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md)).
+> **Status: public preview.** The MIT License applies to this repository
+> unless otherwise noted; the FanSafe name and icons are excepted. See
+> [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and
+> [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md).
 > The two gates that previously held this at "release-candidate" have both
 > cleared: reviewer `SABR` independently re-opened and approved all four
 > city-pack sources (commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`), and
@@ -174,10 +174,15 @@ person** — see each city's `REVIEW.md`. Keep treating all numbers as
 sample data to verify locally, per the in-app labeling.
 
 Phrase content was created with AI assistance, then reviewed, edited, and
-approved by the project maintainer. It is licensed CC-BY-4.0; see
+approved by the project maintainer; see
 [`phrases/PROVENANCE.md`](phrases/PROVENANCE.md). This does not establish
 independent native-speaker or professional translation review, so all phrase
 review statuses remain `unreviewed`.
+
+Emergency numbers and similar information are factual data compiled from
+official public sources. The repository does not claim copyright over the
+underlying facts. The original organization, structure, annotations, and
+documentation in this repository are licensed under the MIT License.
 
 ## Contributing
 
@@ -200,14 +205,12 @@ baseline → credible open-source release → reusable toolkit → pilot →
 funding readiness) and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
 for exactly what gates this specific public-preview release.
 
-## Pilot participation
+## Community feedback
 
-No pilot has run yet and no pilot partner is confirmed. If you represent a
-travel/supporter community, university, or similar group interested in
-being an early pilot participant, see
-[`docs/PILOT_RECRUITMENT.md`](docs/PILOT_RECRUITMENT.md) and
-[`docs/pilot-plan.md`](docs/pilot-plan.md), and reach out via the security
-contact above (there is no dedicated pilot inbox yet).
+FanSafe does not currently plan a formal pilot program. Validation will come
+from community feedback, issue reports, and future contributions rather than
+a structured pilot deployment. No claim of production readiness or real-world
+validation is made.
 
 ## Current maturity: **public preview**
 
@@ -239,9 +242,8 @@ blocking the "public preview" label are both now cleared:
    geolocation paths, with screenshots and recorded SHA-256 hashes. See
    [`docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`](docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md).
 
-Neither of these changes the still-open items: no pilot, no external
-contributor activity, and city-pack data licensing remains unresolved (see
-License, below). See
+Neither of these changes establishes production readiness, real-world
+validation, or external contributor activity. See
 [`docs/open-source-strategy.md`](docs/open-source-strategy.md) for the full
 scored assessment and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
 for the exact gate-by-gate status.
@@ -262,12 +264,8 @@ for the exact gate-by-gate status.
 
 ## License
 
-- **Code and tooling:** Apache-2.0 — see [`LICENSE`](LICENSE). Final, not a
-  draft.
-- **Documentation:** CC-BY-4.0.
-- **Phrase/translation content:** CC-BY-4.0. See
-  [`phrases/PROVENANCE.md`](phrases/PROVENANCE.md).
-- **City-pack data:** not yet licensed for reuse. See
+- **Repository content:** MIT, unless otherwise noted — see
+  [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and
   [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md).
 - **"FanSafe" name, wordmark, and icons:** all rights reserved — see
   [`TRADEMARK.md`](TRADEMARK.md).

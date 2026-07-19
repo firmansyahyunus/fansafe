@@ -17,8 +17,8 @@ elsewhere in this repository that predates it.
 | # | Item | Status | Evidence |
 |---|---|---|---|
 | 1 | Code ownership confirmed | ✅ Done | User decision, 2026-07-19: "Saya adalah pemilik repository dan kode FanSafe." |
-| 2 | Code license finalized | ✅ Done | `LICENSE` (Apache-2.0), `NOTICE`, `docs/content-licensing-matrix.md` |
-| 3 | Content license status resolved | ⚠️ Partially resolved | Phrase content: CC-BY-4.0 after the owner provenance attestation in `phrases/PROVENANCE.md`. City-pack data remains deliberately unlicensed pending a separate owner decision. |
+| 2 | Repository license finalized | ✅ Done | MIT in `LICENSE`, scoped by `NOTICE` and `docs/content-licensing-matrix.md` |
+| 3 | Content license status resolved | ✅ Done | MIT applies to copyrightable repository content; no copyright claim is made over underlying emergency-number facts. FanSafe brand and icons remain excepted. |
 | 4 | Security/Code of Conduct contact confirmed | ✅ Done | `moonwalkingpenguins@gmail.com` in `SECURITY.md`, `CODE_OF_CONDUCT.md`; `tools/validate-repo.js` enforces no leftover "placeholder" wording |
 | 5 | Emergency-number provenance checked against official sources | ✅ Done | `city-packs/<city>/SOURCES.md` — Toronto distinguishes city/community services (no police-non-emergency claim), New York pack is NYC-only, Vancouver's non-emergency number is labeled Vancouver Police Department |
 | 6 | Phrase content review status tracked | ✅ Done | `phrases/safety-critical.json` + `REVIEW_STATUS.md` — all 17 phrases remain explicitly `"unreviewed"`; the owner provenance record does not claim independent language review. |
@@ -26,7 +26,7 @@ elsewhere in this repository that predates it.
 | 8 | Public-preview provenance visible in-app | ✅ Done | City-pack review-status pill (Safety screen), pack card detail text (Travel screen), phrase-review note (Translate screen) — visually confirmed in `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` |
 | 9 | Automated validation extended | ✅ Done | `tools/validate-repo.js` — 13 check categories including Gate 1 taxonomy/scope/migration/escaping regressions; current run passes at HEAD |
 | 10 | Public README rewritten for a public audience | ✅ Done | `README.md` — functional vs. simulated table, limitations, privacy model, supported cities/languages, quick-start, offline behavior, validation commands, contributing, security, provenance, non-affiliation, roadmap, pilot participation, maturity classification |
-| 11 | Pilot partner secured | ❌ Not done | User decision: "NONE YET." `docs/PILOT_RECRUITMENT.md` prepared but not executed |
+| 11 | Formal pilot partner secured | N/A by decision | FanSafe does not currently plan a formal pilot; future validation is limited to documented community feedback, issue reports, and contributions. |
 | 12 | Interactive browser re-verification, including denied-geolocation fallback | ✅ Done | `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` — full pass at commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`, including denied-geolocation (`Never allow` → safe general-location fallback via share/email sheet, no email sent, no console errors), with 7 screenshots and recorded SHA-256 hashes (independently spot-checked: `toronto-service-taxonomy.png` hash reproduced exactly) |
 | 13 | Independent (second-person) review of sourced emergency data | ✅ Done | Reviewer `SABR` recorded `APPROVE` (Mexico City, Toronto, New York City) / `APPROVE WITH CORRECTION` (Vancouver, applied) against commit `383a08ebbe337f1f9d43ab5299953cf6038d6316` in each city's `REVIEW.md` — see epistemic caveat below |
 | 14 | Git remote configured | ❌ Not done | No remote configured; requires owner-supplied URL and explicit permission |

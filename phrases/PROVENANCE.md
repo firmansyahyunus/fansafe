@@ -16,14 +16,9 @@ phrase content under the terms stated below.
 ## License decision
 
 The phrase and translation content in `phrases/safety-critical.json` and the
-generated `phraseBook` arrays is licensed under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-
-Downstream users may share and adapt this content, including commercially,
-provided they give appropriate attribution, link the license, and indicate
-changes. This license decision applies to phrase content only; it does not
-change the Apache-2.0 code license, the still-unresolved city-pack data
-license, or the FanSafe name and icon rights.
+generated `phraseBook` arrays is covered by the repository-wide MIT License.
+See `LICENSE` and `NOTICE`. The FanSafe name and icons remain an explicit
+exception under `TRADEMARK.md`.
 
 ## Review-status boundary
 

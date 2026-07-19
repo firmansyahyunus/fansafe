@@ -1,32 +1,12 @@
-# Hackathon Submission Draft
+# Builder Program Readiness
 
-**Draft only. No target event is selected and no submission has been made.**
+This historical filename is retained for existing links. FanSafe is not
+preparing a hackathon submission.
 
-## Project
+The current objective is to identify suitable AI builder, startup,
+open-source, and AI-credit programs, then prepare only the repository
+artifacts required for a specific application. See
+[`BUILDER_PROGRAM_READINESS.md`](BUILDER_PROGRAM_READINESS.md).
 
-FanSafe is an offline-first safety companion for international travellers,
-with a secondary use as an open-source supporter-safety reference application
-for large international events. It runs as a static PWA and keeps personal
-data in browser local storage rather than sending it to a service.
-
-## Demonstrable capabilities
-
-- Offline shell after service-worker installation.
-- Demo city-pack selection with visible provenance status.
-- Safety phrases with explicit review-status warnings.
-- Local medical card and trusted-contact check-in flows.
-- Scam/ticket risk guidance presented as a heuristic, never authentication.
-
-## Responsible-use disclosure
-
-FanSafe is not emergency infrastructure, a medical product, ticket
-authentication, FIFA-affiliated software, or a certified digital public good.
-Emergency data is sample data, source citations await independent human
-review, and safety-critical translations remain unreviewed. The prototype is
-not ready to claim external pilot outcomes.
-
-## Submission checklist
-
-Choose a target hackathon; check its rules for licence, team, asset, privacy,
-and AI-use disclosures; obtain owner approval; then tailor this text. Do not
-submit this generic draft as-is.
+No target program has been selected, no application has been submitted, and
+no benefit, credit, acceptance, or partnership is claimed.

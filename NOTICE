@@ -1,33 +1,24 @@
 FanSafe
-Copyright (c) 2026 the FanSafe project contributors
+Copyright (c) 2026 FanSafe project contributors
 
-Application source code and tooling in this repository (FanSafe_PWA/index.html,
-FanSafe_PWA/sw.js, FanSafe_Standalone_Prototype.html, tools/*.js, schemas/*)
-is licensed under the Apache License, Version 2.0. See LICENSE for the full
-text.
+The MIT License in LICENSE applies to the entire repository unless a file or
+this notice explicitly says otherwise. This includes application code, tools,
+schemas, documentation, phrase content, and the copyrightable organization,
+structure, annotations, and presentation of city-pack data.
 
-Documentation (README.md, CONTRIBUTING.md, docs/*.md, and similar
-project-authored prose) is licensed under Creative Commons Attribution 4.0
-(CC-BY-4.0).
+Emergency numbers and similar information are factual data compiled from
+official public sources. The repository does not claim copyright over the
+underlying facts. The original organization, structure, annotations, and
+documentation in this repository are licensed under the MIT License.
 
-Phrase/translation content (FanSafe_PWA/index.html's `phraseBook` and
-phrases/safety-critical.json) is licensed under Creative Commons Attribution
-4.0 (CC-BY-4.0). It was created with AI assistance and subsequently reviewed,
+The FanSafe name, wordmark, and app icons (icon-192.png, icon-512.png) are
+not licensed under MIT. They remain subject to TRADEMARK.md.
+
+Phrase content was created with AI assistance and subsequently reviewed,
 edited, and approved by the project maintainer; see phrases/PROVENANCE.md.
 This does not claim independent native-speaker or professional translation
 review.
 
-City-pack data (city-packs/*/pack.json, including emergency-number fields)
-is not licensed for reuse as of this writing. Treat it as all-rights-reserved
-until docs/content-licensing-matrix.md says otherwise.
-
-The "FanSafe" name, wordmark, and app icons (icon-192.png, icon-512.png)
-are all rights reserved, separate from the code license — see TRADEMARK.md.
-
-Third-party dependencies: NONE. FanSafe_PWA/index.html has no build step, no
-package manager dependencies, and loads no external script, font, or CDN
-resource at runtime (verified: no <script src="http...">, no external
-stylesheet links, and the only literal external URL in the source is a
-Google Maps deep link constructed client-side for a "get directions"
-message — it is never fetched by the app itself). This section will be
-updated the moment any third-party dependency is introduced.
+Third-party runtime dependencies: none. FanSafe_PWA/index.html has no build
+step, package-manager dependency, external script, font, or CDN resource at
+runtime.

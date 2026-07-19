@@ -14,10 +14,9 @@ abstract: >-
   no server, no external dependencies); all data stays on-device.
 authors:
   - name: "FanSafe project contributors"
-# license covers the code only (owner-confirmed, 2026-07-19). Phrase content
-# is CC-BY-4.0; city-pack data is unlicensed — see
-# docs/content-licensing-matrix.md.
-license: Apache-2.0
+# MIT applies to the repository unless otherwise noted; see NOTICE and
+# docs/content-licensing-matrix.md for the brand exception and factual-data note.
+license: MIT
 license-url: "PLACEHOLDER — fill in once this repository has a public remote URL, then point at LICENSE"
 repository-code: "PLACEHOLDER — no remote configured yet; update once this repository has one (see Git handoff section of the audit report)"
 date-released: "PLACEHOLDER — update on first tagged release"

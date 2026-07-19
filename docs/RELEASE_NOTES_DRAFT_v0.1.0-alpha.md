@@ -18,9 +18,10 @@ second reviewer (`SABR`), and the public-preview UI and safety-critical
 flows passed a real-browser smoke test including the denied-geolocation
 fallback. See `docs/PUBLIC_RELEASE_CHECKLIST.md` for the full gate table
 and `docs/open-source-strategy.md` for the underlying readiness
-assessment. City-pack data is still not licensed for reuse; phrase content is
-CC-BY-4.0 under `phrases/PROVENANCE.md`. No pilot has run, and no external contributor has used this
-repository — see "Known gaps," below.
+assessment. MIT applies to copyrightable repository content; FanSafe does not
+claim copyright over underlying emergency-number facts. No formal pilot is
+planned, and no external contributor has used this repository — see "Known
+gaps," below.
 
 ### Gate 1 verification (2026-07-19)
 
@@ -42,15 +43,15 @@ no distribution occurred.
 
 ### Added this release
 
-- Apache-2.0 license for code and tooling (`LICENSE`)
+- Repository-wide MIT license, with FanSafe brand and icon exceptions
+  (`LICENSE`, `NOTICE`, `TRADEMARK.md`)
 - Full community/governance file set (`CONTRIBUTING.md`,
   `CODE_OF_CONDUCT.md`, `SECURITY.md`, `PRIVACY.md`, `GOVERNANCE.md`,
   `ROADMAP.md`, `CHANGELOG.md`, `CITATION.cff`, `TRADEMARK.md`)
 - Official-source citations for all 4 demo cities' emergency numbers,
   each independently reviewed by a second person (`city-packs/<city>/SOURCES.md`, `REVIEW.md`)
-- Phrase source and provenance tracking for all 17 phrases (`phrases/`) —
-  CC-BY-4.0 content license, while language-quality status remains
-  `unreviewed`
+- Phrase source and provenance tracking for all 17 phrases (`phrases/`),
+  while language-quality status remains `unreviewed`
 - In-app provenance indicators: city-pack sourcing status pill (Safety
   screen), pack detail text (Travel screen), phrase review note (Translate
   screen) — visually confirmed in a real browser
@@ -78,17 +79,14 @@ no distribution occurred.
 
 ### Known gaps in this release
 
-- City-pack data is not licensed for reuse. Phrase content is CC-BY-4.0,
-  but its safety-critical translations remain `unreviewed` by an independent
-  native or fluent speaker. See `docs/content-licensing-matrix.md`.
 - Safety-critical phrase translations remain `unreviewed` by a native or
   fluent speaker.
-- No pilot has run; no external contributor has used this repository yet.
-- No Git remote is configured; the repository is not public.
+- No formal pilot is planned; no external contributor has used this
+  repository yet.
 
 ### Not included (by design)
 
 - Any FanLocal (marketplace/booking) functionality — out of scope, see
   `README.md`.
-- A finalized license for city-pack data — deliberately withheld pending a
-  separate owner decision.
+- A claim of production readiness, real-world validation, or formal-pilot
+  outcomes.

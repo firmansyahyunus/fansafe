@@ -19,7 +19,7 @@ in this file — never implied through visual styling or copy alone.
 ## "FanSafe" name and app icon
 
 The name "FanSafe," the wordmark, and the app icons (`icon-192.png`,
-`icon-512.png`) are **not** covered by the permissive Apache-2.0 code
+`icon-512.png`) are **not** covered by the permissive MIT repository
 license in `LICENSE`. This is intentional and standard practice: it
 prevents a fork from presenting itself as "FanSafe" while diverging in ways
 that could confuse users about safety-relevant behavior.

@@ -97,11 +97,11 @@ courtesy record, not a legal requirement on downstream reusers.
 
 ### Licensing
 
-Phrase content is CC-BY-4.0 under the owner attestation in
-`phrases/PROVENANCE.md`; it remains `unreviewed` for language-quality
-purposes. City-pack data is still unlicensed pending a separate owner
-decision. See `docs/content-licensing-matrix.md` for the authoritative
-per-category status.
+MIT applies to phrase content and the copyrightable organization, structure,
+annotations, and presentation of city-pack data. The repository does not
+claim copyright over the underlying emergency-number facts. Phrase content
+remains `unreviewed` for language-quality purposes. See
+`docs/content-licensing-matrix.md` for the authoritative per-category status.
 
 ### Automated schema validation
 

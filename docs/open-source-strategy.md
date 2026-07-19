@@ -325,11 +325,11 @@ for?" pushback without #2's concrete traveller framing.
 | Severity | Problem | Evidence | Recommended change | Implemented this audit? |
 |---|---|---|---|---|
 | **Blocker** | No Git repository exists at all | `git rev-parse --show-toplevel` → "not a git repository" | `git init`, then real commits | **Done** — repository initialized, 15+ local commits, no remote configured |
-| **Blocker** | No license | No `LICENSE` file found anywhere | `LICENSE-PROPOSAL.md` as draft | **Done for code** (Apache-2.0, owner-confirmed, `LICENSE`); content licensing remains deliberately unresolved pending translation provenance |
+| **Blocker** | No license | No `LICENSE` file found anywhere | `LICENSE-PROPOSAL.md` as draft | **Resolved**: MIT applies repository-wide unless otherwise noted; brand/icons remain excepted and underlying emergency-number facts carry no copyright claim |
 | **High** | No content sourcing for emergency data | `DECISION_LOG.md` "SAMPLE DATA" label only, no citations | `docs/content-governance.md` + schema + templates | **Done** — official sources cited for all 4 cities and independently re-verified by a second reviewer (`SABR`), commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`; 2 real content gaps found and fixed (Toronto taxonomy, NYC scope) |
 | **High** | No CI / automated validation | No `.github/` directory found | `.github/workflows/ci.yml` + `tools/validate-repo.js` | Yes |
 | **High** | No security/privacy policy docs | No `SECURITY.md`/`PRIVACY.md` found | Added both, plus `docs/threat-model.md` | Yes |
-| **High** | Zero pilot/user evidence | No issues, no roadmap, no feedback record found | `docs/pilot-plan.md` | Plan yes; execution no (needs a real partner) |
+| **High** | Zero user evidence | No issues, no roadmap, no feedback record found | Community-feedback documentation | No evidence yet; formal pilot is not planned |
 | **Medium** | Monolithic architecture blocks reuse | All logic/data in one file, confirmed by source read | `docs/architecture.md` + `schemas/` + reference `city-packs/` | Documented + drafted; runtime unchanged (Phase 2 work) |
 | **Medium** | No contribution/governance docs | No `CONTRIBUTING.md`/`GOVERNANCE.md`/`CODE_OF_CONDUCT.md` found | Added all three | Yes |
 | **Medium** | No funding-channel analysis | Nothing existed | `docs/funding-readiness.md`, dated 2026-07-18 | Yes |
@@ -339,12 +339,11 @@ for?" pushback without #2's concrete traveller framing.
 ## What this audit did not and could not do
 
 - Could not confirm legal ownership of code — **resolved in a later
-  session**: owner confirmed ownership, code is licensed Apache-2.0. Phrase
-  provenance and licensing were also resolved later by owner attestation:
-  phrase content is CC-BY-4.0. City-pack data licensing remains unresolved
-  by design.
-- Could not run a real pilot — requires real participants. **Still true**
-  as of the Gate 1 session — no pilot partner exists.
+  session**: the owner selected a repository-wide MIT license, subject to the
+  documented brand/icon exception. Phrase provenance is recorded, and no
+  copyright claim is made over underlying emergency-number facts.
+- Could not run a real pilot — the owner does not currently plan a formal
+  pilot. Community feedback remains the intended future validation channel.
 - Could not verify emergency-number accuracy against live official sources
   — **resolved in a later (Gate 1) session**: sourced against official
   primary sources and independently re-verified by a second reviewer

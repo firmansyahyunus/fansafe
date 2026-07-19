@@ -9,9 +9,9 @@
   the complete history and intended push set.
 - Confirm `SECURITY.md` contains the intended reporting contact and that it
   is not an emergency-support channel.
-- Retain the current content-license boundary: code and tooling are
-  Apache-2.0; city-pack and phrase content remain unavailable for reuse until
-  provenance and translation review are resolved.
+- Retain the current license boundary: MIT applies repository-wide unless
+  otherwise noted; the FanSafe brand and icons remain excepted, and the
+  repository makes no copyright claim over underlying emergency-number facts.
 - Re-run `node tools/validate-repo.js` from the commit proposed for push.
 
 ## Recommended GitHub controls

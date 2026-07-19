@@ -1,38 +1,30 @@
 # License Status
 
-## Code license: FINAL
+## Repository license: FINAL
 
-As of 2026-07-19, the repository owner has confirmed ownership of the
-FanSafe code and selected Apache-2.0 for source code and tooling. The full
-license text is in [`LICENSE`](LICENSE) and applies to
-`FanSafe_PWA/index.html`, `FanSafe_PWA/sw.js`,
-`FanSafe_Standalone_Prototype.html`, and everything under `tools/` and
-`schemas/`.
+The repository owner selected the MIT License on 2026-07-19. The standard,
+unmodified license text is in [`LICENSE`](LICENSE).
 
-## Phrase and translation content: FINAL
+MIT applies to the entire repository unless otherwise noted, including the
+application, tools, schemas, documentation, phrase content, and the
+copyrightable organization, structure, annotations, and presentation of
+city-pack data.
 
-The 17 phrases in `phrases/safety-critical.json` and the generated
-`phraseBook` arrays are licensed under CC-BY-4.0.
+Emergency numbers and similar information are factual data compiled from
+official public sources. The repository does not claim copyright over the
+underlying facts.
 
-The owner attests that all phrase content was created with AI assistance and
-then reviewed, edited, and approved by the project maintainer. No
-third-party phrase text or professional translation was supplied as a source,
-and the owner represents authority to license the final published content.
-The full provenance record and its limits are in
+## Explicit exception
+
+The FanSafe name, wordmark, and app icons are not licensed under MIT; see
+[`TRADEMARK.md`](TRADEMARK.md).
+
+## Phrase provenance and review boundary
+
+All 17 phrase entries were created with AI assistance and then reviewed,
+edited, and approved by the project maintainer. The owner records this in
 [`phrases/PROVENANCE.md`](phrases/PROVENANCE.md).
 
-This is a license decision, not a claim that the translations were reviewed
-by an independent native speaker or professional translator. All phrases
-therefore remain `unreviewed` for language-quality purposes until such review
-is evidenced.
-
-## City-pack data: UNRESOLVED
-
-City-pack structural data and emergency/non-emergency numbers are still not
-licensed for reuse. They remain all rights reserved by default pending a
-separate owner decision. Official-source citations and human source review
-verify factual claims, but do not themselves grant a license to redistribute
-FanSafe's data presentation.
-
-See [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md)
-for the authoritative per-category license table.
+This provenance and license decision does not claim independent native-speaker
+or professional translation review. All phrases remain `unreviewed` for
+language-quality purposes until such review is evidenced.
