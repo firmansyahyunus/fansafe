@@ -31,6 +31,12 @@ general-location fallback opened through the device email/share sheet, with no
 email sent and no Console errors reported. Safety-critical translations remain
 `unreviewed`.
 
+The distribution ZIP was regenerated from application commit
+`d72b7d2016cb525fb4ee5560283a0e5a15fc8377`; `unzip -t` passed and its
+`index.html` SHA-256 matched the source:
+`ED1E9B7E132F3366A78F519496D9701A8D948C42C58920DEE9ED45535FE8493C`.
+This remains a draft release; no distribution occurred.
+
 ### Added this release
 
 - Apache-2.0 license for code and tooling (`LICENSE`)

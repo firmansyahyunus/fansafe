@@ -27,6 +27,6 @@ claimed by this document.
 
 ## Minimum pilot gate
 
-Before recruiting external travellers, obtain independent human review of
-city-pack sources, resolve the denied-geolocation fallback evidence gap, and
-agree a participant-consent and incident-escalation plan with the pilot host.
+The city-source and denied-geolocation evidence gates are complete. Before
+recruiting external travellers, still agree a participant-consent and
+incident-escalation plan with the pilot host and obtain owner approval.

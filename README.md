@@ -31,6 +31,14 @@ and must not be inferred from anything here — see
 [`docs/architecture.md`](docs/architecture.md#fanlocal-boundary) for the one
 paragraph where it is acknowledged as a future, separate concern.
 
+## Gate 1 status update (2026-07-19)
+
+SABR independently approved all four city-pack sources at commit
+`383a08ebbe337f1f9d43ab5299953cf6038d6316`. The denied-geolocation fallback
+also passed by manual tester attestation at that commit. City data remains
+sample data to verify locally, and safety-critical translations remain
+`unreviewed`. No remote, public release, pilot, or submission is implied.
+
 ## What FanSafe does today
 
 - **Offline city packs** — download-simulated per-city bundles with a

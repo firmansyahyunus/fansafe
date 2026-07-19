@@ -137,3 +137,12 @@ Translate screen about phrase review status).
   pending, so the denied-geolocation fallback is not claimed as verified.
 
 No claim in this report extends beyond what is listed above as tested.
+
+## 5. Gate 1 completion update (2026-07-19)
+
+SABR independently approved the cited sources for all four city packs at
+commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`. The manual tester selected
+`Never allow` for geolocation at that commit; the prompt closed and the
+email/share sheet opened with the general-location fallback. No email was sent
+and no Console errors were reported. This does not alter the explicitly
+unreviewed safety-critical translation status.

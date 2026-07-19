@@ -23,8 +23,9 @@ medical advice, affiliated with FIFA, or a certified digital public good.
 4. Regenerate and integrity-test `FanSafe_PWA.zip` from the approved release
    commit; the existing git-ignored ZIP is structurally valid but does not
    match the current application file.
-5. Keep the repository private until the two public-alpha blockers in
-   `PUBLIC_RELEASE_CHECKLIST.md` are closed by evidence.
+5. Keep the repository private until the owner explicitly approves a
+   visibility decision. The Gate 1 source-review and denied-geolocation
+   evidence has been recorded; this is not authorization to publish.
 6. Create a release only after a tag, release notes, and a final approval.
 
 ## Suggested repository metadata

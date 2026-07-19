@@ -65,6 +65,19 @@ Items 14-16 remain outside this completion update: no remote or publication is
 authorized, and the ZIP must be regenerated from the final release candidate
 before any distribution.
 
+## Release bundle verification update (2026-07-19)
+
+`FanSafe_PWA.zip` was regenerated from the application files at commit
+`d72b7d2016cb525fb4ee5560283a0e5a15fc8377`. `unzip -t` passed and its
+`index.html` SHA-256 matched `FanSafe_PWA/index.html`:
+
+```text
+ED1E9B7E132F3366A78F519496D9701A8D948C42C58920DEE9ED45535FE8493C
+```
+
+This closes the packaging-evidence portion of item 16. It does not authorize
+distribution, remote configuration, a release, or a visibility change.
+
 ## What "credible public repository, release-candidate for public preview" means given the above
 
 This repository already lets a stranger:
