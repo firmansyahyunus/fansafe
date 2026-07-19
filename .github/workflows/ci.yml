@@ -8,9 +8,13 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        # Pinned to a full commit SHA rather than a floating tag (2026-07-19
+        # public-repo hardening): a tag can be moved by the action's
+        # maintainer or, if their account is compromised, by an attacker; a
+        # SHA cannot. Bump deliberately, not automatically.
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
 
