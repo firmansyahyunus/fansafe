@@ -255,7 +255,7 @@ for the exact gate-by-gate status.
 | `FanSafe_PWA/` | The actual application: `index.html`, `manifest.json`, `sw.js`, icons, and its own `README.md`, `DECISION_LOG.md`, `SCREEN_MAP.md`, `STATE_SCHEMA.md`, `TEST_REPORT.md` |
 | `FanSafe_Standalone_Prototype.html` | Byte-identical copy of `FanSafe_PWA/index.html`, for double-click/`file://` use |
 | `FanSafe_PWA.zip` | A packaged copy of `FanSafe_PWA/`, git-ignored — not required for anything documented here |
-| `docs/` | Architecture, threat model, content-governance, pilot-plan, funding-readiness, content-licensing-matrix, and open-source-strategy documents |
+| `docs/` | Architecture, threat model, content-governance, pilot-plan, funding-readiness, content-licensing-matrix, open-source-strategy documents, and a reusable, program-agnostic application kit (`docs/programs/`) |
 | `schemas/` | JSON Schemas for city packs, phrases, and emergency info (the shapes the app currently hardcodes; not yet wired into the running app — see `docs/architecture.md`) |
 | `city-packs/` | Reference extraction of the 4 demo city packs, with `SOURCES.md`/`REVIEW.md` per city |
 | `phrases/` | Reference extraction of the safety-critical phrase categories, with `reviewStatus` tracking |

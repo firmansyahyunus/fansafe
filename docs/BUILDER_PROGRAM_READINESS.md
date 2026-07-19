@@ -45,3 +45,24 @@ hackathon plan, funding claim, or application submission.
   channels, not evidence of production readiness today.
 - No application or external submission may be made without explicit owner
   approval.
+
+## Addendum, 2026-07-19 — reusability across multiple programs
+
+To avoid preparing this repository for one program at a time, application
+materials now follow two rules:
+
+1. **No target program is assumed by default.** The four programs listed
+   above are candidates to *evaluate*, not a queue to apply to in order —
+   see `docs/funding-readiness.md`'s 2026-07-19 addendum: three of the four
+   assume outside equity funding, a registered company, or committed cloud
+   spend, which is a poorer fit for this solo-maintainer, no-entity project
+   than a public-interest-tech or DPG-style channel.
+2. **Application materials live in `docs/programs/`, not in this file or in
+   product docs.** `docs/programs/KIT.md` is the single program-agnostic
+   description/link set reused verbatim across every application; each
+   actual application gets its own dated file
+   (`docs/programs/YYYY-MM-DD-program-name.md`) recording what was
+   submitted, the exact commit SHA cited, and the outcome. See
+   `docs/programs/README.md` for the full convention, including the rule
+   that a program's requirements may never shape `README.md`, `ROADMAP.md`,
+   or other product documentation.

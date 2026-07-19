@@ -32,11 +32,16 @@ from community feedback, issue reports, and future contributions. These
 signals must be documented before they are used as evidence. No production
 readiness, real-world validation, or impact claim follows from this plan.
 
-## Phase 4 - Builder-program readiness: not started
+## Phase 4 - Builder-program readiness: reusable kit prepared, no application started
 
-Identify suitable AI builder, startup, open-source, and AI-credit programs,
-then prepare the repository artifacts required for a specific application.
-See `docs/BUILDER_PROGRAM_READINESS.md`.
+The `docs/programs/` convention (`KIT.md` + `TEMPLATE.md`) now exists so the
+repository can apply to more than one developer, builder, grant, or
+open-source program without redoing preparation each time, and without a
+program's requirements shaping product documentation — see
+`docs/programs/README.md`. Candidate programs and channel fit are tracked in
+`docs/BUILDER_PROGRAM_READINESS.md` and `docs/funding-readiness.md`
+(including a 2026-07-19 reprioritization addendum).
 
-Selecting or applying to a program requires checking its current official
-terms and explicit owner approval. No hackathon submission is planned.
+No program has been selected or applied to. Selecting or applying to a
+program requires checking its current official terms and explicit owner
+approval. No hackathon submission is planned.

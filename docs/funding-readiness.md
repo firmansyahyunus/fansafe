@@ -202,3 +202,35 @@ Identify a current official program, compare its eligibility against actual
 facts, and prepare only the required repository artifacts. See
 `docs/BUILDER_PROGRAM_READINESS.md`. No application should be submitted
 without explicit owner approval.
+
+## Addendum, 2026-07-19 — second-opinion reprioritization (Claude Fable 5)
+
+An independent advisory consult flagged that this document's own scoring
+had gone stale in FanSafe's favor on one channel, while `BUILDER_PROGRAM_
+READINESS.md`'s four named targets are a poorer fit than that document
+implies. Recorded here rather than silently rewriting the dated assessment
+above.
+
+- **DPGA registry is closer than scored above.** The "Current fit: low —
+  no finalized open license" line predates the MIT license decision and
+  `docs/content-licensing-matrix.md`'s ownership documentation, both now
+  done (see `docs/PUBLIC_RELEASE_CHECKLIST.md` items 1–3). That was DPGA's
+  hardest stated blocker. Real gaps remain (demonstrated adoption, a formal
+  do-no-harm review beyond this repo's own threat model), but "no finalized
+  license" is no longer one of them.
+- **The `BUILDER_PROGRAM_READINESS.md` startup-credit targets (OpenAI for
+  Startups, AWS Activate, Microsoft for Startups, GitHub for Startups) are
+  farther than that document's framing implies**, not nearer: three of the
+  four effectively assume outside equity funding, a registered company, or
+  committed cloud spend, none of which fit a solo-maintainer, no-server,
+  no-entity project by design. Evaluate them, but do not treat them as the
+  natural next step over public-interest-tech/DPG-style channels.
+- **Practical effect:** the `docs/programs/` convention (added the same
+  date) is designed so that whichever channel goes first — DPG-style or a
+  startup program — costs the same one-page delta to apply to, per program,
+  rather than one channel's requirements shaping repository prep for all of
+  them.
+
+This addendum does not change any score above; it flags that the
+"Prerequisites"/"Blocking gaps" text for DPGA and the startup-program
+category should be re-read against this note before acting on it.

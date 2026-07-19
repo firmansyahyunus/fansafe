@@ -5,6 +5,39 @@ There are no tagged releases yet — everything below is `Unreleased`.
 
 ## [Unreleased]
 
+### Added (2026-07-19 — reusability across multiple programs)
+
+- `docs/programs/` convention: one program-agnostic `KIT.md` reused verbatim
+  across applications, a `TEMPLATE.md` for per-application dated records, and
+  a `README.md` stating the one-way rule that program requirements may never
+  shape product documentation. Adopted after an independent advisory review
+  (Claude Fable 5) flagged program-chasing artifacts as undermining FanSafe's
+  "built to be useful, not to win a program" positioning.
+- `docs/release-evidence/MANUAL_SMOKE_TEST_CHECKLIST.md`: the repeatable
+  checklist behind the v0.1.0-alpha manual browser smoke test, to be re-run
+  before future tagged releases. Deliberately not wired into CI — doing so
+  would require introducing Playwright and a first `package.json`, against
+  the documented zero-dependency design; revisit only when a second
+  contributor or pilot creates real demand for automated regression coverage.
+- Dated addenda in `docs/funding-readiness.md` and
+  `docs/BUILDER_PROGRAM_READINESS.md` recording a second-opinion
+  reprioritization: DPGA registry fit is closer than previously scored (MIT
+  license and ownership documentation, done since, were its hardest stated
+  blocker), while the four named startup-credit programs are a poorer fit
+  than previously framed (three assume outside equity, a registered company,
+  or committed cloud spend).
+
+### Removed (2026-07-19)
+
+- Two root-level AI-agent operating-instruction files
+  (`FANSAFE_OPEN_SOURCE_REWARD_SUPER_PROMPT.md`,
+  `FANSAFE_PUBLIC_PREVIEW_GATE_1_COMPLETION_PROMPT.md`) untracked and moved
+  outside the repository. They were session prompts, not project
+  documentation or decision records, and their presence in the public tree
+  read as "built to win a program" rather than "built to be useful" per the
+  same advisory review above. Content is preserved locally by the
+  maintainer; nothing in the tracked tree referenced them.
+
 ### Changed
 
 - The repository license is now MIT unless otherwise noted; FanSafe brand and
