@@ -4,94 +4,90 @@ Complexity is estimated as S / M / L / XL. This is not a calendar — no phase
 has a target date, because none can be committed to honestly with a
 single-maintainer, unfunded project.
 
-## Phase 0 — Evidence baseline (this audit)
+**Status as of 2026-07-19:** Phase 0 and Phase 1 are complete. Phase 2 is
+partially complete (city-pack data; phrase data still pending). Phase 3 and
+Phase 4 have not started — both are blocked on real-world facts (a pilot
+partner, translation provenance) this repository's own tooling cannot
+manufacture.
+
+## Phase 0 — Evidence baseline ✅ Complete
 
 - **Goal:** know the true current state before claiming anything about
   readiness.
-- **Deliverables:** repository audit (`docs/open-source-strategy.md`),
-  honest scoring, this roadmap, removal of any overclaiming language found.
-- **Acceptance criteria:** every claim in project docs is traceable to a file,
-  test, or command.
-- **Evidence:** `FanSafe_PWA/TEST_REPORT.md` (pre-existing, independently
-  spot-verified during this audit), this repository's new `docs/` tree.
-- **Complexity:** S (audit itself); already largely done by the time this
-  roadmap exists.
-- **What not to do yet:** don't publish, don't apply for funding.
+- **Delivered:** repository audit (`docs/open-source-strategy.md`), honest
+  scoring (updated through Gate 1), this roadmap.
+- **Evidence:** `FanSafe_PWA/TEST_REPORT.md`, independently spot-verified
+  during the audit and again during Gate 1's browser smoke test
+  (`docs/release-evidence/v0.1.0-alpha/`).
 
-## Phase 1 — Credible open-source release
+## Phase 1 — Credible open-source release ✅ Complete
 
 - **Goal:** a stranger can clone the repo, understand what it is, run it,
   and know how to report a bug or a security issue.
-- **Deliverables:** finalized `LICENSE` (currently only a proposal), root
-  `README.md` (done this audit), `CONTRIBUTING.md`/`CODE_OF_CONDUCT.md`/
-  `SECURITY.md`/`PRIVACY.md` (done this audit), a real CI workflow running
-  the static checks that were previously only manual (done this audit —
-  `.github/workflows/ci.yml` + `tools/validate-repo.js`), Git history
-  actually initialized (currently **there is no `.git` directory at all**).
-- **Acceptance criteria:** CI passes on a clean clone; `git log` shows
-  real, reviewable commits instead of a single opaque drop.
-- **Dependencies:** owner confirms license (see `LICENSE-PROPOSAL.md`).
-- **Complexity:** M.
-- **What not to do yet:** don't add automated tests beyond static
-  validation — there's no test framework decision made yet, and picking one
-  before Phase 2's architecture split would mean re-writing tests against a
-  different module boundary almost immediately.
+- **Delivered:** `LICENSE` finalized (Apache-2.0, owner-confirmed), root
+  `README.md`, `CONTRIBUTING.md`/`CODE_OF_CONDUCT.md`/`SECURITY.md`/
+  `PRIVACY.md`, `.github/workflows/ci.yml` + `tools/validate-repo.js` (13+
+  check categories), real Git history (15+ commits), a real GitHub remote
+  (`github.com/firmansyahyunus/fansafe`, public), branch protection on
+  `main`, secret scanning + push protection + Dependabot alerts enabled,
+  GitHub Actions pinned to commit SHAs.
+- **Acceptance criteria met:** CI passes on GitHub's own runners (not just
+  locally) on every push; `git log` shows real, reviewable, individually
+  described commits.
+- **What's still open from this phase:** none — content-license status
+  (city-pack/phrase data) is a deliberate, documented gate, not an
+  oversight; see Phase 2.
 
-## Phase 2 — Reusable toolkit
+## Phase 2 — Reusable toolkit ⚠️ Partially complete
 
 - **Goal:** city-pack and phrase data can be extended by a third party
-  without touching `index.html`, and the safety/phrase logic is at least
-  documented as a seam even if not yet physically extracted into packages.
-- **Deliverables:** `schemas/*.schema.json` (done this audit, drafted from
-  the current hardcoded shapes), `city-packs/<city>/pack.json` +
-  `SOURCES.md` + `REVIEW.md` reference extraction (done this audit, **not
-  yet wired into the running app** — `index.html` still uses its own
-  hardcoded arrays), `tools/validate-city-pack.js` (done this audit). Actual
-  runtime extraction (making `index.html` load `city-packs/*/pack.json`
-  instead of its inline array) is **not done** and is the next real
-  engineering task.
-- **Acceptance criteria:** `index.html` fetches or bundles city-pack data
-  from `city-packs/` instead of a hardcoded array, with `tools/validate-city-
-  pack.js` passing in CI for every pack.
-- **Complexity:** M (the schema/reference work is done; the runtime wiring
-  is the remaining M-sized piece).
+  without touching `index.html`.
+- **Delivered (city-pack side, 2026-07-19):** `city-packs/<city>/pack.json`
+  is now the actual source of truth — `tools/sync-city-packs.js` generates
+  `index.html`'s inline array from it, with a CI drift check. All four
+  packs are independently human-reviewed (reviewer `SABR`,
+  `city-packs/<city>/REVIEW.md`).
+- **Not yet done (phrase side):** the same treatment for `phraseBook`.
+  `phrases/safety-critical.json` exists as a reference extraction (9 of 17
+  phrases) but has no sync script and is not consumed by `index.html`.
+  Tracked as
+  [issue #2](https://github.com/firmansyahyunus/fansafe/issues/2).
+- **Not started:** phrase/city-pack **content licensing** remains
+  deliberately unresolved — translation provenance (who translated each
+  phrase, by what method) has never been recorded. This blocks marking
+  content reusable under any license, independent of the technical sync
+  work above. Tracked as
+  [issue #3](https://github.com/firmansyahyunus/fansafe/issues/3) —
+  **requires owner input, not something this repository's tooling can
+  determine on its own.**
 - **What not to do yet:** don't split into a multi-package monorepo
-  (Option B from `docs/architecture.md`) until there's a second real
-  consumer of the extracted modules — one app doesn't justify package
-  boundaries yet.
+  (Option B, `docs/architecture.md`) until a second real consumer exists.
 
-## Phase 3 — Pilot and impact evidence
+## Phase 3 — Pilot and impact evidence ❌ Not started
 
 - **Goal:** find out if real people can use FanSafe under realistic
   conditions, not just whether the code runs.
-- **Deliverables:** executed pilot per `docs/pilot-plan.md` (10–30 users),
-  a public summary of what was learned, issues filed from real feedback.
-- **Acceptance criteria:** at least one documented pilot session with
-  before/after readiness-score or task-completion evidence, and a public
-  summary that does not overclaim beyond what was observed.
-- **Dependencies:** Phase 1 complete (so participants aren't testing an
-  unlicensed, undocumented repo); a recruitment channel identified — **no
-  pilot partner exists today** (see `docs/pilot-plan.md`, "Remaining
-  decisions").
+- **Blocked on:** a real pilot partner. `docs/pilot-plan.md` (session
+  design) and `docs/PILOT_RECRUITMENT.md` (outreach draft) are ready to
+  use the moment one exists — **none has been contacted.** This is
+  explicitly not something this repository's tooling can manufacture; it
+  requires the owner (or someone the owner authorizes) to reach a real
+  community, university, or organization.
 - **Complexity:** L (recruitment and facilitation, not code).
-- **What not to do yet:** don't add analytics/telemetry to "measure" the
-  pilot — use the observation methods in `docs/pilot-plan.md` instead.
 
-## Phase 4 — Funding readiness
+## Phase 4 — Funding readiness ❌ Not started
 
 - **Goal:** be a credible applicant for the channels assessed in
-  `docs/funding-readiness.md`, not just theoretically eligible for them.
-- **Deliverables:** sponsor profile / funding page, an Open Collective
-  decision (join a fiscal host or not — requires the human owner), a grant
-  dossier reusing evidence from Phase 3, a partner deck, this roadmap kept
-  current.
-- **Acceptance criteria:** at least one funding-channel prerequisite from
-  `docs/funding-readiness.md` fully met with cited evidence (not just "we
-  could apply").
-- **Dependencies:** Phase 3 pilot evidence; a license and (if pursuing
-  Sovereign Tech Fund or DPGA) clear, documented ownership.
-- **Complexity:** XL (this is the phase most gated by real-world facts this
-  audit cannot manufacture).
-- **What not to do yet:** don't submit a grant application or enable GitHub
-  Sponsors/create an Open Collective until the human owner explicitly
-  decides to — this roadmap documents the path, it does not execute it.
+  `docs/funding-readiness.md`.
+- **Blocked on:** Phase 3 pilot evidence (hard blocker — no funding
+  channel in `docs/funding-readiness.md` treats a codebase alone as
+  sufficient), plus a resolved content license (Phase 2) for any channel
+  that reviews the full artifact, not just the code.
+- **What's realistic right now, independent of Phase 3/4:** entering a
+  hackathon or civic-tech challenge — see
+  `docs/HACKATHON_SUBMISSION_DRAFT.md` and
+  `docs/funding-readiness.md`'s "Bottom line." This was flagged as the
+  single most immediately realistic channel in the original audit and
+  remains true; it just needs the owner to pick an actual open
+  competition (this repository has no way to know which ones are
+  currently accepting entries).

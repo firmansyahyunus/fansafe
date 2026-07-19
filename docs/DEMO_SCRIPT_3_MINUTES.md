@@ -29,6 +29,8 @@ public demo.
 
 ## 2:25-3:00 - Honest close
 
-“The code is ready for inspection, but public alpha is still blocked by
-independent review of city data and a denied-geolocation fallback check.
-Safety-critical translations are intentionally marked unreviewed.”
+“The code is public and independently reviewed — city data was checked
+against official sources and confirmed by a second reviewer, and the
+denied-geolocation fallback was verified live. Safety-critical
+translations are still intentionally marked unreviewed, and no pilot has
+run yet.”
