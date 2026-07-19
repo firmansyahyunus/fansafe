@@ -34,7 +34,7 @@
     },
     "reviewStatus": {
       "type": "string",
-      "description": "Do not claim native-speaker-reviewed or professionally-translated without an entry in reviewedBy. All phrases carried from the original inline phraseBook default to unreviewed because no translator or authorship record exists.",
+      "description": "Do not claim native-speaker-reviewed or professionally-translated without an entry in reviewedBy. See phrases/PROVENANCE.md for the AI-assisted creation and maintainer-approval record. All phrases remain unreviewed because no independent native-speaker or professional translation review is recorded.",
       "enum": ["unreviewed", "maintainer-authored", "native-speaker-reviewed", "professionally-translated"]
     },
     "reviewedBy": {

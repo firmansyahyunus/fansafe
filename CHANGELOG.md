@@ -7,6 +7,9 @@ There are no tagged releases yet — everything below is `Unreleased`.
 
 ### Changed
 
+- Phrase/translation content is now licensed CC-BY-4.0 following a recorded
+  owner attestation of AI-assisted creation and maintainer review; all phrase
+  language-quality statuses remain truthfully `unreviewed`.
 - `phraseBook` is now generated from the schema-validated 17-phrase source
   file by `tools/sync-phrases.js`; all phrase translations remain truthfully
   marked `unreviewed` pending evidenced human review.

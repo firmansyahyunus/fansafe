@@ -339,9 +339,10 @@ for?" pushback without #2's concrete traveller framing.
 ## What this audit did not and could not do
 
 - Could not confirm legal ownership of code — **resolved in a later
-  session**: owner confirmed ownership, code is licensed Apache-2.0.
-  Content (city-pack/phrase) ownership/provenance remains unresolved by
-  design.
+  session**: owner confirmed ownership, code is licensed Apache-2.0. Phrase
+  provenance and licensing were also resolved later by owner attestation:
+  phrase content is CC-BY-4.0. City-pack data licensing remains unresolved
+  by design.
 - Could not run a real pilot — requires real participants. **Still true**
   as of the Gate 1 session — no pilot partner exists.
 - Could not verify emergency-number accuracy against live official sources

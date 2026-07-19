@@ -10,13 +10,16 @@ Documentation (README.md, CONTRIBUTING.md, docs/*.md, and similar
 project-authored prose) is licensed under Creative Commons Attribution 4.0
 (CC-BY-4.0).
 
-Phrase/translation content (FanSafe_PWA/index.html's `phraseBook`) and
-city-pack data (city-packs/*/pack.json, including emergency-number fields)
-are NOT licensed for reuse as of this writing. This is a deliberate,
-owner-instructed gate pending verification of translation provenance — see
-LICENSE-PROPOSAL.md and docs/content-licensing-matrix.md for the precise
-blocker and status. Treat this content as all-rights-reserved until that
-matrix is updated to say otherwise.
+Phrase/translation content (FanSafe_PWA/index.html's `phraseBook` and
+phrases/safety-critical.json) is licensed under Creative Commons Attribution
+4.0 (CC-BY-4.0). It was created with AI assistance and subsequently reviewed,
+edited, and approved by the project maintainer; see phrases/PROVENANCE.md.
+This does not claim independent native-speaker or professional translation
+review.
+
+City-pack data (city-packs/*/pack.json, including emergency-number fields)
+is not licensed for reuse as of this writing. Treat it as all-rights-reserved
+until docs/content-licensing-matrix.md says otherwise.
 
 The "FanSafe" name, wordmark, and app icons (icon-192.png, icon-512.png)
 are all rights reserved, separate from the code license — see TRADEMARK.md.

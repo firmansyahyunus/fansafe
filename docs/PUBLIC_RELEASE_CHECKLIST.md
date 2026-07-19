@@ -18,10 +18,10 @@ elsewhere in this repository that predates it.
 |---|---|---|---|
 | 1 | Code ownership confirmed | ✅ Done | User decision, 2026-07-19: "Saya adalah pemilik repository dan kode FanSafe." |
 | 2 | Code license finalized | ✅ Done | `LICENSE` (Apache-2.0), `NOTICE`, `docs/content-licensing-matrix.md` |
-| 3 | Content (city-pack/phrase) license status resolved | ⚠️ Deliberately unresolved | Owner instruction: do not license until provenance verified. Status documented, not silently assumed — see `LICENSE-PROPOSAL.md` |
+| 3 | Content license status resolved | ⚠️ Partially resolved | Phrase content: CC-BY-4.0 after the owner provenance attestation in `phrases/PROVENANCE.md`. City-pack data remains deliberately unlicensed pending a separate owner decision. |
 | 4 | Security/Code of Conduct contact confirmed | ✅ Done | `moonwalkingpenguins@gmail.com` in `SECURITY.md`, `CODE_OF_CONDUCT.md`; `tools/validate-repo.js` enforces no leftover "placeholder" wording |
 | 5 | Emergency-number provenance checked against official sources | ✅ Done | `city-packs/<city>/SOURCES.md` — Toronto distinguishes city/community services (no police-non-emergency claim), New York pack is NYC-only, Vancouver's non-emergency number is labeled Vancouver Police Department |
-| 6 | Phrase content review status tracked | ✅ Done | `phrases/safety-critical.json` + `REVIEW_STATUS.md` — all 9 safety-critical phrases explicitly marked `"unreviewed"` (unchanged by Gate 1 — translations were not in scope) |
+| 6 | Phrase content review status tracked | ✅ Done | `phrases/safety-critical.json` + `REVIEW_STATUS.md` — all 17 phrases remain explicitly `"unreviewed"`; the owner provenance record does not claim independent language review. |
 | 7 | Known XSS/unsafe-rendering gap closed | ✅ Done | `docs/threat-model.md` T3 — 1 real gap found (`renderContacts()` avatar initials) and fixed; all 24 `innerHTML` sites classified; regression-verified live in the Gate 1 browser smoke test (trusted-contact injection payloads rendered as inert text) |
 | 8 | Public-preview provenance visible in-app | ✅ Done | City-pack review-status pill (Safety screen), pack card detail text (Travel screen), phrase-review note (Translate screen) — visually confirmed in `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` |
 | 9 | Automated validation extended | ✅ Done | `tools/validate-repo.js` — 13 check categories including Gate 1 taxonomy/scope/migration/escaping regressions; current run passes at HEAD |
@@ -71,12 +71,11 @@ It should **not** imply:
 - That the project is sponsor- or grant-ready (see
   `docs/funding-readiness.md` — unchanged, since funding readiness needs
   pilot evidence no session so far has produced)
-- That city-pack/phrase content is licensed for reuse (item 3 — separate
-  from and unaffected by the review work above)
+- That city-pack data is licensed for reuse (item 3 — separate from and
+  unaffected by the review work above)
 
 ## Next gate (Gate 2) — not started
 
-Would include, only after the owner decides to proceed: configuring a Git
-remote, flipping repository visibility, and — separately — resolving the
-content-licensing gate (item 3) by recording phrase translation
-provenance.
+For city-pack data, the remaining content-license decision requires separate
+owner input. Phrase provenance and phrase-content licensing are recorded in
+`phrases/PROVENANCE.md`.

@@ -5,10 +5,9 @@ has a target date, because none can be committed to honestly with a
 single-maintainer, unfunded project.
 
 **Status as of 2026-07-19:** Phase 0 and Phase 1 are complete. Phase 2 is
-partially complete (city-pack data; phrase data still pending). Phase 3 and
-Phase 4 have not started — both are blocked on real-world facts (a pilot
-partner, translation provenance) this repository's own tooling cannot
-manufacture.
+technically complete for city-pack and phrase source data; city-pack content
+licensing remains unresolved. Phase 3 and Phase 4 have not started and are
+blocked on a real pilot partner and resulting impact evidence.
 
 ## Phase 0 — Evidence baseline ✅ Complete
 
@@ -47,19 +46,17 @@ manufacture.
   `index.html`'s inline array from it, with a CI drift check. All four
   packs are independently human-reviewed (reviewer `SABR`,
   `city-packs/<city>/REVIEW.md`).
-- **Not yet done (phrase side):** the same treatment for `phraseBook`.
-  `phrases/safety-critical.json` exists as a reference extraction (9 of 17
-  phrases) but has no sync script and is not consumed by `index.html`.
-  Tracked as
-  [issue #2](https://github.com/firmansyahyunus/fansafe/issues/2).
-- **Not started:** phrase/city-pack **content licensing** remains
-  deliberately unresolved — translation provenance (who translated each
-  phrase, by what method) has never been recorded. This blocks marking
-  content reusable under any license, independent of the technical sync
-  work above. Tracked as
-  [issue #3](https://github.com/firmansyahyunus/fansafe/issues/3) —
-  **requires owner input, not something this repository's tooling can
-  determine on its own.**
+- **Delivered (phrase side, 2026-07-19):** all 17 phraseBook entries are
+  source-controlled in `phrases/safety-critical.json`; `tools/sync-phrases.js`
+  generates the HTML literal and CI detects drift. This completes the
+  technical scope of [issue #2](https://github.com/firmansyahyunus/fansafe/issues/2).
+- **Resolved (phrase content, 2026-07-19):** owner-provided provenance is
+  recorded in `phrases/PROVENANCE.md`, and phrase content is CC-BY-4.0. The
+  language-quality status remains `unreviewed`; this is not a claim of
+  independent native-speaker review. This completes the local evidence scope
+  of [issue #3](https://github.com/firmansyahyunus/fansafe/issues/3).
+- **Still open:** city-pack data licensing is deliberately unresolved and
+  needs a separate owner decision. It is independent of phrase provenance.
 - **What not to do yet:** don't split into a multi-package monorepo
   (Option B, `docs/architecture.md`) until a second real consumer exists.
 

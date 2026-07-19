@@ -18,8 +18,8 @@ second reviewer (`SABR`), and the public-preview UI and safety-critical
 flows passed a real-browser smoke test including the denied-geolocation
 fallback. See `docs/PUBLIC_RELEASE_CHECKLIST.md` for the full gate table
 and `docs/open-source-strategy.md` for the underlying readiness
-assessment. City-pack and phrase **content** is still not licensed for
-reuse, no pilot has run, and no external contributor has used this
+assessment. City-pack data is still not licensed for reuse; phrase content is
+CC-BY-4.0 under `phrases/PROVENANCE.md`. No pilot has run, and no external contributor has used this
 repository — see "Known gaps," below.
 
 ### Gate 1 verification (2026-07-19)
@@ -48,8 +48,9 @@ no distribution occurred.
   `ROADMAP.md`, `CHANGELOG.md`, `CITATION.cff`, `TRADEMARK.md`)
 - Official-source citations for all 4 demo cities' emergency numbers,
   each independently reviewed by a second person (`city-packs/<city>/SOURCES.md`, `REVIEW.md`)
-- Phrase review-status tracking for all 9 safety-critical phrases
-  (`phrases/`) — still `unreviewed`, tracked rather than silently assumed
+- Phrase source and provenance tracking for all 17 phrases (`phrases/`) —
+  CC-BY-4.0 content license, while language-quality status remains
+  `unreviewed`
 - In-app provenance indicators: city-pack sourcing status pill (Safety
   screen), pack detail text (Travel screen), phrase review note (Translate
   screen) — visually confirmed in a real browser
@@ -77,9 +78,9 @@ no distribution occurred.
 
 ### Known gaps in this release
 
-- City-pack/phrase **content is not licensed for reuse** — translation
-  and authorship provenance has not been established. See
-  `docs/content-licensing-matrix.md`.
+- City-pack data is not licensed for reuse. Phrase content is CC-BY-4.0,
+  but its safety-critical translations remain `unreviewed` by an independent
+  native or fluent speaker. See `docs/content-licensing-matrix.md`.
 - Safety-critical phrase translations remain `unreviewed` by a native or
   fluent speaker.
 - No pilot has run; no external contributor has used this repository yet.
@@ -89,5 +90,5 @@ no distribution occurred.
 
 - Any FanLocal (marketplace/booking) functionality — out of scope, see
   `README.md`.
-- A finalized license for city-pack/phrase content — deliberately withheld
-  pending provenance verification.
+- A finalized license for city-pack data — deliberately withheld pending a
+  separate owner decision.

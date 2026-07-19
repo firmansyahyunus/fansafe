@@ -2,13 +2,16 @@
 
 ## Current state (evidence)
 
-Today, all city-pack and phrase content is authored by the sole maintainer
-and hardcoded directly in `FanSafe_PWA/index.html` (`cityPacks`,
-`phraseBook`, `riskSignals`, `docChecklistItems` arrays). There is:
+Today, city-pack content is maintained by the sole maintainer. The 17 phrase
+entries were created with AI assistance and then reviewed, edited, and
+approved by that maintainer; see `phrases/PROVENANCE.md`. City packs and
+phrases are generated into `FanSafe_PWA/index.html` from contributor-side
+sources. There is:
 
 - No sourcing citation for any emergency number
 - No review process (one author, no reviewer)
-- No language-validation step beyond the author's own judgment
+- No independent native-speaker or professional language-validation record
+  beyond the maintainer's own review
 - No versioning beyond a free-text `version`/`updatedAt` string per city pack
   (e.g. `"2026.03"`, `"2026-03-01"`) with no enforced format or effective-date
   semantics
@@ -94,8 +97,11 @@ courtesy record, not a legal requirement on downstream reusers.
 
 ### Licensing
 
-See `LICENSE-PROPOSAL.md` — city-pack and phrase content is proposed under
-CC0-1.0, distinct from the Apache-2.0 code license.
+Phrase content is CC-BY-4.0 under the owner attestation in
+`phrases/PROVENANCE.md`; it remains `unreviewed` for language-quality
+purposes. City-pack data is still unlicensed pending a separate owner
+decision. See `docs/content-licensing-matrix.md` for the authoritative
+per-category status.
 
 ### Automated schema validation
 

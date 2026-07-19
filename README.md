@@ -13,8 +13,9 @@ events**; it is not event emergency infrastructure.
 government or emergency service.** See [`TRADEMARK.md`](TRADEMARK.md).
 
 > **Status: public preview.** Code is licensed (Apache-2.0, see
-> [`LICENSE`](LICENSE)); city-pack and phrase **content** is not yet licensed
-> for reuse (see [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md)).
+> [`LICENSE`](LICENSE)); phrase/translation content is licensed CC-BY-4.0,
+> while city-pack data is not yet licensed for reuse (see
+> [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md)).
 > The two gates that previously held this at "release-candidate" have both
 > cleared: reviewer `SABR` independently re-opened and approved all four
 > city-pack sources (commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`), and
@@ -172,9 +173,11 @@ detail, exact source URLs, and access dates:
 person** — see each city's `REVIEW.md`. Keep treating all numbers as
 sample data to verify locally, per the in-app labeling.
 
-Phrase content has **no recorded translator or authorship provenance** —
-see [`phrases/REVIEW_STATUS.md`](phrases/REVIEW_STATUS.md). This is also
-why phrase content is not yet openly licensed (see License, below).
+Phrase content was created with AI assistance, then reviewed, edited, and
+approved by the project maintainer. It is licensed CC-BY-4.0; see
+[`phrases/PROVENANCE.md`](phrases/PROVENANCE.md). This does not establish
+independent native-speaker or professional translation review, so all phrase
+review statuses remain `unreviewed`.
 
 ## Contributing
 
@@ -237,8 +240,8 @@ blocking the "public preview" label are both now cleared:
    [`docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`](docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md).
 
 Neither of these changes the still-open items: no pilot, no external
-contributor activity, and city-pack/phrase content licensing remains
-unresolved (see License, below). See
+contributor activity, and city-pack data licensing remains unresolved (see
+License, below). See
 [`docs/open-source-strategy.md`](docs/open-source-strategy.md) for the full
 scored assessment and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
 for the exact gate-by-gate status.
@@ -262,8 +265,9 @@ for the exact gate-by-gate status.
 - **Code and tooling:** Apache-2.0 — see [`LICENSE`](LICENSE). Final, not a
   draft.
 - **Documentation:** CC-BY-4.0.
-- **City-pack data and phrase content:** not yet licensed for reuse —
-  translation/authorship provenance has not been verified. See
+- **Phrase/translation content:** CC-BY-4.0. See
+  [`phrases/PROVENANCE.md`](phrases/PROVENANCE.md).
+- **City-pack data:** not yet licensed for reuse. See
   [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md).
 - **"FanSafe" name, wordmark, and icons:** all rights reserved — see
   [`TRADEMARK.md`](TRADEMARK.md).

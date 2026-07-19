@@ -13,10 +13,10 @@ double-click/`file://` path remains supported.
 
 ## Scope and current status
 
-All 17 phrases are marked `"reviewStatus": "unreviewed"`. This is a
-deliberate, evidence-based default: the repository has no record of who
-translated the phrases or by which method. No translation text was changed
-when this source-of-truth file was introduced.
+All 17 phrases are marked `"reviewStatus": "unreviewed"`. The creation
+provenance and license decision are now recorded in `PROVENANCE.md`: the
+content was AI-assisted, then reviewed, edited, and approved by the project
+maintainer. No translation text was changed when this record was added.
 
 The nine safety-critical phrases remain explicitly unreviewed:
 
@@ -26,8 +26,8 @@ The nine safety-critical phrases remain explicitly unreviewed:
 - `doc1`, `doc2` (lost document)
 
 The remaining eight navigation, transport, hotel, and ticket/scam phrases
-are also unreviewed. Their lower immediate safety priority does not create
-evidence of translation quality or authorship.
+are also unreviewed. Maintainer review is not independent native-speaker or
+professional translation evidence, so it does not justify a reviewed status.
 
 ## What would change a phrase's status
 
