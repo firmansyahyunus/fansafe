@@ -165,6 +165,15 @@ function checkCityPacks() {
   }
 }
 
+function checkCityPackSync() {
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, "sync-city-packs.js"), "--check"], { stdio: "inherit" });
+    pass("index.html's cityPacks array matches city-packs/*/pack.json (see tools/sync-city-packs.js)");
+  } catch (e) {
+    fail("index.html's cityPacks array has drifted from city-packs/*/pack.json — run: node tools/sync-city-packs.js");
+  }
+}
+
 function checkPhrases() {
   try {
     execFileSync(process.execPath, [path.join(__dirname, "validate-phrases.js")], { stdio: "inherit" });
@@ -295,7 +304,8 @@ function checkRequiredFiles() {
     "docs/open-source-strategy.md", "docs/funding-readiness.md", "docs/pilot-plan.md",
     "docs/content-licensing-matrix.md",
     "schemas/city-pack.schema.json", "schemas/phrase.schema.json", "schemas/emergency-info.schema.json",
-    "tools/validate-city-pack.js", "tools/validate-phrases.js", "tools/validate-gate1.js", "tools/validate-repo.js",
+    "tools/validate-city-pack.js", "tools/validate-phrases.js", "tools/validate-gate1.js",
+    "tools/sync-city-packs.js", "tools/validate-repo.js",
   ];
   const missing = required.filter((f) => !fs.existsSync(path.join(ROOT, f)));
   if (missing.length === 0) {
@@ -313,6 +323,7 @@ function main() {
   checkManifestJson();
   checkStandaloneCopy(html);
   checkCityPacks();
+  checkCityPackSync();
   checkPhrases();
   checkGate1Regression();
   checkCityPackProvenance();

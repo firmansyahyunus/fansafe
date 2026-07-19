@@ -51,12 +51,21 @@ carefully and new entries should too.
 
 ## Adding or changing a city pack
 
-City-pack data (emergency numbers, supported languages, version) is currently
-hardcoded in `FanSafe_PWA/index.html` (`const cityPacks = [...]`). Follow
-`docs/content-governance.md` for the sourcing/review process before proposing
-a new or changed city pack, and validate any JSON representation against
-`schemas/city-pack.schema.json` with `tools/validate-city-pack.js`. Do not
-invent emergency numbers — cite a source in the pack's `SOURCES.md`.
+`city-packs/<city>/pack.json` is the source of truth for city-pack data
+(emergency numbers, supported languages, version) — **do not** hand-edit
+`FanSafe_PWA/index.html`'s `const cityPacks = [...]` array directly, it is
+generated. Follow `docs/content-governance.md` for the sourcing/review
+process before proposing a new or changed city pack, validate against
+`schemas/city-pack.schema.json` with `tools/validate-city-pack.js`, then run:
+
+```bash
+node tools/sync-city-packs.js
+```
+
+to regenerate `index.html` and its standalone copy. `node tools/validate-
+repo.js` (which `tools/sync-city-packs.js --check` is part of) fails if
+they drift out of sync with `city-packs/`. Do not invent emergency
+numbers — cite a source in the pack's `SOURCES.md`.
 
 ## Adding or changing phrases
 

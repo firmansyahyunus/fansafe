@@ -5,11 +5,15 @@
   "city": "New York City",
   "country": "United States",
   "locale": "en-US",
-  "supportedLanguages": ["en", "es"],
+  "supportedLanguages": [
+    "en",
+    "es"
+  ],
   "version": "2026.03",
   "updatedAt": "2026-07-19",
   "reviewByDate": "2027-01-19",
   "revoked": false,
+  "reviewStatus": "community-reviewed",
   "emergency": {
     "primary": "911",
     "secondaryLabel": "NYC non-emergency",

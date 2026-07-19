@@ -5,11 +5,14 @@
   "city": "Vancouver",
   "country": "Canada",
   "locale": "en-CA",
-  "supportedLanguages": ["en"],
+  "supportedLanguages": [
+    "en"
+  ],
   "version": "2026.05",
   "updatedAt": "2026-07-19",
   "reviewByDate": "2027-01-19",
   "revoked": false,
+  "reviewStatus": "community-reviewed",
   "emergency": {
     "primary": "911",
     "secondaryLabel": "Vancouver Police Department non-emergency",

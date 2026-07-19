@@ -5,11 +5,15 @@
   "city": "Mexico City",
   "country": "Mexico",
   "locale": "es-MX",
-  "supportedLanguages": ["es", "en"],
+  "supportedLanguages": [
+    "es",
+    "en"
+  ],
   "version": "2026.04",
   "updatedAt": "2026-07-19",
   "reviewByDate": "2027-01-19",
   "revoked": false,
+  "reviewStatus": "community-reviewed",
   "emergency": {
     "primary": "911",
     "secondaryLabel": "Locatel non-emergency line",

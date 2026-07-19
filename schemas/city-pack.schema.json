@@ -57,6 +57,11 @@
       "default": false,
       "description": "If true, this pack must not be presented as ready-offline until re-reviewed."
     },
+    "reviewStatus": {
+      "type": "string",
+      "description": "Mirrors FanSafe_PWA/index.html's PACK_REVIEW_LABELS vocabulary (added 2026-07-19, Gate 1 session). 'sample' = no official source cited. 'sourced-unreviewed' = an official source was cited but not independently re-checked. 'community-reviewed' = a named second reviewer re-opened the cited sources and recorded a decision in this city's REVIEW.md. Optional here (default 'sample') so packs pending review still validate.",
+      "enum": ["sample", "sourced-unreviewed", "community-reviewed"]
+    },
     "emergency": { "$ref": "./emergency-info.schema.json" },
     "services": {
       "type": "object",

@@ -5,11 +5,15 @@
   "city": "Toronto",
   "country": "Canada",
   "locale": "en-CA",
-  "supportedLanguages": ["en", "fr"],
+  "supportedLanguages": [
+    "en",
+    "fr"
+  ],
   "version": "2026.04",
   "updatedAt": "2026-07-19",
   "reviewByDate": "2027-01-19",
   "revoked": false,
+  "reviewStatus": "community-reviewed",
   "emergency": {
     "primary": "911",
     "sourceUrl": "https://www.tps.ca/contact/9-1-1-emergency/",

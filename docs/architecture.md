@@ -68,13 +68,25 @@ maintainer project with no other consumers.
    reference JSON extraction (`city-packs/<city>/pack.json`) — without
    touching `index.html`. This documents the seam without committing to an
    architecture prematurely.
-2. **Next (Phase 2, `ROADMAP.md`):** change `index.html` to load city-pack
-   data from `city-packs/*/pack.json` (fetched or inlined at "build" time via
-   a tiny concatenation script — still no framework required) instead of the
-   inline array. This is the first real reuse boundary: city packs become
-   independently editable/reviewable JSON, validated by
-   `tools/validate-city-pack.js` in CI.
-3. **Later, only if a second real consumer appears:** consider extracting
+2. **Done (Phase 2, step 1, 2026-07-19):** `city-packs/<city>/pack.json` is
+   now the single source of truth for city-pack data. `index.html`'s inline
+   `cityPacks` array is **generated**, not hand-maintained — a codegen
+   step for contributors, not a runtime dependency for end users:
+   `tools/sync-city-packs.js` reads and schema-validates every
+   `city-packs/<city>/pack.json` and rewrites the literal array in
+   `FanSafe_PWA/index.html` and its standalone copy. Deliberately **not** a
+   runtime `fetch()`: `city-packs/` lives at the repo root, outside the
+   directory `FanSafe_PWA/README.md`'s quick-start serves as the web root,
+   and `fetch()` of local JSON is blocked on `file://` in most browsers —
+   either would have broken the documented double-click/`file://` path.
+   `node tools/sync-city-packs.js --check` runs in CI
+   (`tools/validate-repo.js`) to catch drift if a contributor edits one
+   without the other.
+3. **Still open (Phase 2, step 2):** the same treatment for `phraseBook` —
+   `phrases/safety-critical.json` exists as a reference extraction (9 of 17
+   phrases, the safety-critical categories) but is not yet wired into a
+   sync script or consumed by `index.html`.
+4. **Later, only if a second real consumer appears:** consider extracting
    the phrase engine and safety-case scoring logic into a small,
    dependency-free JS module (`packages/core` or similar) that both the PWA
    and a hypothetical second integration import. Do not do this speculatively.
