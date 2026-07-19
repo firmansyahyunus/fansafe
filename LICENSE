@@ -204,14 +204,3 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
----
-
-SCOPE NOTE (not part of the Apache License text above, but load-bearing for
-this repository): this LICENSE covers the **application source code and
-tooling** in this repository — `FanSafe_PWA/index.html`, `FanSafe_PWA/sw.js`,
-`FanSafe_Standalone_Prototype.html`, and everything under `tools/` and
-`schemas/`. It does **not** cover city-pack data, phrase/translation
-content, icons, screenshots, or the FanSafe name/brand — see
-`docs/content-licensing-matrix.md` for the authoritative per-category
-status, and `TRADEMARK.md` for brand terms.
