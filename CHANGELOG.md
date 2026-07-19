@@ -1,7 +1,11 @@
 # Changelog
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-There are no tagged releases yet — everything below is `Unreleased`.
+A local, unpushed annotated tag `v0.1.0-alpha` exists as of 2026-07-19
+(commit `9e59c2be577dbc8b8161dec7447dcfd5f993f065`) — see
+`docs/RELEASE_NOTES_DRAFT_v0.1.0-alpha.md`. No GitHub release has been
+published and nothing below has been distributed; everything is still
+tracked as `Unreleased` until the owner approves a push and public release.
 
 ## [Unreleased]
 

@@ -1,7 +1,12 @@
 # Release Notes Draft — `v0.1.0-alpha` (Not Published)
 
-**Not tagged, not released.** Draft only. Do not treat this as evidence a
-release exists — no tag, no GitHub release, no distribution has occurred.
+**Tagged locally, not released.** A local, unpushed annotated tag
+`v0.1.0-alpha` was created 2026-07-19 at commit `9e59c2be577dbc8b8161dec
+7447dcfd5f993f065` to pin a reusable evidence baseline for future program
+applications (see `docs/programs/KIT.md`). This is not a GitHub release: no
+remote push, no published release notes, and no distribution has occurred.
+Do not treat the existence of this local tag as evidence of a public
+release.
 
 ---
 
