@@ -1,34 +1,30 @@
-# Independent source review — v0.1.0-alpha
+# Independent source review - v0.1.0-alpha
 
-## Status: not complete
+## Status: decisions supplied, audit metadata incomplete
 
-The manual verification checklist requires a reviewer who is independent of
-the authoring/audit session to open every cited source and record a name or
-initials, date, result, and notes. That did not occur in this run. An AI
-review or an automated browser check is not recorded as independent human
-review.
+Four human-review decisions were supplied on 2026-07-19. Each record retained
+the literal placeholders `<Reviewer name/initials>` and `<git rev-parse HEAD>`.
+That is insufficient to prove who independently reviewed which revision, so
+these decisions do **not** yet close the independent human-review gate.
 
-| Pack | Current review status | Independent human reviewer | Result |
+| Pack | Supplied decision | Findings recorded | Gate status |
 |---|---|---|---|
-| Mexico City | sourced, unreviewed | — | Not performed |
-| Toronto | sourced, unreviewed | — | Not performed |
-| New York City | sourced, unreviewed | — | Not performed |
-| Vancouver | sourced, unreviewed | — | Not performed |
+| Mexico City | APPROVE | 911, Locatel 55 5658-1111, and Mexico City scope matched; punctuation differences do not change the digits. | Metadata incomplete |
+| Toronto | APPROVE | 911, 311 city services, and 211 community referral matched; no police non-emergency service approved. | Metadata incomplete |
+| New York City | APPROVE | NYPD 911 and NYC311 311 matched; no New Jersey or statewide scope remained. | Metadata incomplete |
+| Vancouver | APPROVE WITH CORRECTION | 911 and 604-717-3321 matched; secondary label needed to name Vancouver Police Department. | Metadata incomplete; correction applied |
 
-## Scope corrections recorded in this run
+## Correction applied from the Vancouver decision
 
-- Toronto now labels 311 as city services and 211 as community services.
-  Neither is labeled police non-emergency; no police-specific service was
-  approved or added.
-- The `newyork` pack is explicitly New York City only. It makes no New
-  Jersey coverage claim.
-- Safety-critical phrase records remain `unreviewed`; no translation status
-  was elevated.
+The Vancouver secondary label now reads `Vancouver Police Department
+non-emergency` in `city-packs/vancouver/pack.json` and both application
+copies. It no longer attributes the police non-emergency number to E-Comm.
 
-## Required human follow-up
+## Required completion
 
-For each URL in `city-packs/<city>/SOURCES.md`, an independent person must
-confirm the organization/domain, stated number or service, geographic scope,
-and taxonomy label, then add their identity/initials, date, result, and notes
-to that pack's `REVIEW.md`. Until then, the UI and all release material must
-continue to say sourced/unreviewed and sample data/verify locally.
+For each pack, the human reviewer must replace the two placeholders in its
+`REVIEW.md` with their name or initials and the exact commit hash they
+reviewed. If the review occurred against a different revision than the final
+pack, the reviewer must re-check the changed facts. Until then, all city packs
+remain `sourced-unreviewed` in the UI and safety-critical phrases remain
+`unreviewed`.

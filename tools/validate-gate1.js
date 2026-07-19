@@ -12,6 +12,7 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const toronto = JSON.parse(fs.readFileSync(path.join(ROOT, "city-packs", "toronto", "pack.json"), "utf8"));
 const newYork = JSON.parse(fs.readFileSync(path.join(ROOT, "city-packs", "newyork", "pack.json"), "utf8"));
+const vancouver = JSON.parse(fs.readFileSync(path.join(ROOT, "city-packs", "vancouver", "pack.json"), "utf8"));
 const app = fs.readFileSync(path.join(ROOT, "FanSafe_PWA", "index.html"), "utf8");
 
 const failures = [];
@@ -23,7 +24,9 @@ expect(toronto.services && toronto.services.city_services && toronto.services.ci
 expect(toronto.services && toronto.services.community_services && toronto.services.community_services.number === "211", "Toronto must model 211 as community_services");
 expect(!Object.hasOwn(toronto.services || {}, "police_non_emergency"), "Toronto must not claim police_non_emergency before independent review");
 expect(newYork.city === "New York City", "newyork pack must be scoped to New York City");
+expect(vancouver.emergency && vancouver.emergency.secondaryLabel === "Vancouver Police Department non-emergency", "Vancouver police non-emergency service must name Vancouver Police Department");
 expect(!/New York\s*\/\s*New Jersey/.test(app), "running app must not display unsupported New Jersey scope");
+expect(app.includes('secondaryLabel:"Vancouver Police Department non-emergency"'), "running app must not attribute Vancouver police non-emergency service to E-Comm");
 expect(app.includes('"newyork-newjersey":"newyork"'), "app must migrate legacy newyork-newjersey localStorage values");
 expect(app.includes('"new_york_new_jersey":"newyork"'), "app must migrate legacy new_york_new_jersey localStorage values");
 expect(app.includes('"new-york-new-jersey":"newyork"'), "app must migrate legacy new-york-new-jersey localStorage values");

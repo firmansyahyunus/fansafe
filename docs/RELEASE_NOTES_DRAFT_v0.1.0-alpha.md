@@ -51,6 +51,9 @@ the exact two items that gate the "public preview" label, and
 ### Known gaps in this release
 
 - No independent (second-person) review of sourced emergency numbers yet.
+- Four human-review decisions have been supplied, but all omit the reviewer
+  identity and exact commit reviewed; they cannot yet be treated as auditable
+  independent confirmation. Vancouver's resulting label correction is applied.
 - Browser smoke testing is recorded in
   `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`; the
   denied-geolocation fallback remains unverified.

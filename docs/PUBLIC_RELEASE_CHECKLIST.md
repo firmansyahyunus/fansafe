@@ -42,6 +42,16 @@ is marked from actual evidence produced this session — not aspirationally.
 | 15 | Repository made public | ❌ Not done | Explicitly out of scope without further approval, per user instruction |
 | 16 | Release ZIP aligned to the intended commit | ❌ Not done | `unzip -t FanSafe_PWA.zip` passes, but its `index.html` hash differs from `FanSafe_PWA/index.html`; regenerate the git-ignored ZIP immediately before any approved release |
 
+### Source-review decision update (2026-07-19)
+
+Human-review decisions were supplied for all four city packs: Mexico City,
+Toronto, and New York City were marked `APPROVE`; Vancouver was marked
+`APPROVE WITH CORRECTION`. The Vancouver correction is applied. However, every
+submitted record left the reviewer identity and the reviewed commit as literal
+placeholders. Item 13 therefore remains open: those two fields must be
+completed by the reviewer before the decisions can count as auditable,
+independent confirmation.
+
 ## What "credible public repository, release-candidate for public preview" means given the above
 
 This repository already lets a stranger:

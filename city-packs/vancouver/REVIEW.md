@@ -1,13 +1,17 @@
-# Review — Vancouver pack
+# Review - Vancouver pack
 
 | Stage | Who | Date | Status |
 |---|---|---|---|
-| Original authoring (hardcoded in `index.html`) | FanSafe prototype build | 2026-07-18 (file timestamp) | Not attributed to a named individual |
+| Original authoring (hardcoded in `index.html`) | FanSafe prototype build | 2026-07-18 | Not attributed to a named individual |
 | Extraction to `city-packs/vancouver/pack.json` | Repository audit | 2026-07-19 | Mechanical extraction, schema-validated |
-| Source citation (`SOURCES.md`) | Repository audit (web search against ecomm911.ca / vpd.ca) | 2026-07-19 | **Done** — both numbers matched official sources exactly; strongest-verified pack of the four (non-emergency number is genuinely police-specific, unlike Toronto's) |
-| Independent human review | — | — | **Not done** |
+| Source citation (`SOURCES.md`) | Repository audit | 2026-07-19 | Sources recorded |
+| Submitted human-review decision | Reviewer identity not supplied | 2026-07-19 | `APPROVE WITH CORRECTION` decision supplied; reviewer identity and reviewed commit were left as placeholders |
+| Required label correction | Repository maintenance | 2026-07-19 | Changed secondary label to Vancouver Police Department non-emergency |
 
-**Status: sourced, not independently reviewed.** Same caveat as the other
-three packs: an automated sourcing pass is not a substitute for a second
-human confirming the citations. Keep the "SAMPLE DATA — verify locally" UI
-labeling until that happens.
+**Status: source correction applied; review decision metadata incomplete.**
+The submitted decision confirms 911 and 604-717-3321, and required the
+secondary label to identify Vancouver Police Department rather than E-Comm.
+That correction is applied in `pack.json` and the running app. The decision
+cannot close the independent-review gate until the reviewer replaces the
+placeholder with their name/initials and the actual commit reviewed. Keep the
+"SAMPLE DATA - verify locally" UI labeling.

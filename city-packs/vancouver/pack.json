@@ -6,13 +6,13 @@
   "country": "Canada",
   "locale": "en-CA",
   "supportedLanguages": ["en"],
-  "version": "2026.03",
-  "updatedAt": "2026-03-10",
+  "version": "2026.04",
+  "updatedAt": "2026-07-19",
   "reviewByDate": "2027-01-19",
   "revoked": false,
   "emergency": {
     "primary": "911",
-    "secondaryLabel": "Non-emergency (E-Comm)",
+    "secondaryLabel": "Vancouver Police Department non-emergency",
     "secondary": "604-717-3321",
     "sourceUrl": "https://vpd.ca/contact-us/",
     "sourceAccessedOn": "2026-07-19"
