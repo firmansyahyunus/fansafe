@@ -1,12 +1,14 @@
 # Release Notes Draft — `v0.1.0-alpha` (Not Published)
 
 **Tagged locally, not released.** A local, unpushed annotated tag
-`v0.1.0-alpha` points at commit `9d6dd1cec6da94ccd91ca78cdd37cca6b20b340b`
-(2026-07-19) to pin a reusable evidence baseline for future program
-applications (see `docs/programs/KIT.md`). This is not a GitHub release: no
-remote push, no published release notes, and no distribution has occurred.
-Do not treat the existence of this local tag as evidence of a public
-release.
+`v0.1.0-alpha` (created 2026-07-19) pins a reusable evidence baseline for
+future program applications (see `docs/programs/KIT.md`). Run
+`git rev-parse v0.1.0-alpha^{commit}` for the exact commit it points to —
+deliberately not hardcoded here, since any commit that edits this file
+changes its own hash, making a pinned value in the same file stale the
+moment it's written. This is not a GitHub release: no remote push, no
+published release notes, and no distribution has occurred. Do not treat the
+existence of this local tag as evidence of a public release.
 
 ---
 
