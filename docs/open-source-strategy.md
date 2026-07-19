@@ -90,10 +90,15 @@ cannot move — that is intentional, not an oversight.
 - **Action taken this audit:** `tools/validate-repo.js` +
   `.github/workflows/ci.yml` automate exactly the static checks that were
   previously manual-only, so they now run on every push instead of once.
-- **Action still required:** an automated interactive/regression test
-  (e.g., Playwright) covering at least the emergency-sheet and medical-card
-  flows — not built in this audit; would require choosing and installing a
-  test framework, a real architectural decision, not a documentation one.
+- **Action still required:** ~~an automated interactive/regression test~~
+  **(Gate 1 update, 2026-07-19):** a manual (not yet automated/CI-wired)
+  Playwright-driven browser session exercised navigation, the emergency
+  action sheet, medical-card reveal, reset, offline reload, and both
+  geolocation paths, with screenshots — see
+  `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`. This
+  closes the "never interactively tested" gap for this specific run but is
+  still a one-time manual session, not a repeatable CI regression suite —
+  that remains a genuine future improvement.
 
 ### Security, safety, and privacy — 11/14 (pre: 8/14 → post: 11/14)
 
@@ -112,9 +117,15 @@ cannot move — that is intentional, not an oversight.
 - **Action taken this audit:** `SECURITY.md`, `PRIVACY.md`,
   `docs/threat-model.md` — formalizing behavior that previously existed only
   as scattered code comments and `DECISION_LOG.md` entries.
-- **Action still required:** an XSS/injection-focused review of the 4
-  `innerHTML`-injected ids, and a lint rule or checklist item to catch new
-  `innerHTML` usage in review (flagged in `docs/threat-model.md`, T3).
+- **Action still required:** ~~an XSS/injection-focused review~~ **(Gate 1
+  update, 2026-07-19):** all 24 `innerHTML` sites were audited by input
+  source; one real unescaped user-controlled sink was found and fixed
+  (`renderContacts()` avatar initials), then regression-verified live with
+  actual injection payloads (`<img src=x onerror=alert(1)>`, `<script>`,
+  raw `< > " ' &`) in a real browser — all rendered as inert text. See
+  `docs/threat-model.md` T3. A lint rule to catch *future* unsafe
+  `innerHTML` usage still does not exist beyond `tools/validate-repo.js`'s
+  heuristic scan.
 
 ### Content provenance and city-pack governance — 4/10 (pre: 1/10 → post: 4/10)
 
@@ -131,9 +142,17 @@ cannot move — that is intentional, not an oversight.
 - **Action taken this audit:** `docs/content-governance.md`,
   `schemas/city-pack.schema.json` etc., `tools/validate-city-pack.js`,
   reference `city-packs/<city>/pack.json` + `SOURCES.md` + `REVIEW.md`.
-- **Action still required:** a human actually cites official sources for
-  the four demo cities' emergency numbers, or the data stays explicitly
-  labeled unsourced sample data indefinitely.
+- **Action still required:** ~~a human actually cites official sources~~
+  **(Gate 1 update, 2026-07-19):** official sources were cited for all
+  four cities (`city-packs/<city>/SOURCES.md`), then independently
+  re-verified by a second reviewer (`SABR`) against commit
+  `383a08ebbe337f1f9d43ab5299953cf6038d6316` — see each city's `REVIEW.md`.
+  Two real content gaps were found and fixed in the same pass: Toronto's
+  non-emergency numbers were relabeled as city/community services (not
+  police-specific), and the "New York/New Jersey" pack was narrowed to
+  New York City only. Sample-data UI labeling is unchanged and intentional
+  — review confirms cited facts as of the review date, not future
+  accuracy.
 
 ### Licensing and legal clarity — 4/8 (pre: 0/8 → post: 4/8)
 
@@ -305,9 +324,9 @@ for?" pushback without #2's concrete traveller framing.
 
 | Severity | Problem | Evidence | Recommended change | Implemented this audit? |
 |---|---|---|---|---|
-| **Blocker** | No Git repository exists at all | `git rev-parse --show-toplevel` → "not a git repository" | `git init`, then real commits | Not yet — requires explicit approval (see final report) |
-| **Blocker** | No license | No `LICENSE` file found anywhere | `LICENSE-PROPOSAL.md` as draft | Drafted, not finalized (requires owner decision) |
-| **High** | No content sourcing for emergency data | `DECISION_LOG.md` "SAMPLE DATA" label only, no citations | `docs/content-governance.md` + schema + templates | Framework yes; actual sourcing no (needs a human to cite real sources) |
+| **Blocker** | No Git repository exists at all | `git rev-parse --show-toplevel` → "not a git repository" | `git init`, then real commits | **Done** — repository initialized, 15+ local commits, no remote configured |
+| **Blocker** | No license | No `LICENSE` file found anywhere | `LICENSE-PROPOSAL.md` as draft | **Done for code** (Apache-2.0, owner-confirmed, `LICENSE`); content licensing remains deliberately unresolved pending translation provenance |
+| **High** | No content sourcing for emergency data | `DECISION_LOG.md` "SAMPLE DATA" label only, no citations | `docs/content-governance.md` + schema + templates | **Done** — official sources cited for all 4 cities and independently re-verified by a second reviewer (`SABR`), commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`; 2 real content gaps found and fixed (Toronto taxonomy, NYC scope) |
 | **High** | No CI / automated validation | No `.github/` directory found | `.github/workflows/ci.yml` + `tools/validate-repo.js` | Yes |
 | **High** | No security/privacy policy docs | No `SECURITY.md`/`PRIVACY.md` found | Added both, plus `docs/threat-model.md` | Yes |
 | **High** | Zero pilot/user evidence | No issues, no roadmap, no feedback record found | `docs/pilot-plan.md` | Plan yes; execution no (needs a real partner) |
@@ -319,13 +338,18 @@ for?" pushback without #2's concrete traveller framing.
 
 ## What this audit did not and could not do
 
-- Could not confirm legal ownership of code/content — requires the human
-  owner.
-- Could not run a real pilot — requires real participants.
+- Could not confirm legal ownership of code — **resolved in a later
+  session**: owner confirmed ownership, code is licensed Apache-2.0.
+  Content (city-pack/phrase) ownership/provenance remains unresolved by
+  design.
+- Could not run a real pilot — requires real participants. **Still true**
+  as of the Gate 1 session — no pilot partner exists.
 - Could not verify emergency-number accuracy against live official sources
-  for the four demo cities — requires a human to do the actual citation
-  work `docs/content-governance.md` now requires of future contributions.
+  — **resolved in a later (Gate 1) session**: sourced against official
+  primary sources and independently re-verified by a second reviewer
+  (`SABR`). This confirms the cited facts as of the review date, not their
+  accuracy forever — city data must still be verified locally by end users.
 - Could not change the running app's architecture (Phase 2 extraction) —
-  documented the path without executing a functional rewrite, consistent
-  with "gradual migration, not a rewrite" and this audit's low-risk-only
-  implementation scope.
+  **still true**. `index.html` still uses its own inline arrays; the
+  `city-packs/`/`phrases/` extraction remains reference-only, consistent
+  with "gradual migration, not a rewrite."

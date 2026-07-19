@@ -7,3 +7,8 @@ FanSafe_PWA.zip
 .DS_Store
 Thumbs.db
 *.swp
+
+# Playwright CLI scratch output (console logs, ad hoc screenshots/snapshots)
+# from manual browser smoke-testing sessions — not build artifacts. Curated
+# evidence lives in docs/release-evidence/, which IS tracked.
+.playwright-cli/

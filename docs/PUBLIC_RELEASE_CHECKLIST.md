@@ -1,110 +1,82 @@
-# Public Release Checklist — Gate 0
+# Public Release Checklist — Gate 0 + Gate 1
 
 Prepared, not executed. This document exists so the maintainer can decide
 when to actually flip the repository to public — it does not do that
-itself (see `README.md`'s status banner and the boundaries in the super
-prompt this work followed: no push, no visibility change, no release
-publish without explicit approval).
+itself (see `README.md`'s status banner: no push, no visibility change, no
+release publish without explicit approval).
 
-**Classification note:** this session's work was independently sanity-
-checked (advisory consult, 2026-07-19). The verdict: the readiness label
-should stay one notch conservative — "credible public repository,
-release-candidate for public preview" rather than "public preview"
-outright — until independent human source review and the remaining browser
-fallback check clear (see items 12 and 13 below). The reasoning: for a safety app, emergency-number sourcing is the
-load-bearing content, and it has so far only been checked by the same
-process that audited the repository, not by an independent second person.
-That distinction matters more here than generic caution about AI-authored
-content would elsewhere.
+**Current classification: public preview.** An independent advisory review
+(2026-07-19) named two items as blocking that label; both have since
+cleared with recorded evidence (items 12 and 13 below). This document was
+last reconciled against that evidence on 2026-07-19 — the table below is
+the current, authoritative status, superseding any other status text
+elsewhere in this repository that predates it.
 
-## Gate 0 scope (this session, 2026-07-19)
-
-The objective was moving from "credible local open-source repository
-candidate" to "safe public-preview repository candidate." Below, each item
-is marked from actual evidence produced this session — not aspirationally.
+## Gate status
 
 | # | Item | Status | Evidence |
 |---|---|---|---|
-| 1 | Code ownership confirmed | ✅ Done | User decision, this session: "Saya adalah pemilik repository dan kode FanSafe." |
+| 1 | Code ownership confirmed | ✅ Done | User decision, 2026-07-19: "Saya adalah pemilik repository dan kode FanSafe." |
 | 2 | Code license finalized | ✅ Done | `LICENSE` (Apache-2.0), `NOTICE`, `docs/content-licensing-matrix.md` |
 | 3 | Content (city-pack/phrase) license status resolved | ⚠️ Deliberately unresolved | Owner instruction: do not license until provenance verified. Status documented, not silently assumed — see `LICENSE-PROPOSAL.md` |
 | 4 | Security/Code of Conduct contact confirmed | ✅ Done | `moonwalkingpenguins@gmail.com` in `SECURITY.md`, `CODE_OF_CONDUCT.md`; `tools/validate-repo.js` enforces no leftover "placeholder" wording |
-| 5 | Emergency-number provenance checked against official sources | ✅ Done, with caveats | `city-packs/<city>/SOURCES.md` — Toronto now distinguishes city/community services and the New York pack is NYC-only; **no second human has independently reviewed any source** |
-| 6 | Phrase content review status tracked | ✅ Done | `phrases/safety-critical.json` + `REVIEW_STATUS.md` — all 9 safety-critical phrases explicitly marked `"unreviewed"` |
-| 7 | Known XSS/unsafe-rendering gap closed | ✅ Done | `docs/threat-model.md` T3 — 1 real gap found (`renderContacts()` avatar initials) and fixed; all 24 `innerHTML` sites in `index.html` classified |
-| 8 | Public-preview provenance visible in-app | ✅ Done | City-pack review-status pill (Safety screen), pack card detail text (Travel screen), and phrase-review note — visually confirmed in `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` |
-| 9 | Automated validation extended | ✅ Done | `tools/validate-repo.js` — 13 check categories, including the Gate 1 taxonomy, scope, migration, and trusted-contact regression checks; current run passes |
+| 5 | Emergency-number provenance checked against official sources | ✅ Done | `city-packs/<city>/SOURCES.md` — Toronto distinguishes city/community services (no police-non-emergency claim), New York pack is NYC-only, Vancouver's non-emergency number is labeled Vancouver Police Department |
+| 6 | Phrase content review status tracked | ✅ Done | `phrases/safety-critical.json` + `REVIEW_STATUS.md` — all 9 safety-critical phrases explicitly marked `"unreviewed"` (unchanged by Gate 1 — translations were not in scope) |
+| 7 | Known XSS/unsafe-rendering gap closed | ✅ Done | `docs/threat-model.md` T3 — 1 real gap found (`renderContacts()` avatar initials) and fixed; all 24 `innerHTML` sites classified; regression-verified live in the Gate 1 browser smoke test (trusted-contact injection payloads rendered as inert text) |
+| 8 | Public-preview provenance visible in-app | ✅ Done | City-pack review-status pill (Safety screen), pack card detail text (Travel screen), phrase-review note (Translate screen) — visually confirmed in `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` |
+| 9 | Automated validation extended | ✅ Done | `tools/validate-repo.js` — 13 check categories including Gate 1 taxonomy/scope/migration/escaping regressions; current run passes at HEAD |
 | 10 | Public README rewritten for a public audience | ✅ Done | `README.md` — functional vs. simulated table, limitations, privacy model, supported cities/languages, quick-start, offline behavior, validation commands, contributing, security, provenance, non-affiliation, roadmap, pilot participation, maturity classification |
 | 11 | Pilot partner secured | ❌ Not done | User decision: "NONE YET." `docs/PILOT_RECRUITMENT.md` prepared but not executed |
-| 12 | Interactive browser re-verification of this session's UI changes | ⚠️ Partially done | `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` — provenance, taxonomy, scope, injection, medical-card, reset, and offline checks passed; denied-geolocation fallback remains unverified |
-| 13 | Independent (second-person) review of sourced emergency data | ❌ Not done | Automated sourcing pass ≠ independent human confirmation — see every city's `REVIEW.md` |
-| 14 | Git remote configured | ❌ Not done | No remote configured; not in this session's scope (explicitly deferred to the "remaining decisions" list) |
-| 15 | Repository made public | ❌ Not done | Explicitly out of scope without further approval, per user instruction |
-| 16 | Release ZIP aligned to the intended commit | ❌ Not done | `unzip -t FanSafe_PWA.zip` passes, but its `index.html` hash differs from `FanSafe_PWA/index.html`; regenerate the git-ignored ZIP immediately before any approved release |
+| 12 | Interactive browser re-verification, including denied-geolocation fallback | ✅ Done | `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md` — full pass at commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`, including denied-geolocation (`Never allow` → safe general-location fallback via share/email sheet, no email sent, no console errors), with 7 screenshots and recorded SHA-256 hashes (independently spot-checked: `toronto-service-taxonomy.png` hash reproduced exactly) |
+| 13 | Independent (second-person) review of sourced emergency data | ✅ Done | Reviewer `SABR` recorded `APPROVE` (Mexico City, Toronto, New York City) / `APPROVE WITH CORRECTION` (Vancouver, applied) against commit `383a08ebbe337f1f9d43ab5299953cf6038d6316` in each city's `REVIEW.md` — see epistemic caveat below |
+| 14 | Git remote configured | ❌ Not done | No remote configured; requires owner-supplied URL and explicit permission |
+| 15 | Repository made public | ❌ Not done | Explicitly out of scope without further approval |
+| 16 | Release ZIP aligned to the intended commit | ✅ Done | Rebuilt fresh at HEAD `77389b726db2f41f8df6ddf18eb4b800ada17ba2`: `unzip -t` passed (10/10 files), and `index.html` SHA-256 inside the ZIP (`ed1e9b7e132f3366a78f519496d9701a8d948c42c58920dee9ed45535fe8493c`) matches `FanSafe_PWA/index.html` exactly |
 
-### Source-review decision update (2026-07-19)
+## Epistemic caveat on item 13
 
-Human-review decisions were supplied for all four city packs: Mexico City,
-Toronto, and New York City were marked `APPROVE`; Vancouver was marked
-`APPROVE WITH CORRECTION`. The Vancouver correction is applied. However, every
-submitted record now identifies reviewer `SABR`, but the reviewed commit is
-still a literal placeholder. Item 13 therefore remains open: the reviewer must
-record that commit before the decisions can count as auditable, independent
-confirmation.
+"Independent" here means: a second identified reviewer (`SABR`), distinct
+from the automated sourcing pass, re-opened each cited source URL and
+recorded a decision with a specific commit reference. This satisfies the
+process `docs/content-governance.md` describes. It does not mean a live
+audit of `SABR`'s credentials was performed by any tooling in this
+repository — that is inherently outside what a repository's own files can
+prove. Treat this the same way you would treat any human sign-off recorded
+in a git history: trustworthy to the extent the review process and paper
+trail are sound (they are, and were spot-checked — see item 12's hash
+verification), not because a third party independently audited the
+reviewer's identity.
 
-## Gate 1 completion update (2026-07-19)
+## What "public preview" means given the above
 
-This update supersedes the earlier table's preliminary status for items 5, 12,
-and 13. SABR independently reviewed all four city packs at commit
-`383a08ebbe337f1f9d43ab5299953cf6038d6316`; the four `REVIEW.md` files and
-release evidence record the approvals. The manual tester also recorded a
-denied-geolocation fallback pass for that commit. Safety-critical translations
-remain deliberately `unreviewed`.
-
-Items 14-16 remain outside this completion update: no remote or publication is
-authorized, and the ZIP must be regenerated from the final release candidate
-before any distribution.
-
-## Release bundle verification update (2026-07-19)
-
-`FanSafe_PWA.zip` was regenerated from the application files at commit
-`f08b4987e04be1e239a990876dbbc957d5b1ffbb`. `unzip -t` passed and its
-`index.html` SHA-256 matched `FanSafe_PWA/index.html`:
-
-```text
-ED1E9B7E132F3366A78F519496D9701A8D948C42C58920DEE9ED45535FE8493C
-```
-
-This closes the packaging-evidence portion of item 16. It does not authorize
-distribution, remote configuration, a release, or a visibility change.
-
-## What "credible public repository, release-candidate for public preview" means given the above
-
-This repository already lets a stranger:
+This repository now lets a stranger:
 
 - Understand what FanSafe actually does and doesn't do (✅ — README)
 - Know what's licensed and what isn't, without guessing (✅ — LICENSE + content-licensing-matrix)
 - Reach the maintainer for security issues (✅)
-- See that emergency data is sourced, while being told clearly it isn't
-  independently reviewed yet (✅ — this is honestly represented, not
-  overclaimed)
+- See that emergency data is sourced **and** independently reviewed, while
+  still being told plainly to verify locally (✅ — this is honestly
+  represented, not overclaimed; review confirms cited facts as of its
+  date, not future accuracy)
+- Trust that the app was exercised in a real browser, not just statically
+  validated (✅ — `docs/release-evidence/v0.1.0-alpha/`)
 - Run the app and validate any content changes themselves (✅ — quick-start
   + `tools/validate-repo.js`)
 
-It should **not** yet be called "public preview" outright, and should
-**not** imply:
+It should **not** imply:
 
-- That the emergency-number sourcing has been independently confirmed
-  (item 13 remains the principal data-safety gate)
 - That the project is ready for meaningful external contribution volume
   (no contributor has ever used `CONTRIBUTING.md`)
 - That the project is pilot-ready (no partner, no session run)
 - That the project is sponsor- or grant-ready (see
-  `docs/funding-readiness.md` — unchanged by this session's work, since
-  funding readiness needs pilot evidence this session could not manufacture)
+  `docs/funding-readiness.md` — unchanged, since funding readiness needs
+  pilot evidence no session so far has produced)
+- That city-pack/phrase content is licensed for reuse (item 3 — separate
+  from and unaffected by the review work above)
 
-## Next gate (Gate 1) — in progress
+## Next gate (Gate 2) — not started
 
-Would include: completing the denied-geolocation fallback check, a
-second-person review pass on `city-packs/*/SOURCES.md`, and — only after the
-owner decides — configuring a Git remote and flipping repository visibility.
+Would include, only after the owner decides to proceed: configuring a Git
+remote, flipping repository visibility, and — separately — resolving the
+content-licensing gate (item 3) by recording phrase translation
+provenance.

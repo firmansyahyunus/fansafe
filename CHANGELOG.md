@@ -36,6 +36,21 @@ There are no tagged releases yet — everything below is `Unreleased`.
   already hardcoded in `FanSafe_PWA/index.html`. **At that point the running
   app was unchanged and still used its own inline arrays** — this was
   documentation/tooling, not a behavior change.
+- Independent human source review (reviewer `SABR`) of all four city packs
+  at commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`, recorded in each
+  `city-packs/<city>/REVIEW.md`.
+- Real-browser smoke-test evidence in
+  `docs/release-evidence/v0.1.0-alpha/` — navigation, provenance
+  indicators, Toronto taxonomy, New York City scope, trusted-contact
+  injection handling, medical-card reveal, reset, offline reload, and both
+  the granted- and denied-geolocation paths, with screenshots and recorded
+  SHA-256 hashes.
+
+### Verified
+
+- `FanSafe_PWA.zip` rebuilt fresh and confirmed integrity-valid
+  (`unzip -t`, 10/10 files) with its `index.html` SHA-256 matching
+  `FanSafe_PWA/index.html` exactly at HEAD.
 
 ### Current implementation boundary
 

@@ -7,32 +7,25 @@ boundaries (no push, no release, no remote configuration without approval).
 
 ## Milestone title
 
-`v0.1.0-alpha — Release candidate for public preview`
+`v0.1.0-alpha — Public preview`
 
 ## Description (proposed)
 
-> Tracks the remaining verification gates in
-> `docs/PUBLIC_RELEASE_CHECKLIST.md`: the denied-geolocation browser fallback
-> and independent (second-person) review of `city-packs/*/SOURCES.md`. The
-> real-browser pass, Toronto city/community-service taxonomy correction, and
-> New York City scope correction are recorded in
-> `docs/release-evidence/v0.1.0-alpha/`.
+> Both verification gates in `docs/PUBLIC_RELEASE_CHECKLIST.md` are
+> cleared: the denied-geolocation browser fallback passed, and `SABR`
+> independently reviewed and approved `city-packs/*/SOURCES.md`. Evidence
+> is recorded in `docs/release-evidence/v0.1.0-alpha/`. Remaining issues
+> below are lower-priority follow-ups, not release blockers.
 
 ## Proposed issues to attach
 
-1. **Complete denied-geolocation fallback verification**
-   Labels: `testing`, `priority-high`
-   Body: the browser smoke test verified navigation, provenance displays,
-   Toronto taxonomy, New York City scope, trusted-contact escaping, medical
-   reveal, reset, and offline reload. Its browser context left geolocation
-   pending, so explicitly exercise a denied permission and confirm the safe
-   general-location fallback. Update the smoke-test evidence with the result.
+1. ~~Complete denied-geolocation fallback verification~~ — **Done.** See
+   `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`,
+   "Completed denial follow-up."
 
-2. **Independent review of city-pack emergency-number sources**
-   Labels: `content-governance`, `priority-high`
-   Body: a second person (not the one who ran the automated sourcing pass)
-   opens each URL in `city-packs/<city>/SOURCES.md` and confirms the cited
-   number matches. Update each `REVIEW.md` accordingly.
+2. ~~Independent review of city-pack emergency-number sources~~ — **Done.**
+   See each city's `REVIEW.md`, reviewer `SABR`, commit
+   `383a08ebbe337f1f9d43ab5299953cf6038d6316`.
 
 3. **city-pack schema: express "reviewedBy required if reviewStatus claims
    review" in schema itself, or document as JS-only rule**
@@ -47,6 +40,12 @@ boundaries (no push, no release, no remote configuration without approval).
    Body: per `docs/architecture.md`, Phase 2 — `index.html` still uses its
    own inline `cityPacks` array; the `city-packs/` extraction is reference-
    only. Out of scope for `v0.1.0-alpha`.
+
+5. **Establish phrase translation provenance**
+   Labels: `content-governance`, `priority-medium`
+   Body: unlocks the content-licensing gate (`docs/content-licensing-matrix.md`
+   item 3) — record who authored/translated each phrase and by what
+   method, then re-run the license decision for phrase content.
 
 ## Suggested labels (if not already present)
 

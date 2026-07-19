@@ -12,32 +12,29 @@ events**; it is not event emergency infrastructure.
 **Not officially affiliated with FIFA, any World Cup organizing body, or any
 government or emergency service.** See [`TRADEMARK.md`](TRADEMARK.md).
 
-> **Status: credible public repository, release-candidate for public
-> preview — not yet there.** Code is licensed (Apache-2.0, see
+> **Status: public preview.** Code is licensed (Apache-2.0, see
 > [`LICENSE`](LICENSE)); city-pack and phrase **content** is not yet licensed
 > for reuse (see [`docs/content-licensing-matrix.md`](docs/content-licensing-matrix.md)).
-> Emergency-number sources were checked against official primary sources,
-> but **no independent human has verified that sourcing yet** — for a
-> safety app, that is the one gap that matters most before calling this a
-> "preview." Read [`docs/open-source-strategy.md`](docs/open-source-strategy.md)
-> and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
-> before assuming this is contributor-, sponsor-, or pilot-ready — see
-> "Current maturity" below for the honest classification and the remaining
-> verification gates.
+> The two gates that previously held this at "release-candidate" have both
+> cleared: reviewer `SABR` independently re-opened and approved all four
+> city-pack sources (commit `383a08ebbe337f1f9d43ab5299953cf6038d6316`), and
+> a real-browser smoke test — including the denied-geolocation fallback —
+> passed at the same commit. See
+> [`docs/release-evidence/v0.1.0-alpha/`](docs/release-evidence/v0.1.0-alpha/)
+> for the recorded evidence and
+> [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md) for
+> the full gate-by-gate status. This is still **not** "contributor-ready,"
+> "pilot-ready," or "sponsor/grant-ready" — no external contributor or pilot
+> has used this repository — and city data remains sample data to verify
+> locally; safety-critical translations remain `unreviewed`. No remote,
+> public release, pilot, or submission is implied by this status. See
+> "Current maturity" below for the full classification.
 
 FanSafe is the only active product scope. **FanLocal** (a possible future
 marketplace/booking companion) is not implemented anywhere in this repository
 and must not be inferred from anything here — see
 [`docs/architecture.md`](docs/architecture.md#fanlocal-boundary) for the one
 paragraph where it is acknowledged as a future, separate concern.
-
-## Gate 1 status update (2026-07-19)
-
-SABR independently approved all four city-pack sources at commit
-`383a08ebbe337f1f9d43ab5299953cf6038d6316`. The denied-geolocation fallback
-also passed by manual tester attestation at that commit. City data remains
-sample data to verify locally, and safety-critical translations remain
-`unreviewed`. No remote, public release, pilot, or submission is implied.
 
 ## What FanSafe does today
 
@@ -202,33 +199,42 @@ being an early pilot participant, see
 [`docs/pilot-plan.md`](docs/pilot-plan.md), and reach out via the security
 contact above (there is no dedicated pilot inbox yet).
 
-## Current maturity: **credible public repository — release-candidate for public preview**
+## Current maturity: **public preview**
 
-Above "prototype only" (there is now a finalized code license, CI,
-security/privacy policy, and officially-sourced — if not yet independently
-reviewed — content), but deliberately **not** labeled "public preview" yet,
-and not "contributor-ready" or "pilot-ready" (no external contributor or
-pilot has used this repository). An independent advisory review of this
-session's work concluded the label should stay one notch conservative until
-the remaining verification gates clear:
+Above "prototype only" (finalized code license, CI, security/privacy
+policy) and above "credible public repository, release-candidate for
+public preview" (the two data-safety gates named below have both cleared
+with recorded evidence). Still **not** "contributor-ready," "pilot-ready,"
+or "sponsor-/grant-ready" — no external contributor or pilot has used this
+repository, and funding-channel prerequisites are unchanged from
+`docs/funding-readiness.md`.
 
-1. **A second human verifies the four cities' emergency numbers** against
-   the sources cited in `city-packs/<city>/SOURCES.md` — the current
-   sourcing pass was done by the same process that audited the repository,
-   with no independent check yet. For a safety app, this is the one
-   verification that matters most.
-2. **The denied-geolocation fallback check.** A real-browser smoke pass has
-   confirmed the provenance indicators, city labels, injection handling,
-   medical-card reveal, reset, service-worker control, and offline reload;
-   its browser context did not resolve a denied geolocation request. See
-   `docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`.
+The two gates an independent advisory review (2026-07-19) identified as
+blocking the "public preview" label are both now cleared:
 
-Both are feasible for the maintainer. Until then, the honest
-label is "credible public repository, pending independent data
-verification" rather than "public preview." See
+1. **Independent human source verification.** Reviewer `SABR` re-opened
+   the cited official sources for all four city packs and recorded
+   `APPROVE` (Mexico City, Toronto, New York City) or `APPROVE WITH
+   CORRECTION` (Vancouver — correction applied) against commit
+   `383a08ebbe337f1f9d43ab5299953cf6038d6316`. See each city's
+   `city-packs/<city>/REVIEW.md`. This was reviewed by a second person
+   using the sourcing this repository's own audit process produced — it is
+   not a from-scratch independent investigation, and it does not make the
+   underlying numbers immune to change; keep verifying locally.
+2. **Real-browser smoke test, including the denied-geolocation fallback.**
+   A Playwright-driven Chrome session exercised navigation, the
+   provenance indicators, Toronto's service taxonomy, New York City scope,
+   trusted-contact injection handling, medical-card reveal, reset,
+   service-worker/offline reload, and both the granted- and denied-
+   geolocation paths, with screenshots and recorded SHA-256 hashes. See
+   [`docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md`](docs/release-evidence/v0.1.0-alpha/manual-browser-smoke-test.md).
+
+Neither of these changes the still-open items: no pilot, no external
+contributor activity, and city-pack/phrase content licensing remains
+unresolved (see License, below). See
 [`docs/open-source-strategy.md`](docs/open-source-strategy.md) for the full
 scored assessment and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)
-for the exact gate status.
+for the exact gate-by-gate status.
 
 ## What's in this repository
 
