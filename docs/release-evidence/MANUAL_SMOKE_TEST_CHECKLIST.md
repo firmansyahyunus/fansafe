@@ -24,7 +24,8 @@ creates actual demand for automated regression protection.
 
 ## Checklist
 
-Serve the app locally (`cd FanSafe_PWA && python -m http.server 8080`), open
+Serve the repository root locally (`python -m http.server 8080` from the repo
+root — do not `cd FanSafe_PWA` first, or the path below 404s), open
 `http://127.0.0.1:8080/FanSafe_PWA/` in a real browser, and record a pass/fail
 plus evidence (screenshot, console output, or hash) for each row:
 
