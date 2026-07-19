@@ -68,7 +68,7 @@ before any distribution.
 ## Release bundle verification update (2026-07-19)
 
 `FanSafe_PWA.zip` was regenerated from the application files at commit
-`d72b7d2016cb525fb4ee5560283a0e5a15fc8377`. `unzip -t` passed and its
+`f08b4987e04be1e239a990876dbbc957d5b1ffbb`. `unzip -t` passed and its
 `index.html` SHA-256 matched `FanSafe_PWA/index.html`:
 
 ```text
