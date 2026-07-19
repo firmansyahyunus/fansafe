@@ -69,10 +69,24 @@ numbers — cite a source in the pack's `SOURCES.md`.
 
 ## Adding or changing phrases
 
-Follow the existing `phraseBook` shape (`id`, `category`, `values` per
-language). Every phrase must exist in all four supported languages (`id`,
-`en`, `es`, `fr`) before merge — a partial phrase is worse than no phrase,
-since the UI has no per-language fallback for it.
+`phrases/safety-critical.json` is the source of truth for the whole
+phraseBook (the filename is legacy). Do **not** hand-edit the inline
+`const phraseBook = [...]` array in either HTML file. Every phrase must have
+an `id`, `category`, `values`, and `reviewStatus`; every `values` object must
+contain all four supported languages (`id`, `en`, `es`, `fr`).
+
+Preserve truthful review status. In particular, do not change an
+`"unreviewed"` safety-critical translation to a reviewed status unless the
+required `reviewedBy` evidence has been recorded; see
+`phrases/REVIEW_STATUS.md` and `docs/content-governance.md`.
+
+After editing the source file, regenerate both HTML copies and validate:
+
+```bash
+node tools/sync-phrases.js
+node tools/validate-repo.js
+```
+
 
 ## Commit and PR conventions
 

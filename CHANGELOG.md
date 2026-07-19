@@ -7,6 +7,9 @@ There are no tagged releases yet — everything below is `Unreleased`.
 
 ### Changed
 
+- `phraseBook` is now generated from the schema-validated 17-phrase source
+  file by `tools/sync-phrases.js`; all phrase translations remain truthfully
+  marked `unreviewed` pending evidenced human review.
 - Toronto's 311 and 211 service label now distinguishes city services from
   community services and makes no police-non-emergency claim.
 - The `newyork` pack and the running app now explicitly cover New York City

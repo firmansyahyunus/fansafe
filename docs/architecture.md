@@ -12,12 +12,13 @@ and `sw.js` (43 lines, stale-while-revalidate caching) round out the PWA.
 `FanSafe_Standalone_Prototype.html` at the repo root is a byte-identical
 copy for `file://` use (confirmed via `md5sum`).
 
-All product data — 4 city packs, 17 phrases × 4 languages across 8
-categories, 9 scam-risk signals, 4 travel-document checklist items — is
-hardcoded as JS array literals inside the same file
-(`const cityPacks = [...]`, `const phraseBook = [...]`, `const riskSignals =
-[...]`, around `index.html:1060-1123`). There is no schema, no separate data
-file, and no build-time or run-time validation of this data today.
+Most product data — 9 scam-risk signals and 4 travel-document checklist
+items — remains hardcoded as JS array literals. City packs and phrases now
+have contributor-side JSON sources that are schema-validated and generated
+into the inline `const cityPacks = [...]` and `const phraseBook = [...]`
+literals. This preserves the single-file runtime and `file://` support: there
+is no runtime fetch or external dependency. The remaining product data has no
+separate source file or build-time validation.
 
 State is `localStorage`-backed, namespaced `fansafe.*`, documented
 exhaustively in `FanSafe_PWA/STATE_SCHEMA.md`. There is no versioning field
@@ -27,6 +28,20 @@ schema as a whole has no version key — a schema change today would silently
 break on old stored data unless `safeGet`'s fallback happens to mask it).
 
 ## Is it one app or a reusable toolkit today?
+
+### Current generated-data boundary
+
+The earlier description of city packs and phrases as reference-only
+extractions is superseded for those two data sets. They are now
+contributor-side sources, schema-validated and generated into the inline
+arrays, not runtime dependencies. `tools/sync-city-packs.js` maintains
+`cityPacks`; `tools/sync-phrases.js` maintains the 17-entry `phraseBook` from
+`phrases/safety-critical.json` (a legacy filename). Both scripts write the
+PWA and standalone HTML copies, and their `--check` modes run from
+`tools/validate-repo.js` in CI. No runtime `fetch()` was added, so the
+documented double-click/`file://` path remains intact. All phrases,
+including the nine safety-critical entries, remain truthfully marked
+`"unreviewed"` pending evidenced human translation review.
 
 **One monolithic application.** Phrase data, city data, safety/scoring logic,
 UI rendering, and storage are all in the same file with no module boundary
@@ -82,10 +97,15 @@ maintainer project with no other consumers.
    `node tools/sync-city-packs.js --check` runs in CI
    (`tools/validate-repo.js`) to catch drift if a contributor edits one
    without the other.
-3. **Still open (Phase 2, step 2):** the same treatment for `phraseBook` —
-   `phrases/safety-critical.json` exists as a reference extraction (9 of 17
-   phrases, the safety-critical categories) but is not yet wired into a
-   sync script or consumed by `index.html`.
+3. **Done (Phase 2, step 2, 2026-07-19):**
+   `phrases/safety-critical.json` (a legacy filename) is the source of truth
+   for all 17 phraseBook entries. `tools/sync-phrases.js` schema-validates
+   the source and generates the inline literal in both HTML copies;
+   `node tools/sync-phrases.js --check` runs through
+   `tools/validate-repo.js` in CI. This is contributor-side code generation,
+   not a runtime fetch, so the documented `file://` path remains intact. All
+   phrases, including the nine safety-critical entries, remain truthfully
+   marked `"unreviewed"` pending evidenced human translation review.
 4. **Later, only if a second real consumer appears:** consider extracting
    the phrase engine and safety-case scoring logic into a small,
    dependency-free JS module (`packages/core` or similar) that both the PWA

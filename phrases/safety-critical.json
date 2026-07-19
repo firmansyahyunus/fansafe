@@ -1,101 +1,19 @@
 [
-  {
-    "id": "em1",
-    "category": "emergency",
-    "values": {
-      "id": "Saya butuh bantuan segera.",
-      "en": "I need help urgently.",
-      "es": "Necesito ayuda urgente.",
-      "fr": "J'ai besoin d'aide de toute urgence."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "em2",
-    "category": "emergency",
-    "values": {
-      "id": "Ini keadaan darurat.",
-      "en": "This is an emergency.",
-      "es": "Esto es una emergencia.",
-      "fr": "C'est une urgence."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "med1",
-    "category": "medical",
-    "values": {
-      "id": "Tolong panggil ambulans.",
-      "en": "Please call an ambulance.",
-      "es": "Por favor, llame a una ambulancia.",
-      "fr": "Appelez une ambulance, s'il vous plaît."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "med2",
-    "category": "medical",
-    "values": {
-      "id": "Saya membutuhkan dokter.",
-      "en": "I need a doctor.",
-      "es": "Necesito un médico.",
-      "fr": "J'ai besoin d'un médecin."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "med3",
-    "category": "medical",
-    "values": {
-      "id": "Saya memiliki alergi serius.",
-      "en": "I have a serious allergy.",
-      "es": "Tengo una alergia grave.",
-      "fr": "J'ai une allergie grave."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "pol1",
-    "category": "police",
-    "values": {
-      "id": "Saya butuh bantuan polisi.",
-      "en": "I need police assistance.",
-      "es": "Necesito ayuda de la policía.",
-      "fr": "J'ai besoin de l'aide de la police."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "pol2",
-    "category": "police",
-    "values": {
-      "id": "Saya ingin melaporkan pencurian.",
-      "en": "I want to report a theft.",
-      "es": "Quiero denunciar un robo.",
-      "fr": "Je veux signaler un vol."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "doc1",
-    "category": "lost_document",
-    "values": {
-      "id": "Paspor saya hilang.",
-      "en": "My passport is missing.",
-      "es": "He perdido mi pasaporte.",
-      "fr": "J'ai perdu mon passeport."
-    },
-    "reviewStatus": "unreviewed"
-  },
-  {
-    "id": "doc2",
-    "category": "lost_document",
-    "values": {
-      "id": "Saya perlu membuat laporan polisi.",
-      "en": "I need to file a police report.",
-      "es": "Necesito presentar un informe policial.",
-      "fr": "Je dois déposer un rapport de police."
-    },
-    "reviewStatus": "unreviewed"
-  }
+  { "id": "em1", "category": "emergency", "values": { "id": "Saya butuh bantuan segera.", "en": "I need help urgently.", "es": "Necesito ayuda urgente.", "fr": "J'ai besoin d'aide de toute urgence." }, "reviewStatus": "unreviewed" },
+  { "id": "em2", "category": "emergency", "values": { "id": "Ini keadaan darurat.", "en": "This is an emergency.", "es": "Esto es una emergencia.", "fr": "C'est une urgence." }, "reviewStatus": "unreviewed" },
+  { "id": "med1", "category": "medical", "values": { "id": "Tolong panggil ambulans.", "en": "Please call an ambulance.", "es": "Por favor, llame a una ambulancia.", "fr": "Appelez une ambulance, s'il vous plaît." }, "reviewStatus": "unreviewed" },
+  { "id": "med2", "category": "medical", "values": { "id": "Saya membutuhkan dokter.", "en": "I need a doctor.", "es": "Necesito un médico.", "fr": "J'ai besoin d'un médecin." }, "reviewStatus": "unreviewed" },
+  { "id": "med3", "category": "medical", "values": { "id": "Saya memiliki alergi serius.", "en": "I have a serious allergy.", "es": "Tengo una alergia grave.", "fr": "J'ai une allergie grave." }, "reviewStatus": "unreviewed" },
+  { "id": "nav1", "category": "navigation", "values": { "id": "Tolong arahkan saya ke stadion.", "en": "Please show me how to get to the stadium.", "es": "Por favor, indíqueme cómo llegar al estadio.", "fr": "Pouvez-vous m'indiquer comment aller au stade, s'il vous plaît?" }, "reviewStatus": "unreviewed" },
+  { "id": "nav2", "category": "navigation", "values": { "id": "Di mana stasiun metro terdekat?", "en": "Where is the nearest metro station?", "es": "¿Dónde está la estación de metro más cercana?", "fr": "Où est la station de métro la plus proche?" }, "reviewStatus": "unreviewed" },
+  { "id": "trans1", "category": "transport", "values": { "id": "Berapa tarif taksi ke hotel saya?", "en": "How much is a taxi to my hotel?", "es": "¿Cuánto cuesta un taxi a mi hotel?", "fr": "Combien coûte un taxi jusqu'à mon hôtel?" }, "reviewStatus": "unreviewed" },
+  { "id": "trans2", "category": "transport", "values": { "id": "Peron mana yang menuju pusat kota?", "en": "Which platform goes downtown?", "es": "¿Qué andén va al centro?", "fr": "Quel quai va au centre-ville?" }, "reviewStatus": "unreviewed" },
+  { "id": "hotel1", "category": "hotel", "values": { "id": "Tolong bantu saya kembali ke hotel.", "en": "Please help me return to my hotel.", "es": "Por favor, ayúdeme a regresar a mi hotel.", "fr": "Aidez-moi à retourner à mon hôtel, s'il vous plaît." }, "reviewStatus": "unreviewed" },
+  { "id": "hotel2", "category": "hotel", "values": { "id": "Saya kehilangan kunci kamar saya.", "en": "I lost my room key.", "es": "Perdí la llave de mi habitación.", "fr": "J'ai perdu la clé de ma chambre." }, "reviewStatus": "unreviewed" },
+  { "id": "pol1", "category": "police", "values": { "id": "Saya butuh bantuan polisi.", "en": "I need police assistance.", "es": "Necesito ayuda de la policía.", "fr": "J'ai besoin de l'aide de la police." }, "reviewStatus": "unreviewed" },
+  { "id": "pol2", "category": "police", "values": { "id": "Saya ingin melaporkan pencurian.", "en": "I want to report a theft.", "es": "Quiero denunciar un robo.", "fr": "Je veux signaler un vol." }, "reviewStatus": "unreviewed" },
+  { "id": "doc1", "category": "lost_document", "values": { "id": "Paspor saya hilang.", "en": "My passport is missing.", "es": "He perdido mi pasaporte.", "fr": "J'ai perdu mon passeport." }, "reviewStatus": "unreviewed" },
+  { "id": "doc2", "category": "lost_document", "values": { "id": "Saya perlu membuat laporan polisi.", "en": "I need to file a police report.", "es": "Necesito presentar un informe policial.", "fr": "Je dois déposer un rapport de police." }, "reviewStatus": "unreviewed" },
+  { "id": "tix1", "category": "ticket_scam", "values": { "id": "Apakah tiket ini resmi?", "en": "Is this ticket official?", "es": "¿Este boleto es oficial?", "fr": "Ce billet est-il officiel?" }, "reviewStatus": "unreviewed" },
+  { "id": "tix2", "category": "ticket_scam", "values": { "id": "Saya pikir saya ditipu.", "en": "I think I was scammed.", "es": "Creo que fui estafado.", "fr": "Je pense avoir été escroqué." }, "reviewStatus": "unreviewed" }
 ]

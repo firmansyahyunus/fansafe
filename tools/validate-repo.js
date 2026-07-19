@@ -174,6 +174,15 @@ function checkCityPackSync() {
   }
 }
 
+function checkPhraseSync() {
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, "sync-phrases.js"), "--check"], { stdio: "inherit" });
+    pass("index.html's phraseBook matches phrases/safety-critical.json (see tools/sync-phrases.js)");
+  } catch (e) {
+    fail("index.html's phraseBook has drifted from phrases/safety-critical.json — run: node tools/sync-phrases.js");
+  }
+}
+
 function checkPhrases() {
   try {
     execFileSync(process.execPath, [path.join(__dirname, "validate-phrases.js")], { stdio: "inherit" });
@@ -305,7 +314,7 @@ function checkRequiredFiles() {
     "docs/content-licensing-matrix.md",
     "schemas/city-pack.schema.json", "schemas/phrase.schema.json", "schemas/emergency-info.schema.json",
     "tools/validate-city-pack.js", "tools/validate-phrases.js", "tools/validate-gate1.js",
-    "tools/sync-city-packs.js", "tools/validate-repo.js",
+    "tools/sync-city-packs.js", "tools/sync-phrases.js", "tools/validate-repo.js",
   ];
   const missing = required.filter((f) => !fs.existsSync(path.join(ROOT, f)));
   if (missing.length === 0) {
@@ -324,6 +333,7 @@ function main() {
   checkStandaloneCopy(html);
   checkCityPacks();
   checkCityPackSync();
+  checkPhraseSync();
   checkPhrases();
   checkGate1Regression();
   checkCityPackProvenance();

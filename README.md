@@ -141,13 +141,20 @@ device reliability. See `TEST_REPORT.md` and the release evidence.
 
 ## Validating city packs and phrases
 
+The city-pack and phrase arrays in the HTML are generated contributor-side;
+validate that neither generated block has drifted before committing a data
+change:
+
 ```bash
 node tools/validate-repo.js         # full repository validation (CI runs this)
 node tools/validate-city-pack.js    # city-packs/<city>/pack.json against schemas/city-pack.schema.json
 node tools/validate-phrases.js      # phrases/*.json against schemas/phrase.schema.json
+node tools/sync-city-packs.js --check  # verify generated city data has no drift
+node tools/sync-phrases.js --check     # verify generated phrase data has no drift
 ```
 
-All three are zero-dependency Node scripts (no `ajv`, no build step). See
+All validation and sync scripts are zero-dependency Node scripts (no `ajv`,
+no build step). See
 [`docs/content-governance.md`](docs/content-governance.md) for the full
 city-pack/phrase contribution and review process.
 

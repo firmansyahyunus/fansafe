@@ -1,57 +1,53 @@
 # Phrase Review Status
 
-Reference extraction of the **safety-critical** phrase categories
-(`emergency`, `medical`, `police`, `lost_document`) from
-`FanSafe_PWA/index.html`'s hardcoded `phraseBook` array, produced during the
-2026-07-19 public-release gate-0 session. Like `city-packs/`, this is a
-reference artifact — **`index.html` still uses its own inline array; this
-extraction is not wired into the running app** (see `docs/architecture.md`,
-Phase 2).
+`phrases/safety-critical.json` is the contributor-side source of truth for
+all 17 entries in FanSafe's phrase book. Its legacy filename is retained for
+continuity; it does not mean that every one of the 17 phrases is
+safety-critical.
 
-## Scope
+`node tools/sync-phrases.js` schema-validates this file and generates the
+inline `const phraseBook = [...]` literal in both
+`FanSafe_PWA/index.html` and `FanSafe_Standalone_Prototype.html`. This is a
+code-generation step, not a runtime data fetch, so the documented
+double-click/`file://` path remains supported.
 
-9 of the 17 total phrases: `em1`, `em2` (emergency), `med1`, `med2`, `med3`
-(medical), `pol1`, `pol2` (police), `doc1`, `doc2` (lost_document). The
-remaining 8 phrases (`navigation`, `transport`, `hotel`, `ticket_scam`
-categories) were not extracted this session — they are lower safety
-priority and out of scope for this pass. `docs/content-governance.md`'s
-review requirements apply to them too whenever they are extracted.
+## Scope and current status
 
-## Status: all 9 phrases are `"unreviewed"`
+All 17 phrases are marked `"reviewStatus": "unreviewed"`. This is a
+deliberate, evidence-based default: the repository has no record of who
+translated the phrases or by which method. No translation text was changed
+when this source-of-truth file was introduced.
 
-Every phrase in `phrases/safety-critical.json` is marked
-`"reviewStatus": "unreviewed"`. This is a deliberate, evidence-based
-default, not an oversight:
+The nine safety-critical phrases remain explicitly unreviewed:
 
-- No record exists anywhere in the repository (code, `DECISION_LOG.md`, or
-  elsewhere) of who translated these phrases or by what method
-  (self-authored, professional translator, machine translation, etc.).
-- Per `LICENSE-PROPOSAL.md` and `docs/content-licensing-matrix.md`, this
-  same missing-provenance gap is also why phrase content is not licensed
-  for reuse yet — the two issues (review status and license status) share
-  one root cause.
-- **Do not claim `"native-speaker-reviewed"` or `"professionally-translated"`
-  for any phrase without an evidenced `reviewedBy` entry.**
-  `tools/validate-phrases.js` enforces this: it fails validation if
-  `reviewStatus` claims review but `reviewedBy` is empty.
+- `em1`, `em2` (emergency)
+- `med1`, `med2`, `med3` (medical)
+- `pol1`, `pol2` (police)
+- `doc1`, `doc2` (lost document)
+
+The remaining eight navigation, transport, hotel, and ticket/scam phrases
+are also unreviewed. Their lower immediate safety priority does not create
+evidence of translation quality or authorship.
 
 ## What would change a phrase's status
 
-1. A fluent or native speaker of the target language reviews the phrase
-   for accuracy and, for emergency/medical phrases specifically, for being
-   unambiguous under stress (per `docs/content-governance.md`).
-2. Record that reviewer in the phrase's `reviewedBy` array:
+1. A fluent or native speaker reviews the phrase for accuracy and, for
+   emergency/medical phrases, for being unambiguous under stress (per
+   `docs/content-governance.md`).
+2. Record the reviewer in the phrase's `reviewedBy` array, for example:
    `{ "language": "es", "reviewer": "<name or handle>" }`.
 3. Update `reviewStatus` to `"native-speaker-reviewed"` (or
-   `"professionally-translated"` if applicable, with the same evidence
-   standard).
-4. Re-run `node tools/validate-phrases.js` to confirm it passes.
+   `"professionally-translated"` where evidenced).
+4. Run `node tools/sync-phrases.js`, then `node tools/validate-repo.js`.
 
-## Why this matters more for these 4 categories than the other 8
+Do not claim `"native-speaker-reviewed"` or
+`"professionally-translated"` without the corresponding `reviewedBy`
+evidence. `tools/validate-phrases.js` rejects reviewed statuses without it.
 
-A wrong "navigation" phrase is an inconvenience. A wrong or ambiguous
-"medical" or "emergency" phrase, used by someone under real stress in a
-country where they don't speak the language, is a safety issue. This is
-why `docs/content-governance.md` singles out emergency/medical phrases for
-a stricter review bar, and why this session's provenance pass started here
-rather than with the full 17-phrase set.
+## Why the safety-critical subset needs particular care
+
+A wrong navigation phrase is an inconvenience. A wrong or ambiguous medical
+or emergency phrase, used by someone under real stress in a country where
+they do not speak the language, is a safety issue. That is why
+`docs/content-governance.md` applies a stricter review bar to the emergency
+and medical categories.
