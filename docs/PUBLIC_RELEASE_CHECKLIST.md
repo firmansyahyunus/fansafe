@@ -47,10 +47,10 @@ is marked from actual evidence produced this session — not aspirationally.
 Human-review decisions were supplied for all four city packs: Mexico City,
 Toronto, and New York City were marked `APPROVE`; Vancouver was marked
 `APPROVE WITH CORRECTION`. The Vancouver correction is applied. However, every
-submitted record left the reviewer identity and the reviewed commit as literal
-placeholders. Item 13 therefore remains open: those two fields must be
-completed by the reviewer before the decisions can count as auditable,
-independent confirmation.
+submitted record now identifies reviewer `SABR`, but the reviewed commit is
+still a literal placeholder. Item 13 therefore remains open: the reviewer must
+record that commit before the decisions can count as auditable, independent
+confirmation.
 
 ## What "credible public repository, release-candidate for public preview" means given the above
 

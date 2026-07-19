@@ -2,10 +2,10 @@
 
 ## Status: decisions supplied, audit metadata incomplete
 
-Four human-review decisions were supplied on 2026-07-19. Each record retained
-the literal placeholders `<Reviewer name/initials>` and `<git rev-parse HEAD>`.
-That is insufficient to prove who independently reviewed which revision, so
-these decisions do **not** yet close the independent human-review gate.
+Four human-review decisions were supplied on 2026-07-19 by reviewer `SABR`.
+Each record retained the literal `<git rev-parse HEAD>` placeholder. That is
+insufficient to prove which revision was independently reviewed, so these
+decisions do **not** yet close the independent human-review gate.
 
 | Pack | Supplied decision | Findings recorded | Gate status |
 |---|---|---|---|
@@ -22,9 +22,8 @@ copies. It no longer attributes the police non-emergency number to E-Comm.
 
 ## Required completion
 
-For each pack, the human reviewer must replace the two placeholders in its
-`REVIEW.md` with their name or initials and the exact commit hash they
-reviewed. If the review occurred against a different revision than the final
-pack, the reviewer must re-check the changed facts. Until then, all city packs
-remain `sourced-unreviewed` in the UI and safety-critical phrases remain
+For each pack, the human reviewer must add the exact commit hash reviewed to
+its `REVIEW.md`. If the review occurred against a different revision than the
+final pack, the reviewer must re-check the changed facts. Until then, all city
+packs remain `sourced-unreviewed` in the UI and safety-critical phrases remain
 `unreviewed`.
